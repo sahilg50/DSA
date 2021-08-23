@@ -1,0 +1,3 @@
+maxH = temp;
+            high = i;
+        
