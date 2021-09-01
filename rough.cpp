@@ -3,14 +3,9 @@
 using namespace std;
 int main()
 {
-    cout << "Enter the value: ";
-
-    int a, b, c, d;
-    cin >> a >> b >> c >> d;
-
-    int e = a + b + c + d;
-
-    cout << e;
+    int a = 10;
+    a += 'a';
+    cout << a;
 
     return 0;
 }
