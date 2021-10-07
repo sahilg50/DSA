@@ -44,3 +44,7 @@ int main()
     }
     return 0;
 }
+
+/*
+The time coplexity fo this approach is O(nlogn)
+*/

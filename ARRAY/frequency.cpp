@@ -1,3 +1,5 @@
+/*Write a program to find the frequency of all the elements in the array*/
+
 #include <iostream>
 using namespace std;
 
@@ -10,7 +12,7 @@ int main()
         int flag = 0;
     };
 
-    cout << "Enter the length of the array:\t";
+    cout << "Enter the length of the array: ";
 
     int length;
     cin >> length;
