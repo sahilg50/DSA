@@ -26,10 +26,12 @@ int main()
         if (v[i][0] > end)
         {
             take++;
+
             end = v[i][1];
         }
     }
 
-    cout << take << endl;
+    cout << take << "activities" << endl;
+    cout << end << "is the end time of last activity picked" << endl;
     return 0;
 }
