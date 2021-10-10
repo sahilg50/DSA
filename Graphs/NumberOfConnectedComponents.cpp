@@ -8,9 +8,10 @@ class Graph
     //number of nodes in graph
     int v;
     list<int> *adj;
-    bool *visited;
 
 public:
+    bool *visited;
+
     Graph(int v); //constructor for the graph
 
     void addEdge(int v, int w); //Add edges to the graph
@@ -44,10 +45,40 @@ void Graph::initializeNotVisited()
 
 void Graph::DFS(int s)
 {
+    visited[s] = true;
+
+    list<int>::iterator i;
+    for (i = adj[s].begin(); i != adj[s].end(); i++)
+    {
+        if (!visited[*i])
+        {
+            DFS(*i);
+        }
+    }
 }
 
 int main()
 {
+
+    Graph g(6);
+    g.addEdge(1, 2);
+    g.addEdge(2, 3);
+    g.addEdge(1, 3);
+    g.addEdge(4, 5);
+
+    g.initializeNotVisited();
+
+    int connectedComponents = 0;
+    for (int i = 0; i < 6; i++)
+    {
+        if (g.visited[i] == false)
+        {
+            g.DFS(i);
+            connectedComponents++;
+        }
+    }
+
+    cout << connectedComponents << " ";
 
     return 0;
 }
