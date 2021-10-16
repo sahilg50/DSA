@@ -4,7 +4,10 @@
         "algorithm": "cpp",
         "cmath": "cpp",
         "vector": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "utility": "cpp"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }
