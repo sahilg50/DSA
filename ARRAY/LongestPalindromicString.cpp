@@ -1,11 +1,13 @@
 /*This problem is solved using dynamic prgramming (DP)
 The brute force solution would be to find all the substrings and then check for the palindromic substrings. In this approach the time complexity would be O(n^3).
 The Optimal solution would be using the dynamic programming approach and in this case the time complexity would be O(n^2) where n is the size of the string. The space complexity is also O(n^2).
+There is also a 3rd approach and that takes O(n^2) time complexity and and a constant space complexity.
 */
 
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 void printSubStr(string str, int low, int high)
@@ -17,6 +19,7 @@ void printSubStr(string str, int low, int high)
     cout << endl;
 }
 
+//Using DP
 int longestSubString(string str)
 {
     int n = str.size();
@@ -103,4 +106,35 @@ int main()
     string str = "geeksababageeks";
     cout << longestSubString(str);
     return 0;
+}
+
+//3Rd Approach
+string longestPalindrome(string s)
+{
+    if (s.length() < 1)
+        return "";
+    int start = 0, end = 0;
+    for (int i = 0; i < s.length(); i++)
+    {
+        int len1 = expandAroundCenter(s, i, i);
+        int len2 = expandAroundCenter(s, i, i + 1);
+        int len = max(len1, len2);
+        if (len > end - start)
+        {
+            start = i - (len - 1) / 2;
+            end = i + len / 2;
+        }
+    }
+    return s.substr(start, end + 1);
+}
+
+int expandAroundCenter(string s, int left, int right)
+{
+    int L = left, R = right;
+    while (L >= 0 && R < s.length() && s.at(L) == s.at(R))
+    {
+        L--;
+        R++;
+    }
+    return R - L - 1;
 }
