@@ -8,20 +8,22 @@ using namespace std;
 int main()
 
 {
-    vector<vector<int>> v;
-    v.push_back({1, 2, 3, 4, 5, 7, 8});
-    v.push_back({1, 2, 3});
-    v[1].push_back(4);
-    v[4].push_back(10);
+    int a = 11;
+    cout << a / 2;
+    // vector<vector<int>> v;
+    // v.push_back({1, 2, 3, 4, 5, 7, 8});
+    // v.push_back({1, 2, 3});
+    // v[1].push_back(4);
+    // v[4].push_back(10);
 
-    for (int i = 0; i < v.size(); i++)
-    {
-        for (int j = 0; j < v[i].size(); j++)
-        {
-            cout << v[i][j] << " ";
-        }
-        cout << endl;
-    }
+    // for (int i = 0; i < v.size(); i++)
+    // {
+    //     for (int j = 0; j < v[i].size(); j++)
+    //     {
+    //         cout << v[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
 
     // list<int> *l = new list<int>[2];
 

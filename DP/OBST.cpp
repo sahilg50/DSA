@@ -38,6 +38,7 @@ int optCost(int freq[], int i, int j)
     return min + fsum;
 }
 
+// The main funciton that calculates the cost of the binary tree
 int optimalSearchTree(int keys[], int freq[], int n)
 {
     //Make sure to sort the keys[] because that is the base for a binary search tree
