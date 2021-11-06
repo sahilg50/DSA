@@ -20,15 +20,15 @@ int main()
     cout << map.at("rishav") << endl; // throws error is the key is not present
 
     //size
-    cout << map.size() << endl; //returns the size of the hashmap
+    cout << "Size: " << map.size() << endl; //returns the size of the hashmap
 
     //Check the presence
     cout << map.count("sahil") << endl; // returns 0 or 1
 
     //erase
-    cout << map.size() << endl;
+    cout << "Size: " << map.size() << endl;
     map.erase("sahil"); //deletes the key value pair.
-    cout << map.size() << endl;
+    cout << "Size: " << map.size() << endl;
 
     return 0;
 }
