@@ -8,7 +8,8 @@ using namespace std;
 int main()
 
 {
-    int a = 11;
+    int a;
+    cin >> a;
     cout << a / 2;
     // vector<vector<int>> v;
     // v.push_back({1, 2, 3, 4, 5, 7, 8});

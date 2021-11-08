@@ -6,6 +6,8 @@ int main()
 {
     // vector<int> *dv = new vector<int>(); // Dynamically allocates the memory
 
+    // vector<int> v2(10, -2); // we're initializing a vector with size 10 and default value -2
+
     vector<int> v; // statically allocates the memory
 
     //insert
