@@ -1,79 +1,41 @@
 #include <iostream>
-#include <list>
+#include <vector>
+#include <unordered_map>
+
 using namespace std;
 
 class Graph
 {
-    int v; // total number of edges
-
-    //Adjacency List
-    list<int> *adj;
+    unordered_map<int, vector<int>> map;
 
 public:
-    Graph(int v);
-    //Function to add an edge to the graph
-    void addEdge(int v, int w);
-
-    //DFS traversal of the vertices reachable from v
-    void DFS(int v);
-};
-
-Graph::Graph(int v)
-{
-    this->v = v;
-    adj = new list<int>[v];
-}
-
-void Graph::addEdge(int v, int w)
-{
-    adj[v].push_back(w);
-}
-
-void Graph::DFS(int s)
-{
-    bool *visited = new bool[this->v];
-    for (int i = 0; i < this->v; i++)
+    void addEdge(int u, int v)
     {
-        visited[i] = false;
+        map[u].push_back(v);
     }
 
-    //Mark the current node as visited and print it
-    visited[s] = true;
-    cout << s << " " << endl;
-
-    list<int>::iterator i;
-    for (i = adj[s].begin(); i != adj[s].end(); i++)
+    int size()
     {
-        if (!visited[*i])
+        unordered_map<int, bool> nodes;
+        for (auto i : map)
         {
-            DFS(*i);
+            nodes[i.first] = true;
+            for (auto j : map[i.first])
+                nodes[j] = true;
         }
+
+        return nodes.size();
     }
-}
+};
 
 int main()
 {
-    int nodes, edges;
-    cout << "Enter the number of nodes: ";
-    cin >> nodes;
-    cout << endl
-         << "Enter the number of egdes: ";
-    cin >> edges;
 
-    Graph g(nodes);
+    Graph graph;
+    graph.addEdge(1, 2);
+    graph.addEdge(1, 9);
+    graph.addEdge(1, 8);
 
-    int x, y;
-    for (int i = 0; i < edges; ++i)
-    {
-        cin >> x >> y;
-        g.addEdge(x, y);
-    }
-
-    cout << "Enter the node from where to start the DFS: ";
-    int n;
-    cin >> n;
-
-    g.DFS(n);
-
+    cout << graph.size();
     return 0;
 }
