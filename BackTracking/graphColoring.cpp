@@ -42,19 +42,24 @@ public:
             nodes.insert(i.first);
             for (auto j : map[i.first])
                 nodes.insert(j);
-
-            return nodes.size();
         }
+
+        return nodes.size();
     }
 
-    bool checkColoring(int curr_node, int total_covered, int total_colors)
+    bool checkColoring(int node, int total_colors)
     {
+
         //base case
-        if (total_covered == 4)
+        if (node == size_of_graph())
         {
             return true;
         }
-        cout << size_of_graph() << endl;
+
+        auto iter = map.begin();
+        for (int i = 0; i < node; i++)
+            ++iter;
+        int curr_node = iter->first;
 
         for (int i = 0; i < total_colors; i++)
         {
@@ -64,20 +69,10 @@ public:
                 color_map[curr_node] = i;
                 visited.insert(curr_node);
                 cout << "Curren Node: " << curr_node << " Color: " << i << endl;
-                for (auto j : map[curr_node])
-                {
 
-                    if (visited.count(j) == 0)
-                    {
-                        cout << "Tried: " << j << endl;
+                if (checkColoring(node + 1, total_colors))
+                    return true;
 
-                        bool nextColorAssignKarPaye = checkColoring(j, total_covered + 1, total_colors);
-                        if (nextColorAssignKarPaye)
-                        {
-                            return true;
-                        }
-                    }
-                }
                 color_map.erase(curr_node);
             }
         }
@@ -94,8 +89,10 @@ int main()
     g.addEdge(2, 3);
     g.addEdge(3, 4);
     g.addEdge(4, 1);
+    g.addEdge(3, 5);
+    g.addEdge(5, 4);
 
-    // cout << g.size_of_graph();
-    cout << g.checkColoring(1, 0, 10);
+    cout << "Size of the graph: " << g.size_of_graph() << endl;
+    cout << g.checkColoring(0, 2);
     return 0;
 }
