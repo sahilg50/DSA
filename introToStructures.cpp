@@ -9,13 +9,16 @@ struct node
     int val;
     node *next;
 
-    node(int x) : val(x), next(nullptr) {}
+    node(int x) : val(x), next(nullptr) {} //constuctor for the structure
 };
 
 int main()
 {
 
-    node n1(10)
+    node n1(10);
+    node *temp = &n1;
 
-        return 0;
+    cout << n1.next;
+    cout << temp->next;
+    return 0;
 }
