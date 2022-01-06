@@ -49,7 +49,7 @@ bool solveNQueen(int board[][10], int i, int n)
         }
         cout << endl
              << endl;
-        return true; //change this to false if you want all the configurations
+        return false; //change this to false if you want all the configurations
     }
 
     //recurcive call
@@ -78,6 +78,6 @@ int main()
 {
     int n;
     int board[10][10] = {0};
-    solveNQueen(board, 0, 4);
+    solveNQueen(board, 0, 5);
     return 0;
 }

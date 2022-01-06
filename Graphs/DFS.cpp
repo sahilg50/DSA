@@ -35,6 +35,7 @@ int main()
     graph.addEdge(1, 2);
     graph.addEdge(1, 9);
     graph.addEdge(1, 8);
+    graph.addEdge(2, 5);
 
     cout << graph.size();
     return 0;

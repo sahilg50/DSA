@@ -2,6 +2,7 @@
 #include <vector>
 using namespace std;
 
+// vector<vector<int>> vec( n , vector<int> (m, 0));mr
 int main()
 {
     // vector<int> *dv = new vector<int>(); // Dynamically allocates the memory

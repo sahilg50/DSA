@@ -1,21 +1,22 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
-#include <unordered_set>
+
 using namespace std;
-
-struct node
-{
-    int val;
-    node *next;
-
-    node(int x) : val(x), next(nullptr) {}
-};
 
 int main()
 {
+    vector<int> arr(2);
+    unordered_map<int, arr> map;
+    vector<int> vec;
 
-    node n1(10)
+    vec.push_back(6);
+    vec.push_back(-17);
+    vec.push_back(12);
 
-        return 0;
+    cout << "Vector Size: " << vec.size() << endl;
+
+    vec.erase(next(vec.begin()));
+    cout << "Vector Size: " << vec.size() << endl;
+    return 0;
 }
