@@ -37,6 +37,7 @@ int main()
 }
 
 /*
+It is a backtracing problem.
 TC: O(n!) because the total number of permutations are n!
 SC: O(r-l) where the r-l represents the size of the string 
 */
