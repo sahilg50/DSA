@@ -8,16 +8,16 @@ int main()
     unordered_map<string, int> map;
 
     //Insert
-    pair<string, int> p("sahil", 225);
+    pair<string, int> p("s", 225);
     map.insert(p);
 
     map["manan"] = 225;
 
     //find or access
-    cout << map["sahil"] << endl;
+    cout << map["s"] << endl;
 
-    cout << map["akul"] << endl;      // creates a new key value pair with the default value 0
-    cout << map.at("rishav") << endl; // throws error is the key is not present
+    cout << map["akul"] << endl; // creates a new key value pair with the default value 0
+    // cout << map.at("rishav") << endl; // throws error is the key is not present
 
     //size
     cout << "Size: " << map.size() << endl; //returns the size of the hashmap

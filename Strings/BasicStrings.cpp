@@ -21,7 +21,7 @@ int main()
     //Append the strings.
     s1.append(s2);
     cout << s1 << endl;
-    cout << s1[3] << endl;
+    cout << "helloi " << s1[3] << endl;
 
     //This funcrtino is used to clear the string.
     abc.clear();

@@ -7,6 +7,7 @@
 		"unordered_map": "cpp",
 		"utility": "cpp",
 		"xutility": "cpp",
-		"string": "cpp"
+		"string": "cpp",
+		"xstring": "cpp"
 	}
 }
