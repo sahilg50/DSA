@@ -190,6 +190,37 @@ private:
         }
     }
 
+    // method to print the postorder traversal using two stacks.
+    void postorder_Iterative(Node *root)
+    {
+        if (!root)
+            return;
+        cout << endl
+             << "Printing the portorder traversal iteratively." << endl;
+        stack<Node *> s1;
+        stack<int> s2;
+
+        s1.push(root);
+        while (!s1.empty())
+        {
+            Node *temp = s1.top();
+            s1.pop();
+            s2.push(temp->data);
+            if (temp->left)
+                s1.push(temp->left);
+            if (temp->right)
+                s1.push(temp->right);
+        }
+
+        // poping all the elements from the second stack and printing.
+        while (!s2.empty())
+        {
+            cout << s2.top() << " ";
+            s2.pop();
+        }
+        return;
+    }
+
 public:
     // public method to insert a new node.
     void insertBST(int val)
@@ -236,6 +267,12 @@ public:
     {
         inorder_iterative(head);
     }
+
+    // public method to iteratively print the postorder traversal
+    void postorderIterative()
+    {
+        postorder_Iterative(head);
+    }
 };
 
 int main()
@@ -256,5 +293,6 @@ int main()
          << endl;
     new_bst.inorderBST();
     new_bst.inorderIterative();
+    new_bst.postorderIterative();
     return 0;
 }
