@@ -1,9 +1,11 @@
 #include <iostream>
 #include <algorithm>
+#include <queue>
+#include <stack>
 
 using namespace std;
 
-//Strcuture to create a new node.
+// Strcuture to create a new node.
 struct Node
 {
     int data;
@@ -36,7 +38,7 @@ private:
         return root;
     }
 
-    //Private method to print the inorder traversal
+    // Private method to print the inorder traversal
     void inorder(Node *root)
     {
         if (root == NULL)
@@ -47,7 +49,37 @@ private:
         inorder(root->right);
     }
 
-    //Method to search the key in the BST.
+    // method to print the inorder traversal iteratively.
+    void inorder_iterative(Node *root)
+    {
+        if (!root)
+            return;
+
+        stack<Node *> S;
+        cout << endl
+             << "Printing the iterative inorder traversal of BT: ";
+        while (true)
+        {
+            if (root != NULL)
+            {
+                S.push(root);
+                root = root->left;
+            }
+            else
+            {
+                if (S.empty())
+                    break;
+
+                root = S.top();
+                S.pop();
+                cout << root->data << " ";
+                root = root->right;
+            }
+        }
+        return;
+    }
+
+    // Method to search the key in the BST.
     bool search(Node *root, int val)
     {
         if (root == NULL)
@@ -63,7 +95,7 @@ private:
             search(root->right, val);
     }
 
-    //Method to find the inorder successor.
+    // Method to find the inorder successor.
     Node *inorderSuccessor(Node *root)
     {
         Node *curr = root;
@@ -74,7 +106,7 @@ private:
         return curr;
     }
 
-    //Method to delete a node from the BST;
+    // Method to delete a node from the BST;
     Node *Delete(Node *root, int key)
     {
         if (key < root->data)
@@ -107,14 +139,65 @@ private:
         return root;
     }
 
+    // Method to print the level order traversal
+    void levelOrder_using_queue(Node *root)
+    {
+        if (root == NULL)
+        {
+            return;
+        }
+        queue<Node *> q;
+        q.push(root);
+        cout << endl
+             << "WE'll print the level order traversal" << endl;
+        while (!q.empty())
+        {
+            int size = q.size();
+            vector<int> level;
+            for (int i = 0; i < size; i++)
+            {
+                Node *temp = q.front();
+                q.pop();
+                if (temp->left)
+                    q.push(temp->left);
+                if (temp->right)
+                    q.push(temp->right);
+
+                cout << temp->data << " ";
+            }
+            cout << endl;
+        }
+        // TC-> O(n), n is the number of nodes.
+        // SC-> O(n), this is because there can be a maximum of n nodes in the queue at a time.
+    }
+
+    // Method to print the preorder traversal iteratively.
+    void preorder_iterative(Node *root)
+    {
+        stack<Node *> s;
+        s.push(root);
+        cout << endl
+             << "Printing the preorder traversal iteratively." << endl;
+        while (!s.empty())
+        {
+            Node *temp = s.top();
+            s.pop();
+            if (temp->right)
+                s.push(temp->right);
+            if (temp->left)
+                s.push(temp->left);
+            cout << temp->data << " ";
+        }
+    }
+
 public:
-    //public method to insert a new node.
+    // public method to insert a new node.
     void insertBST(int val)
     {
         head = insert(val, head);
     }
 
-    //public method to print the inorder traversal.
+    // public method to print the inorder traversal.
     void inorderBST()
     {
         inorder(head);
@@ -130,10 +213,28 @@ public:
             cout << "The key does not exist!" << endl;
     }
 
-    //Public method to delete a node from the BST
+    // Public method to delete a node from the BST
     void deleteBST(int key)
     {
         Delete(head, key);
+    }
+
+    // Public method to print the level order traveral using queue
+    void levelOrder_queue()
+    {
+        levelOrder_using_queue(head);
+    }
+
+    // public method to print the preorder traversal iteratively.
+    void preorderIterative()
+    {
+        preorder_iterative(head);
+    }
+
+    // public method to iteratively print the inorder traversal.
+    void inorderIterative()
+    {
+        inorder_iterative(head);
     }
 };
 
@@ -149,6 +250,11 @@ int main()
     new_bst.searhBST(11);
     new_bst.deleteBST(5);
     new_bst.inorderBST();
-
+    new_bst.levelOrder_queue();
+    new_bst.preorderIterative();
+    cout << endl
+         << endl;
+    new_bst.inorderBST();
+    new_bst.inorderIterative();
     return 0;
 }
