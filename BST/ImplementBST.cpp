@@ -174,10 +174,10 @@ private:
     // Method to print the preorder traversal iteratively.
     void preorder_iterative(Node *root)
     {
-        stack<Node *> s;
-        s.push(root);
         cout << endl
              << "Printing the preorder traversal iteratively." << endl;
+        stack<Node *> s;
+        s.push(root);
         while (!s.empty())
         {
             Node *temp = s.top();
@@ -219,6 +219,37 @@ private:
             s2.pop();
         }
         return;
+    }
+
+    // method to get the max height of the binary tree
+    int maxHeight(Node *root)
+    {
+        if (root == NULL)
+            return 0;
+
+        int lh = maxHeight(root->left);
+        int rh = maxHeight(root->right);
+
+        return 1 + max(lh, rh);
+    }
+
+    // method to check if the BT is balanced or not.
+    int check(Node *root)
+    {
+        if (root == NULL)
+            return 0;
+
+        int lh = check(root->left);
+        if (lh == -1)
+            return -1;
+        int rh = check(root->right);
+        if (rh == -1)
+            return -1;
+
+        if (abs(lh - rh) > 1)
+            return -1;
+
+        return 1 + max(lh, rh);
     }
 
 public:
@@ -273,6 +304,20 @@ public:
     {
         postorder_Iterative(head);
     }
+
+    // public method to get the max height of the bianry tree
+    void height()
+    {
+        cout << endl
+             << "The max height of the binary tree is: " << maxHeight(head) << endl;
+    }
+
+    void isBalanced()
+    {
+        int flag = check(head);
+        cout << endl
+             << "Balnced Tree: " << (flag == -1);
+    }
 };
 
 int main()
@@ -294,5 +339,8 @@ int main()
     new_bst.inorderBST();
     new_bst.inorderIterative();
     new_bst.postorderIterative();
+    new_bst.height();
+    new_bst.isBalanced();
+
     return 0;
 }
