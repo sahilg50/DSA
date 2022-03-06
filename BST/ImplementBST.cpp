@@ -252,6 +252,19 @@ private:
         return 1 + max(lh, rh);
     }
 
+    // method to find the diameter of the binary tree
+    int getDiameter(Node *root, int Maximum)
+    {
+        if (root == NULL)
+            return 0;
+
+        int lh = getDiameter(root->left, Maximum);
+        int rh = getDiameter(root->right, Maximum);
+
+        Maximum = max(Maximum, lh + rh);
+        return 1 + max(lh, rh);
+    }
+
 public:
     // public method to insert a new node.
     void insertBST(int val)
@@ -312,11 +325,20 @@ public:
              << "The max height of the binary tree is: " << maxHeight(head) << endl;
     }
 
+    // public method to get the max height of the bianry tree
     void isBalanced()
     {
         int flag = check(head);
         cout << endl
              << "Balnced Tree: " << (flag == -1);
+    }
+
+    // public method to get the mdiameter of the binary tree
+    void diameter()
+    {
+        int ans = getDiameter(head, 0);
+        cout << endl
+             << "The diameter of the binary tree is: " << ans << endl;
     }
 };
 
@@ -341,6 +363,7 @@ int main()
     new_bst.postorderIterative();
     new_bst.height();
     new_bst.isBalanced();
+    new_bst.diameter();
 
     return 0;
 }
