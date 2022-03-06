@@ -253,7 +253,7 @@ private:
     }
 
     // method to find the diameter of the binary tree
-    int getDiameter(Node *root, int diameter)
+    int getDiameter(Node *root, int &diameter)
     {
         if (root == NULL)
             return 0;
@@ -334,11 +334,12 @@ public:
     }
 
     // public method to get the mdiameter of the binary tree
-    void diameter()
+    void getdiameter()
     {
-        int ans = getDiameter(head, 0);
+        int diameter = 0;
+        getDiameter(head, diameter);
         cout << endl
-             << "The diameter of the binary tree is: " << ans << endl;
+             << "The diameter of the binary tree is: " << diameter << endl;
     }
 };
 
@@ -363,7 +364,7 @@ int main()
     new_bst.postorderIterative();
     new_bst.height();
     new_bst.isBalanced();
-    new_bst.diameter();
+    new_bst.getdiameter();
 
     return 0;
 }
