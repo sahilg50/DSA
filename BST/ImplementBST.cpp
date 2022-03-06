@@ -253,15 +253,15 @@ private:
     }
 
     // method to find the diameter of the binary tree
-    int getDiameter(Node *root, int Maximum)
+    int getDiameter(Node *root, int diameter)
     {
         if (root == NULL)
             return 0;
 
-        int lh = getDiameter(root->left, Maximum);
-        int rh = getDiameter(root->right, Maximum);
+        int lh = getDiameter(root->left, diameter);
+        int rh = getDiameter(root->right, diameter);
 
-        Maximum = max(Maximum, lh + rh);
+        diameter = max(diameter, lh + rh);
         return 1 + max(lh, rh);
     }
 
