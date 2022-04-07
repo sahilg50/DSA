@@ -265,6 +265,20 @@ private:
         return 1 + max(lh, rh);
     }
 
+    // method to find the maximum path sum.
+    int getMaxPathSum(Node *node, int &maxi)
+    {
+        if (node == NULL)
+            return 0;
+
+        int leftSum = max(0, getMaxPathSum(node->left, maxi));
+        int rightSum = max(0, getMaxPathSum(node->right, maxi));
+
+        maxi = max(maxi, (leftSum + rightSum + node->data));
+
+        return node->data + max(leftSum, rightSum);
+    }
+
 public:
     // public method to insert a new node.
     void insertBST(int val)
@@ -341,6 +355,15 @@ public:
         cout << endl
              << "The diameter of the binary tree is: " << diameter << endl;
     }
+
+    // public method to find the maxSUm path in the binary tree
+    void MaxPathSum()
+    {
+        int maxi = 0;
+        getMaxPathSum(head, maxi);
+        cout << endl
+             << "THe max path sum is: " << maxi << endl;
+    }
 };
 
 int main()
@@ -365,6 +388,7 @@ int main()
     new_bst.height();
     new_bst.isBalanced();
     new_bst.getdiameter();
+    new_bst.MaxPathSum();
 
     return 0;
 }

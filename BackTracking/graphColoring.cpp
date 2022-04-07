@@ -50,7 +50,7 @@ public:
     bool checkColoring(int node, int total_colors)
     {
 
-        //base case
+        // base case
         if (node == size_of_graph())
         {
             return true;
