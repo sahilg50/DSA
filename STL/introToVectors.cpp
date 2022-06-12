@@ -78,5 +78,50 @@ int main()
     printVec(v5);
     printVec(v);
 
+    // Now we'll declare the vector of pair
+    vector<pair<int, int>> vp = {{1, 2}, {3, 4}};
+    vp.push_back({5, 6});
+    for (int i = 0; i < vp.size(); i++)
+    {
+        cout << vp[i].first << " " << vp[i].second << endl;
+    }
+
+    // Array of vectors
+    // Note: Its's like the a 2D matrix, where we can increase the number of olumns but we cannot increase the number of rows.
+    vector<int> va[3];
+    for (int i = 0; i < 3; i++)
+    {
+        //  taking user input to input the number of elements to input in the vector va[i]
+        int n;
+        cin >> n;
+        for (int j = 0; j < n; j++)
+        {
+            int x;
+            cin >> x;
+            va[i].push_back(x);
+        }
+    }
+
+    // Vector of vectors
+    // Note: THe vector of vectors is like a 2D matrix where we can increase the number fo rows as well the number of columns. The number of rows can be increased by pushing(push_back()) an entire vector into the vector of vectors and we can also decrease the number of rows by poping (pop_back()) an entire vector from the vector of vectors.
+
+    int N;
+    cin >> N;
+    vector<vector<int>> vv;
+    for (int i = 0; i < N; i++)
+    {
+
+        vector<int> temp;
+        int m;
+        cin >> m;
+        for (int i = 0; i < m; i++)
+        {
+            int val;
+            cin >> val;
+            temp.push_back(val);
+        }
+        vv.push_back(temp);
+    }
+
     return 0;
 }
