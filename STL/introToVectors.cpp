@@ -2,20 +2,36 @@
 #include <vector>
 using namespace std;
 
+void printVec(vector<int> v)
+{
+
+    // In this function, a copy of the vector is recieved, so the changes made in this function won't reflect in the original vector.
+
+    // To reflect the chages, the vector should passed by reference, i.e. void printVec(vector<int> &v)
+    for (int i = 0; i < v.size(); i++)
+    {
+        cout << v[i] << " ";
+    }
+    cout << endl;
+}
+
 int main()
 {
     // 2D vector intitailization where n, m is the rows, cols respectively
-    int n = 10;
+    int n = 10, m = 5;
     vector<vector<int>> vec(n, vector<int>(m, 0));
 
-    // vector<int> *dv = new vector<int>(); // Dynamically allocates the memory
+    // Dynamically allocates the memory
+    vector<int> *dv = new vector<int>();
 
-    // vector<int> v2(10, -2); // we're initializing a vector with size 10 and default value -2
+    // we're initializing a vector with size 10 and default value -2
+    vector<int> v3(10, -2);
 
-    vector<int> v; // statically allocates the memory
+    // statically allocates the memory
+    vector<int> v;
 
     // insert
-    v.push_back(10);
+    v.push_back(10); // TC-> O(1)
     v.push_back(90);
     v.push_back(80);
 
@@ -34,10 +50,9 @@ int main()
     // access the out of range indices
     cout << "Index 5: " << v[5] << endl; // returns the garbage value because the index is out of range
     // cout << "Index 5: " << v.at(5) << endl; //returns error because the range is index is out the range
+    v.pop_back(); // TC-> O(1)
 
-    // find the underlying capacity of the array
-    cout << "Lets check the size of the vector and the underlying capacity of the vevctor ad we pushback elements in the vector." << endl;
-
+    // find the underlying capacity and the size of the array
     vector<int> v2;
     for (int i = 0; i < 100; i++)
     {
@@ -45,15 +60,23 @@ int main()
         cout << "Value: " << v2[i] << " Size: " << v2.size() << " Capacity: " << v2.capacity() << endl;
     }
 
-    // Different ways of iterating the vectors
-    // 1st Method
-    for (int i = 0; i < v2.size(); i++)
-    {
-        cout << v2[i];
-    }
+    // Making a copy, TC-> O(n)
+    cout << endl
+         << endl
+         << "When making copy: " << endl;
+    vector<int> v4 = v;
+    v4.push_back(34);
+    printVec(v4);
+    printVec(v);
 
-    // 2nd Method
-    for ()
+    // Making a reference to the vector
+    cout << endl
+         << endl
+         << "When making a reference: " << endl;
+    vector<int> &v5 = v;
+    v5.push_back(24);
+    printVec(v5);
+    printVec(v);
 
-        return 0;
+    return 0;
 }
