@@ -1,1 +1,0 @@
-cout << map.at("rishav") << endl; // throws error is the key is not present

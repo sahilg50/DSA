@@ -7,27 +7,27 @@ int main()
 {
     unordered_map<string, int> map;
 
-    //Insert
+    // Insert
     pair<string, int> p("s", 225);
     map.insert(p);
 
     map["manan"] = 225;
 
-    //find or access
+    // find or access
     cout << map["s"] << endl;
 
     cout << map["akul"] << endl; // creates a new key value pair with the default value 0
     // cout << map.at("rishav") << endl; // throws error is the key is not present
 
-    //size
-    cout << "Size: " << map.size() << endl; //returns the size of the hashmap
+    // size
+    cout << "Size: " << map.size() << endl; // returns the size of the hashmap
 
-    //Check the presence
+    // Check the presence
     cout << map.count("sahil") << endl; // returns 0 or 1
 
-    //erase
+    // erase
     cout << "Size: " << map.size() << endl;
-    map.erase("sahil"); //deletes the key value pair.
+    map.erase("sahil"); // deletes the key value pair.
     cout << "Size: " << map.size() << endl;
 
     return 0;
