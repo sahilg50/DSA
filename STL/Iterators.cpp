@@ -28,5 +28,44 @@ int main()
     }
     // NOTE: (*it).first <==> (it->first)
 
+    // In C++11 owards
+    cout << endl
+         << endl
+         << "RANGE BASED LOOPS" << endl;
+    // value is a copy
+    for (int value : v)
+    {
+        cout << value << " ";
+    }
+    cout << endl;
+
+    // Using references
+    for (int &value : v)
+    {
+        value++;
+    }
+    for (int value : v)
+    {
+        cout << value << " ";
+    }
+    cout << endl;
+
+    // Understanding auto keyword
+    cout << endl
+         << endl
+         << "UNDERSTANDING AUTO KEYWORD" << endl;
+    for (auto it3 = v.begin(); it3 != v.end(); it3++)
+    {
+        cout << *it3 << " ";
+    }
+    cout << endl;
+    // Note: Auto keyword automatically detects the datatype of the assigned value.
+
+    for (auto &num : v)
+    {
+        cout << num << " ";
+    }
+    cout << endl;
+
     return 0;
 }
