@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
 void printVec(vector<int> v)
@@ -15,6 +16,7 @@ void printVec(vector<int> v)
     cout << endl;
 }
 
+// NOTE: All the vectors are stored in contiguous memory locations.
 int main()
 {
     // 2D vector intitailization where n, m is the rows, cols respectively
