@@ -5,8 +5,16 @@ using namespace std;
 
 int main()
 {
-    unordered_map<string, int> map;
+    // Note: The difference between maps and unordered_map is the in maps, the elements are inserted on the basis of the comparison of the key whereas in unordered maps, the elements are inserted on the basis of the hash value of the key that is calculated using hashtables. Therefore your key values can be vectors, sets etc in case of maps whereas not in the case of the unordered maps.
 
+    // Unordered Maps are implemented using hastables.
+    unordered_map<int, string> m;
+    m[1] = "abc"; // TC-> Time complexity to insert or access the elements in unordered_map is O(1), beacuse of the collisions, the time complexity will increase but we still go with O(1)
+    m[5] = "cdc";
+    m[3] = "bf";
+    m[2] = "gf";
+
+    unordered_map<string, int> map;
     // Insert
     pair<string, int> p("s", 225);
     map.insert(p);
