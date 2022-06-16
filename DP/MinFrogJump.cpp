@@ -10,7 +10,7 @@ int solve(int ind, vector<int> &Heights, vector<int> &dp)
     if (ind == 0)
         return 0;
     if (dp[ind] != -1)
-        return 0;
+        return dp[ind];
     int jump1 = solve(ind - 1, Heights, dp) + abs(Heights[ind] - Heights[ind - 1]);
 
     int jump2 = INT_MAX;
