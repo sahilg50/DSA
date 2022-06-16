@@ -9,6 +9,7 @@
 		"xutility": "cpp",
 		"string": "cpp",
 		"xstring": "cpp",
-		"map": "cpp"
+		"map": "cpp",
+		"algorithm": "cpp"
 	}
 }
