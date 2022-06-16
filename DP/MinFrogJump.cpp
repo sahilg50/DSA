@@ -18,7 +18,7 @@ int solve(int ind, vector<int> &Heights, vector<int> &dp)
     {
         jump2 = solve(ind - 2, Heights, dp) + abs(Heights[ind] - Heights[ind - 2]);
     }
-    return min(jump1, jump2);
+    return dp[ind] = min(jump1, jump2);
 };
 
 int main()
