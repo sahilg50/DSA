@@ -10,6 +10,7 @@
 		"string": "cpp",
 		"xstring": "cpp",
 		"map": "cpp",
-		"algorithm": "cpp"
+		"algorithm": "cpp",
+		"xtree": "cpp"
 	}
 }
