@@ -14,7 +14,7 @@ int main()
     S.insert("likes");
 
     // To find the element in the set
-    auto it = S.find("likes");
+    auto it = S.find("likes"); // TC->O(log(n))
     if (it != S.end())
     {
         cout << "Element is found and now we'll delete the element!";
@@ -38,5 +38,5 @@ int main()
         cout << *it << " ";
     }
 
-        return 0;
+    return 0;
 }
