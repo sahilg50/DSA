@@ -19,7 +19,6 @@ vector<int> NGE(vector<int> &v)
     {
         if ((!s.empty()) && (v[s.top()] < v[i]))
         {
-            cout << s.top();
             nge[s.top()] = v[i];
             s.pop();
         }
