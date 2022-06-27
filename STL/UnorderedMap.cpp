@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include <typeinfo>
 using namespace std;
 
 int main()
@@ -13,6 +14,12 @@ int main()
     m[5] = "cdc";
     m[3] = "bf";
     m[2] = "gf";
+    for (auto &itr : m)
+    {
+        // cout << typeid(itr).name() << endl;
+        cout << itr.first << " " << itr.second;
+    }
+    // Note that the new keys are inserted in the beginning of the unrdered_map
 
     unordered_map<string, int> map;
     // Insert

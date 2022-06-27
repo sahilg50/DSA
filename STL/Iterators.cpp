@@ -42,6 +42,7 @@ int main()
     // Using references
     for (int &value : v)
     {
+        // Note how the values will increase by one
         value++;
     }
     for (int value : v)
@@ -66,6 +67,17 @@ int main()
         cout << num << " ";
     }
     cout << endl;
+
+    // another exmaple wehere we can use auto keyword
+    cout << endl
+         << endl
+         << "AUTO IN CASE OF VECTOR PAIRS";
+    vector<pair<int, int>> vp = {{1, 2}, {3, 4}, {6, 7}};
+    for (pair<int, int> &pr : vp)
+    {
+        cout << endl
+             << pr.first << " " << pr.second;
+    }
 
     return 0;
 }

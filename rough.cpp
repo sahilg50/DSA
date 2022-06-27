@@ -1,11 +1,15 @@
 #include <iostream>
-#include <limits.h>
 using namespace std;
 
+void test(int *arr)
+{
+    *arr = 100;
+}
 int main()
 {
-    int n = (int)1e10;
-    if (n == INT_MAX)
-        cout << "same";
+    // int arr[] = {1, 3, 4, 2, 10, 9};
+    int arr = 10;
+    test(&arr);
+    cout << arr;
     return 0;
 }
