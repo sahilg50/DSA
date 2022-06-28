@@ -11,7 +11,7 @@ int main()
     cout << "\nEnter the number of V and E for the undirected graph: ";
     int n, m;
     cin >> n >> m;
-    vector<int> *adj = new vector<int>[n + 1];
+    vector<int> *adj = new vector<int>[n];
     for (int i = 0; i < m; i++)
     {
         int u, v;
@@ -22,7 +22,7 @@ int main()
     // SC-> O(V + 2*E), v: Vertices, E: Edges
 
     // Printing the graph
-    for (int i = 0; i < n + 1; i++)
+    for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < adj[i].size(); j++)
         {

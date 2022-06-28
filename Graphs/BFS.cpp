@@ -1,67 +1,53 @@
-//Creating a graph using adjacent list and then apply the code for BFS.
-
 #include <iostream>
-#include <list>
+#include <vector>
+#include <queue>
 
 using namespace std;
 
 class Graph
 {
-
-    int v; //total numnber of vertices
-
-    //Pointer to an array containing adjacency lists
-    list<int> *adj;
+private:
+    int n;
+    vector<int> *adj;
 
 public:
-    Graph(int v); //Constructor
-
-    //Funtion to add edge to the graph
-    void addEdge(int v, int w);
-
-    //Prints BFS traversal from a given source s
-    void BFS(int s);
+    Graph(int n);               // Constructor, n is the total number of verticesin graph.
+    void addEdge(int u, int v); // Method to add undirected edge between u and v.
+    void BFS(int s);            // Method to print BFS traversal starting from node s.
 };
-
-Graph::Graph(int v)
+Graph::Graph(int n)
 {
-    this->v = v;
-    adj = new list<int>[v];
+    this->n = n;
+    this->adj = new vector<int>[n];
 }
 
-void Graph::addEdge(int v, int w)
+void Graph::addEdge(int u, int v)
 {
-    adj[v].push_back(w);
+    adj[u].push_back(v);
+    adj[v].push_back(u);
 }
 
 void Graph::BFS(int s)
 {
-    bool *visited = new bool[v];
-    for (int i = 0; i < v; i++)
-
+    bool *visited = new bool[this->n];
+    for (int i = 0; i < n; i++)
         visited[i] = false;
 
-    list<int> queue;
+    queue<int> Q;
     visited[s] = true;
-    queue.push_back(s);
+    Q.push(s);
 
-    // 'i' will be used to get all adjacent
-    // vertices of a vertex
-
-    list<int>::iterator i;
-
-    while (!queue.empty())
+    vector<int>::iterator it;
+    while (!Q.empty())
     {
-        s = queue.front();
+        s = Q.front(), Q.pop();
         cout << s << " ";
-        queue.pop_front();
-
-        for (i = adj[s].begin(); i != adj[s].end(); i++)
+        for (it = adj[s].begin(); it != adj[s].end(); it++)
         {
-            if (!visited[*i])
+            if (!visited[*it])
             {
-                visited[*i] = true;
-                queue.push_back(*i);
+                visited[*it] = true;
+                Q.push(*it);
             }
         }
     }
@@ -74,10 +60,11 @@ int main()
     g.addEdge(0, 1);
     g.addEdge(0, 2);
     g.addEdge(1, 2);
-    g.addEdge(2, 0);
+    g.addEdge(1, 3);
     g.addEdge(2, 3);
-    g.addEdge(3, 3);
 
     cout << "Following is the Breadth First Traversal ";
     g.BFS(2);
+
+    return 0;
 }
