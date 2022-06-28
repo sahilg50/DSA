@@ -127,12 +127,5 @@ int main()
         vv.push_back(temp);
     }
 
-    // Shuffle a vector
-    vector<int> vr = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-
-    random_shuffle(vr.begin(), vr.end());
-    for (int i : vr)
-        cout << i << " ";
-
     return 0;
 }
