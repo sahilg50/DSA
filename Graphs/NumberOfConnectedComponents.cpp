@@ -1,84 +1,101 @@
 #include <iostream>
-#include <list>
 #include <vector>
+#include <queue>
+
 using namespace std;
 
 class Graph
 {
-    //number of nodes in graph
-    int v;
-    list<int> *adj;
+private:
+    int n;
+    vector<int> *adj;
 
 public:
+    Graph(int n);               // Constructor, n is the total number of verticesin graph.
+    void addEdge(int u, int v); // Method to add undirected edge between u and v.
+    void BFS(int s);            // Method to print BFS traversal starting from node s.
+    void deleteGraph();         // delete the graph and release the memory
     bool *visited;
-
-    Graph(int v); //constructor for the graph
-
-    void addEdge(int v, int w); //Add edges to the graph
-
-    //Initialize all the nodes as not visited.
-    void initializeNotVisited();
-
-    //DFS
-    void DFS(int s);
 };
-
-Graph::Graph(int v)
+Graph::Graph(int n)
 {
-    this->v = v;
-    adj = new list<int>[v];
-    visited = new bool[v];
+    this->n = n;
+    this->adj = new vector<int>[n];
+    this->visited = new bool[n];
 }
 
-void Graph::addEdge(int v, int w)
+void Graph::addEdge(int u, int v)
 {
-    adj[v].push_back(w);
+    adj[u].push_back(v);
+    adj[v].push_back(u);
 }
 
-void Graph::initializeNotVisited()
+void Graph::BFS(int s)
 {
-    for (int i = 0; i < this->v; i++)
-    {
+    for (int i = 0; i < n; i++)
         visited[i] = false;
-    }
-}
 
-void Graph::DFS(int s)
-{
+    queue<int> Q;
     visited[s] = true;
+    Q.push(s);
 
-    list<int>::iterator i;
-    for (i = adj[s].begin(); i != adj[s].end(); i++)
+    while (!Q.empty())
     {
-        if (!visited[*i])
+        s = Q.front(), Q.pop();
+        cout << s << " ";
+        for (int it : adj[s])
         {
-            DFS(*i);
+            if (!visited[it])
+            {
+                visited[it] = true;
+                Q.push(it);
+            }
         }
     }
+}
+
+void Graph::deleteGraph()
+{
+    delete[] this->adj;
 }
 
 int main()
 {
+    cout << endl
+         << "Enter the total number of nodes and edges: ";
+    int N, M;
+    cin >> N >> M;
+    Graph g(N);
 
-    Graph g(6);
-    g.addEdge(1, 2);
-    g.addEdge(2, 3);
-    g.addEdge(1, 3);
-    g.addEdge(4, 5);
-
-    g.initializeNotVisited();
-
-    int connectedComponents = 0;
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < M; i++)
     {
-        if (g.visited[i] == false)
-        {
-            g.DFS(i);
-            connectedComponents++;
-        }
+        cout << endl
+             << "Enter the edge: ";
+        int u, v;
+        cin >> u >> v;
+        g.addEdge(u, v);
     }
 
-    cout << connectedComponents << " ";
+    cout << "Following is the Breadth First Traversal ";
+
+    // Find the number of connected components
+    int components = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        if (!g.visited[i])
+        {
+            g.BFS(i);
+            components++;
+        }
+    }
+    cout << endl
+         << "The number of components in the graph are: " << components;
 
     return 0;
 }
+
+/*
+TC-> O(V + 2*E) -> Exact
+SC-> O(V)
+where V, E is the total number of vertices and edges respectively
+*/

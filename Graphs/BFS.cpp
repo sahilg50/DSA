@@ -14,8 +14,7 @@ public:
     Graph(int n);               // Constructor, n is the total number of verticesin graph.
     void addEdge(int u, int v); // Method to add undirected edge between u and v.
     void BFS(int s);            // Method to print BFS traversal starting from node s.
-
-    // delete the graph
+    void deleteGraph();         // delete the graph and release the memory
 };
 Graph::Graph(int n)
 {
@@ -54,6 +53,11 @@ void Graph::BFS(int s)
     }
 }
 
+void Graph::deleteGraph()
+{
+    delete[] this->adj;
+}
+
 int main()
 {
     Graph g(4);
@@ -69,3 +73,9 @@ int main()
 
     return 0;
 }
+
+/*
+TC-> O(V + 2*E) -> Exact
+SC-> O(V)
+where V, E is the total number of vertices and edges respectively
+*/
