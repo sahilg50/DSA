@@ -59,6 +59,7 @@ void Graph::deleteGraph()
 
 int main()
 {
+    // Note that this code will only work for the connected graph. For the disconnectd graph, check out the number of connected components code.
     Graph g(4);
 
     g.addEdge(0, 1);

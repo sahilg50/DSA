@@ -11,9 +11,9 @@ private:
     vector<int> *adj;
 
 public:
-    Graph(int n);               // Constructor, n is the total number of verticesin graph.
+    Graph(int n);               // Constructor, n is the total number of vertices in graph.
     void addEdge(int u, int v); // Method to add undirected edge between u and v.
-    void DFS(int s);            // Method to print BFS traversal starting from node s.
+    void DFS(int s);            // Method to print DFS traversal starting from node s.
     void deleteGraph();         // delete the graph and release the memory
     vector<bool> visited;       // Array to keep check of the visited nodes
 };
@@ -51,6 +51,7 @@ void Graph::deleteGraph()
 
 int main()
 {
+    // Note that this code will only work for the connected graph. For the disconnectd graph, check out the number of connected components code.
     cout << endl
          << "Enter the total number of nodes and edges: ";
     int N, M;
