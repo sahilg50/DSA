@@ -15,11 +15,13 @@ public:
     void addEdge(int u, int v); // Method to add undirected edge between u and v.
     void BFS(int s);            // Method to print BFS traversal starting from node s.
     void deleteGraph();         // delete the graph and release the memory
+    vector<bool> visited;
 };
 Graph::Graph(int n)
 {
     this->n = n;
     this->adj = new vector<int>[n];
+    this->visited.resize(n, false);
 }
 
 void Graph::addEdge(int u, int v)
@@ -30,9 +32,6 @@ void Graph::addEdge(int u, int v)
 
 void Graph::BFS(int s)
 {
-    bool *visited = new bool[this->n];
-    for (int i = 0; i < n; i++)
-        visited[i] = false;
 
     queue<int> Q;
     visited[s] = true;
