@@ -127,5 +127,8 @@ int main()
         vv.push_back(temp);
     }
 
+    // 3d nested Vector
+    vector<vector<vector<int>>> dp(n, vector<vector<int>>(m, vector<int>(m, -1)));
+
     return 0;
 }

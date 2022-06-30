@@ -59,7 +59,7 @@ void Graph::deleteGraph()
 
 int main()
 {
-    // Note that this code will only work for the connected graph. For the disconnectd graph, check out the number of connected components code.
+    // Note that this code will only work for the connected graph. For the disconnectd graph, check out the number of connected components code. This is because when we define the starting node then everytime we call the bfs, the bfs will start from the same node and will not be able to find the other components of the graph.
     Graph g(4);
 
     g.addEdge(0, 1);
