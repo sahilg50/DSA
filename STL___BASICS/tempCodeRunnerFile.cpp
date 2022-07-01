@@ -1,0 +1,1 @@
+Test Case : "   Hello        World" cout << "\nCASE 1: ";
