@@ -14,8 +14,12 @@ public:
     Graph(int n);               // Constructor, n is the total number of verticesin graph.
     void addEdge(int u, int v); // Method to add undirected edge between u and v.
     void BFS(int s);            // Method to print BFS traversal starting from node s.
-    void deleteGraph();         // delete the graph and release the memory
     vector<bool> visited;
+
+    ~Graph()
+    {
+        delete[] this->adj;
+    }
 };
 Graph::Graph(int n)
 {
@@ -50,11 +54,6 @@ void Graph::BFS(int s)
             }
         }
     }
-}
-
-void Graph::deleteGraph()
-{
-    delete[] this->adj;
 }
 
 int main()

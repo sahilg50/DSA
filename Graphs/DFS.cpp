@@ -14,8 +14,12 @@ public:
     Graph(int n);               // Constructor, n is the total number of vertices in graph.
     void addEdge(int u, int v); // Method to add undirected edge between u and v.
     void DFS(int s);            // Method to print DFS traversal starting from node s.
-    void deleteGraph();         // delete the graph and release the memory
     vector<bool> visited;       // Array to keep check of the visited nodes
+
+    ~Graph() // Destructor
+    {
+        delete[] this->adj;
+    }
 };
 Graph::Graph(int n)
 {
@@ -44,11 +48,6 @@ void Graph::DFS(int s)
     }
 }
 
-void Graph::deleteGraph()
-{
-    delete[] this->adj;
-}
-
 int main()
 {
     // Note that this code will only work for the connected graph. For the disconnectd graph, check out the number of connected components code.
@@ -73,8 +72,6 @@ int main()
     cin >> start;
     cout << "Following is the Depth First Traversal: ";
     g.DFS(start);
-
-    g.deleteGraph();
 
     return 0;
 }
