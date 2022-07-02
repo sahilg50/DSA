@@ -13,7 +13,7 @@ private:
 public:
     Graph(int n);               // Constructor, n is the total number of verticesin graph.
     void addEdge(int u, int v); // Method to add undirected edge between u and v.
-    void BFS(int s);            // Method to print BFS traversal starting from node s.
+    void BFS(int src);          // Method to print BFS traversal starting from node s.
     void deleteGraph();         // delete the graph and release the memory
     vector<bool> visited;
 };
@@ -30,18 +30,18 @@ void Graph::addEdge(int u, int v)
     adj[v].push_back(u);
 }
 
-void Graph::BFS(int s)
+void Graph::BFS(int src)
 {
 
     queue<int> Q;
-    visited[s] = true;
-    Q.push(s);
+    visited[src] = true;
+    Q.push(src);
 
     while (!Q.empty())
     {
-        s = Q.front(), Q.pop();
-        cout << s << " ";
-        for (int it : adj[s])
+        src = Q.front(), Q.pop();
+        cout << src << " ";
+        for (int it : adj[src])
         {
             if (!visited[it])
             {
@@ -54,6 +54,7 @@ void Graph::BFS(int s)
 
 void Graph::deleteGraph()
 {
+
     delete[] this->adj;
 }
 
