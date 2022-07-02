@@ -12,6 +12,8 @@ int main()
     If we enter the string: "    Hello     World" using cin, only "hello" is stored and the remaining string is taken as input in the next input command, in case 1: getline() and in case 2: cin.
 
     cin ingnores the spaces in front of first input character and (everything after the last character or from the first space that occurs after the first character input)
+
+    IMP-> If you want that your getline should not pickup any space left by cin, then you can use cin.ignore() after calling cin.
     */
 
     // Test Case : "   Hello        World" cout << "\nCASE 1: ";
@@ -30,15 +32,14 @@ int main()
     cin >> str1;
     cout << str1;
 
+    // Comparison of two strings
     string s1 = "aa";
     string s2 = "aafz";
-    string abc = "osnfj pwojf0w f08";
-
     /*
     Compares the strings s1 and s2 lexicographically.
     If s1 > s2, return 1
     If s1 == s2, return 0
-    If s1 < s2 , return -1v
+    If s1 < s2 , return -1
 
     If the s1 = "aa" and s2="aazfh", then it return -3, because the s1 is subset of s2 and it return the difference in the lengths of the strings. Its also true vise versa.
     */
@@ -50,6 +51,7 @@ int main()
     cout << "helloi " << s1[3] << endl;
 
     // This funcrtino is used to clear the string.
+    string abc = "YELLO";
     abc.clear();
     cout << abc;
 
@@ -81,7 +83,7 @@ int main()
     int x = stoi(s5);
     cout << x << endl;
 
-    // INteger to string
+    // Integer to string
     int y = 90;
     cout << to_string(y) + "2" << endl;
 
@@ -89,5 +91,16 @@ int main()
     string s10 = "lsdhf dofj";
     sort(s10.begin(), s10.end());
     cout << s10 << endl;
+
+    /*
+    If you weant to append a character at the end of the string, then always go for s.push_back('a') instead of s = s + 'a', this is because in this method it first creates a copy of original string s (TC->O(s.size())), then add 'a' to it and then finally store it in s.
+    */
+    string s = "hello";
+    s.push_back('a');
+
+    // Appends 5 characters from 0th index of
+    // str2 to str1
+    str1 = "React", str2 = "Native";
+    str1.append(str2, 0, 5);
     return 0;
 }
