@@ -11,18 +11,20 @@ int main()
      -> To deal with this situation we use delete or delete[]
 
      -> C++ uses the new operator to dynamically allocate memory on the heap at the run time.
+
+     -> Each time you call a method/function, C++ allocates a new block of memory called a stack frame to hold its local variables. These stack frames come from a region of memory called the stack.
      */
 
      // delete
      cout << "\n\ndelete CONCEPT: \n\n\n";
-     int *B = new int;
+     int *B = new int; // B is stored in stack frame of main()
      *B = 10;
      delete B;
 
      // delete[]
      cout << "\ndelete[] CONCEPT: \n";
      int *A = new int[10];
-     A[0] = 100;
+     A[0] = 100; // A is stored inside stack frame of main()
      A[1] = 200;
      cout << endl
           << "Created dynamic array A of size 10 :" << endl
@@ -48,6 +50,8 @@ int main()
           << "The value at that memory address + 1 is: " << *(A + 1);
 
      // We observe that the values stored at A[0] and A[1] have been deleted and that means delete[] A worked successfully.
+
+     // Note that A and B itself do not get deleted.
 
      return 0;
 }
