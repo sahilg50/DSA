@@ -1,10 +1,11 @@
 #include <iostream>
+#include <cstring>
 #include <vector>
 using namespace std;
 /*
 Key points:
 - This is the code for directed cyclic graph
-- Add the nodes atarting from 0, i.e. follow 0 based indexing
+- Add the nodes atart from 0, i.e. follow 0 based indexing
 */
 class Graph
 {
@@ -32,7 +33,6 @@ Graph::Graph(int n)
 void Graph::addEdge(int u, int v)
 {
     adj[u].push_back(v);
-    adj[v].push_back(u);
 }
 
 bool Graph::DFS(int src, int vis[], int dfsVis[])
@@ -79,13 +79,18 @@ int main()
     int V, E;
     cin >> V >> E;
     Graph g(V);
-    cout << "\nEnter the edges: ";
+    cout << "\nEnter the edges:\n";
     for (int i = 0; i < E; i++)
     {
         int u, v;
         cin >> u >> v;
         g.addEdge(u, v);
     }
+
+    if (g.isCyclic())
+        cout << "\nThe graph contains a cycle! ";
+    else
+        cout << "\nNo cycle!";
 
     return 0;
 }

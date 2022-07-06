@@ -1,5 +1,6 @@
 #include <iostream>
 #include <set>
+#include <unordered_set>
 #include <string>
 using namespace std;
 
@@ -65,6 +66,12 @@ int main()
     This can we used in case of priority queue questions.
     Another important point to note is that while deleting the elemnts in multimap, if we use s.erase(ele), then it will delete all the ele in te multimap, but if we use, auto it = s.find(ele), s.erase(it); then only the single element will be deleted.
     */
+
+    unordered_set<bool> Set;
+    /*
+    An unordered_set is implemented using a hash table where keys are hashed into indices of a hash table so that the insertion is always randomized. All operations on the unordered_set takes constant time O(1) on an average which can go up to linear time O(n) in worst case which depends on the internally used hash function, but practically they perform very well and generally provide a constant time lookup operation.
+    */
+    // the other intuition is that it's like an unorderd_map but without values.
 
     return 0;
 }
