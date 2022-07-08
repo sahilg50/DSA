@@ -2,8 +2,22 @@
 #include <cstring>
 using namespace std;
 
+/*
+ - Collection of datatypes is array
+ - local array size limit = order of 10^5
+ - global array size limit = order of 10^7
+ - global and static arrays are stored in data segemnt of the memory.
+ - local arrays or pointer to dynamic array(array stored in heap) are stored in stack.
+*/
+
+const int N = 1e7;
+int arr1[N];
+
 int main()
 {
+
+    int a[10]; // array a of size
+
     cout << "\nEnter the size of the array: ";
     int n;
     cin >> n;
@@ -17,5 +31,9 @@ int main()
     {
         cout << arr[i] << " ";
     }
+
+    // 2D Array
+    int b[3][4]; // 3 rows and 4 columns
+
     return 0;
 }
