@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 int main()
@@ -9,7 +10,10 @@ int main()
     if (-1)
         cout << "if(-1)" << endl;
     if (1)
-        cout << "if(1)";
+        cout << "if(1)" << endl;
+
+    // sqrt() is a function of cmath library
+    cout << sqrt(10);
 
     return 0;
 }
