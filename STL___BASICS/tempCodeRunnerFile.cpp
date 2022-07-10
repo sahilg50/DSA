@@ -1,1 +1,1 @@
-Test Case : "   Hello        World" cout << "\nCASE 1: ";
+3 * 1ll
