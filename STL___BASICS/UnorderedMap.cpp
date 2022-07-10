@@ -1,7 +1,9 @@
 #include <iostream>
 #include <unordered_map>
+#include <vector>
 #include <string>
 #include <typeinfo>
+#include <algorithm>
 using namespace std;
 
 int main()
@@ -44,6 +46,20 @@ int main()
     cout << "Size: " << map.size() << endl;
     map.erase("sahil"); // deletes the key value pair.
     cout << "Size: " << map.size() << endl;
+
+    /*
+    SORTING
+    There is no inbuilt way of sorting the map, so you can initialize a vector<pair<>> and sort that.
+    */
+    unordered_map<char, int> m2;
+    m2['c'] = 10;
+    m2['a'] = 30;
+    m2['z'] = 15;
+    vector<pair<char, int>> v(m2.begin(), m2.end());
+    // sorting based on the first value in the pair vector
+    sort(v.begin(), v.end());
+    for (auto &it : v)
+        cout << it.first << " " << it.second << "\t";
 
     return 0;
 }
