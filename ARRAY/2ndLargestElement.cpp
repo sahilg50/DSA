@@ -33,7 +33,7 @@ void largest_secondLargest(vector<int> &nums)
 
 int main()
 {
-    vector<int> nums = {100, 4, 6, 1, 9, -2, 0, 10};
+    vector<int> nums = {-10, 0, -2, 8, 9};
     largest_secondLargest(nums);
     return 0;
 }
