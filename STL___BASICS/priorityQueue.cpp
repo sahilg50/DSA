@@ -32,5 +32,24 @@ int main()
     This is because priority_queue is an STL Container Adapter that provides restrictive access to make it behave like a standard priority queue data structure.
     */
 
+    /*
+    Method 1: Inserting the elements iteratively
+    TC-> O(NlogN)
+    SC-> O(N)
+    */
+    priority_queue<int> PQ;
+    int arr[] = {15, 25, 6, 54, 45, 26, 12};
+    int N = sizeof(arr) / sizeof(arr[0]);
+    priority_queue<int> PQ;
+    for (int i = 0; i < N; i++)
+        PQ.push(arr[i]);
+
+    /*
+    Method 2: Inserting all the elements at once
+    TC-> O(N)
+    SC-> O(N)
+    */
+    priority_queue<int> PQ2(arr, arr + N);
+
     return 0;
 }

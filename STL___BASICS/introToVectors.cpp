@@ -130,5 +130,14 @@ int main()
     // 3d nested Vector
     vector<vector<vector<int>>> dp(n, vector<vector<int>>(m, vector<int>(m, -1)));
 
+    /*
+    Parameter:The function accepts three parameters specified as below:
+    position – It specifies the iterator which points to the position where the insertion is to be done.
+    size – It specifies the number of times a val is to be inserted at the specified position.
+    val – It specifies the value to be inserted.
+
+    v.insert(v.begin()+index, val);
+    */
+
     return 0;
 }
