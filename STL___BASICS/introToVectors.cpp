@@ -5,6 +5,11 @@
 
 using namespace std;
 
+struct node
+{
+    int x, y;
+};
+
 void printVec(vector<int> v)
 {
 
@@ -83,6 +88,8 @@ int main()
     printVec(v);
 
     // Now we'll declare the vector of pair
+    cout << endl
+         << "Vector of pairs: ";
     vector<pair<int, int>> vp = {{1, 2}, {3, 4}};
     vp.push_back({5, 6});
     for (int i = 0; i < vp.size(); i++)
@@ -92,23 +99,27 @@ int main()
 
     // Array of vectors
     // Note: Its's like the a 2D matrix, where we can increase the number of olumns but we cannot increase the number of rows.
+    cout << endl
+         << "Array of Vectors explanation: ";
     vector<int> va[3];
     for (int i = 0; i < 3; i++)
     {
         //  taking user input to input the number of elements to input in the vector va[i]
+        cout << endl
+             << "The values in the vectors will be inserted using rand(), just enter the size of the vector at index " << i << ": ";
         int n;
         cin >> n;
         for (int j = 0; j < n; j++)
         {
-            int x;
-            cin >> x;
-            va[i].push_back(x);
+            va[i].push_back(rand());
         }
     }
 
     // Vector of vectors
     // Note: THe vector of vectors is like a 2D matrix where we can increase the number fo rows as well the number of columns. The number of rows can be increased by pushing(push_back()) an entire vector into the vector of vectors and we can also decrease the number of rows by poping (pop_back()) an entire vector from the vector of vectors.
 
+    cout << endl
+         << "Vector of Vectors: ";
     int N;
     cin >> N;
     vector<vector<int>> vv;
@@ -120,9 +131,7 @@ int main()
         cin >> m;
         for (int i = 0; i < m; i++)
         {
-            int val;
-            cin >> val;
-            temp.push_back(val);
+            temp.push_back(rand());
         }
         vv.push_back(temp);
     }
@@ -139,5 +148,20 @@ int main()
     v.insert(v.begin()+index, val);
     */
 
+    // vector of structures
+    cout << endl
+         << "Vector of structures: ";
+    vector<struct node> SV;
+    SV.push_back({1, 2});
+    struct node *test = &SV[0];
+    cout << endl
+         << test->x << " " << test->y;
+
+    // pop_back()
+    cout << endl
+         << "POP FRONT() demo: ";
+    vector<int> v20 = {1, 2, 3};
+    v20.pop_back();
+    cout << v20[0];
     return 0;
 }

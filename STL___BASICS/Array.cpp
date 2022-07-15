@@ -8,6 +8,7 @@ using namespace std;
  - global array size limit = order of 10^7
  - global and static arrays are stored in data segemnt of the memory.
  - local arrays or pointer to dynamic array(array stored in heap) are stored in stack.
+ - With dynamic arrays, you have to handle the memory by yourself, so it is preferred to use vectors where the memory management is hidden from the user.
 */
 
 const int N = 1e7;
