@@ -1,97 +1,140 @@
 #include <iostream>
+#include <vector>
 #include <algorithm>
 using namespace std;
 
-void max_heap(int arr[], int size, int i)
+// MAX HEAP
+class maxHeap
 {
-    //i is the parent
-    int largest = i;
-    int left = i * 2;        //left child
-    int right = (i * 2) + 1; //right child
+private:
+    vector<int> arr = {0};
 
-    if (left < size && arr[left] > arr[largest])
-        largest = left;
-
-    if (right < size && arr[right] > arr[largest])
-        largest = right;
-
-    if (largest != i)
+public:
+    // Method to insert values in the heap
+    void insert(int val)
     {
-        swap(arr[i], arr[largest]);
-        max_heap(arr, size, largest);
+        // The indexing of the heap is from 1. do not consider the value stored at index index 0;
+        arr.push_back(val);
+        int index = arr.size() - 1;
+        while (index > 1)
+        {
+            int parent = index / 2;
+            if (arr[parent] < arr[index])
+            {
+                swap(arr[index], arr[parent]);
+            }
+            else
+                return;
+
+            index = index / 2;
+        }
+
+        // TC-> O(logN)
+    }
+
+    // Method to print the max heap
+    void print()
+    {
+        cout << endl
+             << "The max heap is: ";
+        for (int i = 1; i < arr.size(); i++)
+        {
+            cout << arr[i] << " ";
+        }
+        // TC->O(N)
+    }
+
+    // Method to delete any node of user choice from the heap
+    void del(int val)
+    {
+        // If the Heap is empty
+        if (arr.size() == 1)
+        {
+            cout << endl
+                 << "Nothing to delete, the maxheap is empty!";
+            return;
+        }
+
+        // step 1 -> Check if the element to be deleted exists in heap or not
+        int index = -1;
+        for (int i = 0; i < arr.size(); i++)
+        {
+            if (arr[i] == val)
+            {
+                index = i;
+                break;
+            }
+        }
+        if (index == -1)
+        {
+            cout << endl
+                 << "The element not found!";
+            return;
+        }
+
+        // Step 2 -> swap the node and the last node
+        swap(arr[index], arr[arr.size() - 1]);
+
+        // Step 3 -> Remove the last node
+        arr.pop_back();
+
+        // step 4 -> Take the root node to it's correct position (Heapify)
+        int i = index;
+        int size = arr.size();
+        while (i < size)
+        {
+            int L = 2 * i;
+            int R = 2 * i + 1;
+            // check if its a leaf node
+            if (L >= size && R >= size)
+                return;
+
+            int Lval = -1, Rval = -1;
+            if (L < size)
+                Lval = arr[L];
+            if (R < size)
+                Rval = arr[R];
+
+            // if node is less than any of the children then replace it with the greater child.
+            if (arr[i] < Lval || arr[i] < Rval)
+            {
+                if (Lval > Rval)
+                {
+                    swap(arr[i], arr[L]);
+                    i = L;
+                }
+                else
+                {
+                    swap(arr[i], arr[R]);
+                    i = R;
+                }
+            }
+            else
+                return;
+        }
+        return;
+
+        // Tc-> O(log N)
+        // SC-> O(log N)
     }
 };
 
-void min_heap(int arr[], int size, int i)
-{
-    int smallest = i;
-    int left = i * 2;
-    int right = (i * 2) + 1;
-
-    if (left < size && arr[left] < arr[smallest])
-        smallest = left;
-
-    if (right < size && arr[right] < arr[smallest])
-        smallest = right;
-
-    if (smallest != i)
-    {
-        swap(arr[i], arr[smallest]);
-        min_heap(arr, size, smallest);
-    }
-}
-
-void build_maxheap(int arr[], int size)
-{
-    int startIdx = size / 2;
-
-    for (int i = startIdx; i >= 1; i--)
-        max_heap(arr, size, i);
-}
-
-void build_minheap(int arr[], int size)
-{
-    int startIdx = size / 2;
-
-    for (int i = startIdx; i >= 1; i--)
-        min_heap(arr, size, i);
-}
-
-void print_heap(int arr[], int size)
-{
-    for (int i = 1; i < size; i++)
-    {
-        cout << arr[i] << " ";
-    }
-}
-
 int main()
 {
-
-    cout << "Enter the size of the array: ";
-    int n;
-    cin >> n;
-    int size = n + 1;
-    int *arr = new int[size];
-    cout << "Enter the elements of the array: " << endl;
-    for (int i = 1; i < size; i++)
+    maxHeap h;
+    vector<int> nodes = {10, 2, 5, 6, 7, 20, 100};
+    for (auto &i : nodes)
     {
-        int val;
-        cin >> val;
-        arr[i] = val;
+        h.insert(i);
+        h.print();
     }
 
-    print_heap(arr, size);
-    cout << endl;
-    build_maxheap(arr, size);
-
-    print_heap(arr, size);
-    cout << endl;
-
-    build_minheap(arr, size);
-    cout << endl;
-
-    print_heap(arr, size);
+    cout << endl
+         << "Enter the node to be deleted: ";
+    int target;
+    cin >> target;
+    h.del(target);
+    h.print();
 
     return 0;
 }
