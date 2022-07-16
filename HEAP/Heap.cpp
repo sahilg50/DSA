@@ -7,7 +7,7 @@ using namespace std;
 class maxHeap
 {
 private:
-    vector<int> arr = {0};
+    vector<int> arr = {0}; // array taes values only through insert function. It is the main array
 
 public:
     // Method to insert values in the heap
@@ -78,7 +78,7 @@ public:
         // Step 3 -> Remove the last node
         arr.pop_back();
 
-        // step 4 -> Take the root node to it's correct position (Heapify)
+        // step 4 -> Take the root node to it's correct position (Heapify iteratively)
         int i = index;
         int size = arr.size();
         while (i < size)
@@ -119,6 +119,35 @@ public:
     }
 };
 
+// Recursive method to build heap, can also use the iterative method given in the void del method
+void heapify(vector<int> &arr, int i)
+{
+    int largest = i;
+    int L = 2 * i;
+    int R = 2 * i + 1;
+    int n = arr.size();
+
+    if (L < n && arr[L] > arr[largest])
+        largest = L;
+    if (R < n && arr[R] > arr[largest])
+        largest = R;
+
+    if (largest != i)
+    {
+        swap(arr[largest], arr[i]);
+        heapify(arr, largest);
+    }
+}
+void buildHeap(vector<int> &arr)
+{
+    int N = arr.size() - 1;   // N is the number of nodes in the heap
+    int startInd = N / 2 + 1; // startInd is the starting index of the non leaf nodes
+    for (int i = startInd; i >= 0; i--)
+    {
+        heapify(arr, i);
+    }
+};
+
 int main()
 {
     maxHeap h;
@@ -135,6 +164,14 @@ int main()
     cin >> target;
     h.del(target);
     h.print();
+
+    // Second section of the code shows the use of heapify function
+    nodes = {10, 2, 5, 6, 7, 20, 100};
+    buildHeap(nodes);
+    cout << endl
+         << "Array after heapifing: ";
+    for (auto i : nodes)
+        cout << i << " ";
 
     return 0;
 }
