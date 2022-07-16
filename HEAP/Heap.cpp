@@ -7,10 +7,30 @@ using namespace std;
 class maxHeap
 {
 private:
-    vector<int> arr = {0}; // array taes values only through insert function. It is the main array
+    // Follows 1 based indexing
+    vector<int> arr = {0}; // Takes values through insert method only
+    // Recursively heapify a non leaf element
+    void heapify(int i, int N)
+    {
+        // N is the range upto which arr elements are accessible
+        int largest = i;   // Index that is to be adjusted
+        int L = 2 * i;     // Left child
+        int R = 2 * i + 1; // Right child
+
+        if (L <= N && arr[L] > arr[largest])
+            largest = L;
+        if (R <= N && arr[R] > arr[largest])
+            largest = R;
+
+        if (largest != i)
+        {
+            swap(arr[largest], arr[i]);
+            heapify(largest, N);
+        }
+    }
 
 public:
-    // Method to insert values in the heap
+    // Insert values in the heap
     void insert(int val)
     {
         // The indexing of the heap is from 1. do not consider the value stored at index index 0;
@@ -30,9 +50,10 @@ public:
         }
 
         // TC-> O(logN)
+        // Sc-> O(1)
     }
 
-    // Method to print the max heap
+    // Print the max heap
     void print()
     {
         cout << endl
@@ -42,22 +63,28 @@ public:
             cout << arr[i] << " ";
         }
         // TC->O(N)
+        // SC->O(1)
     }
 
-    // Method to delete any node of user choice from the heap
-    void del(int val)
+    // Delete any node of user choice
+    void del()
     {
         // If the Heap is empty
-        if (arr.size() == 1)
+        int N = arr.size() - 1;
+        if (N == 0)
         {
             cout << endl
                  << "Nothing to delete, the maxheap is empty!";
             return;
         }
 
+        cout << "\nEnter the node to be deleted: ";
+        int val;
+        cin >> val;
+
         // step 1 -> Check if the element to be deleted exists in heap or not
         int index = -1;
-        for (int i = 0; i < arr.size(); i++)
+        for (int i = 0; i <= N; i++)
         {
             if (arr[i] == val)
             {
@@ -73,105 +100,67 @@ public:
         }
 
         // Step 2 -> swap the node and the last node
-        swap(arr[index], arr[arr.size() - 1]);
+        swap(arr[index], arr[N]);
 
         // Step 3 -> Remove the last node
         arr.pop_back();
+        N = N - 1; // Number of nodes decreases by 1
 
-        // step 4 -> Take the root node to it's correct position (Heapify iteratively)
-        int i = index;
-        int size = arr.size();
-        while (i < size)
+        // step 4 -> Heapify all the nodes from the current node to root node
+        for (int i = index; i >= 1; i--)
         {
-            int L = 2 * i;
-            int R = 2 * i + 1;
-            // check if its a leaf node
-            if (L >= size && R >= size)
-                return;
-
-            int Lval = -1, Rval = -1;
-            if (L < size)
-                Lval = arr[L];
-            if (R < size)
-                Rval = arr[R];
-
-            // if node is less than any of the children then replace it with the greater child.
-            if (arr[i] < Lval || arr[i] < Rval)
-            {
-                if (Lval > Rval)
-                {
-                    swap(arr[i], arr[L]);
-                    i = L;
-                }
-                else
-                {
-                    swap(arr[i], arr[R]);
-                    i = R;
-                }
-            }
-            else
-                return;
+            heapify(i, N);
         }
         return;
-
-        // Tc-> O(log N)
+        // TC-> Searching the element: O(N) + Heapify: O(NlogN), but according to books it is O(logN)
         // SC-> O(log N)
     }
-};
 
-// Recursive method to build heap, can also use the iterative method given in the void del method
-void heapify(vector<int> &arr, int i)
-{
-    int largest = i;
-    int L = 2 * i;
-    int R = 2 * i + 1;
-    int n = arr.size();
-
-    if (L < n && arr[L] > arr[largest])
-        largest = L;
-    if (R < n && arr[R] > arr[largest])
-        largest = R;
-
-    if (largest != i)
+    // Sort the heap
+    void heapSort()
     {
-        swap(arr[largest], arr[i]);
-        heapify(arr, largest);
-    }
-}
-void buildHeap(vector<int> &arr)
-{
-    int N = arr.size() - 1;   // N is the number of nodes in the heap
-    int startInd = N / 2 + 1; // startInd is the starting index of the non leaf nodes
-    for (int i = startInd; i >= 0; i--)
+        int N = arr.size() - 1;
+        while (N > 1)
+        {
+            // step1 -> swap
+            swap(arr[1], arr[N]);
+            N--;
+
+            heapify(1, N);
+        }
+        // TC->O(NlogN), since we heapify N elements
+    };
+
+    // Build the heap from non leaf nodes
+    void buildHeap()
     {
-        heapify(arr, i);
-    }
+        int N = arr.size() - 1; // N is the number of nodes in the heap
+        int startInd = N / 2;   // startInd is the starting index of the non leaf nodes
+        for (int i = startInd; i >= 1; i--)
+        {
+            heapify(i, N);
+        }
+        // TC-> O(NlogN)
+    };
 };
 
 int main()
 {
-    maxHeap h;
     vector<int> nodes = {10, 2, 5, 6, 7, 20, 100};
+    maxHeap h;
     for (auto &i : nodes)
-    {
-        h.insert(i);
-        h.print();
-    }
+        h.insert(i), h.print();
 
-    cout << endl
-         << "Enter the node to be deleted: ";
-    int target;
-    cin >> target;
-    h.del(target);
-    h.print();
+    h.del();
+    cout << "\nAfter deleting: ", h.print();
 
-    // Second section of the code shows the use of heapify function
-    nodes = {10, 2, 5, 6, 7, 20, 100};
-    buildHeap(nodes);
-    cout << endl
-         << "Array after heapifing: ";
-    for (auto i : nodes)
-        cout << i << " ";
+    h.heapSort();
+    cout << "\nAfter heap sort: ", h.print();
+
+    cout << "\nNote: After heapsort the array is no longer a heap therefore we've to build the heap again using buildHeap(): ";
+
+    h.buildHeap();
+    cout << "\nAfter building the heap: ", h.print();
 
     return 0;
 }
