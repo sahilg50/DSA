@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <vector>
 using namespace std;
 
 int main()
@@ -37,7 +38,6 @@ int main()
     TC-> O(NlogN)
     SC-> O(N)
     */
-    priority_queue<int> PQ;
     int arr[] = {15, 25, 6, 54, 45, 26, 12};
     int N = sizeof(arr) / sizeof(arr[0]);
     priority_queue<int> PQ;
@@ -51,6 +51,19 @@ int main()
     SC-> O(N)
     */
     priority_queue<int> PQ2(arr, arr + N);
+
+    /*
+    In Priority queue of vectors, the priority is decided by comparing the elements of the vectors.
+    If the first element is same, then the priority is decided by the second element in the vector and so on.
+    */
+
+    priority_queue<vector<int>> pv;
+    pv.push({1, 2});
+    pv.push({1, 5});
+    vector<int> ans = pv.top();
+    cout << "\nThe top vector is: ";
+    for (int &i : ans)
+        cout << i << " ";
 
     return 0;
 }

@@ -131,7 +131,7 @@ public:
         // TC->O(NlogN), since we heapify N elements
     };
 
-    // Build the heap from non leaf nodes
+    // Build the heap by calling heapify for all non leaf nodes
     void buildHeap()
     {
         int N = arr.size() - 1; // N is the number of nodes in the heap
