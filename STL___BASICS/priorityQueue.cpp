@@ -31,7 +31,7 @@ int main()
     }
     /*
     This is because priority_queue is an STL Container Adapter that provides restrictive access to make it behave like a standard priority queue data structure.
-    */
+*/
 
     /*
     Method 1: Inserting the elements iteratively

@@ -162,6 +162,6 @@ int main()
          << "POP FRONT() demo: ";
     vector<int> v20 = {1, 2, 3};
     v20.pop_back();
-    cout << v20[0];
+    cout << v20.front(); // cout << v20[0]
     return 0;
 }
