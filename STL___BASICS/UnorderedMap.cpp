@@ -21,7 +21,9 @@ int main()
         // cout << typeid(itr).name() << endl;
         cout << itr.first << " " << itr.second;
     }
-    // Note that the new keys are inserted in the beginning of the unrdered_map
+    /*
+    Note that the new keys are inserted in the beginning of the unrdered_map but if we define the key values while declaring the map itself then the key value pairs are inserted in the order we write them
+    */
 
     unordered_map<string, int> map;
     // Insert

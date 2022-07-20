@@ -55,5 +55,19 @@ int main()
     map<string, int> M;
     M["sahil"] = 1;
     M["Tejal"] = 2; // TC-> O(size(key)*log(n)), this is because when key is your string then the time to copare the strings is also counted while executing the program.
+
+    // Reverse Iterator
+    map<char, int> mpp = {
+        {'a', 1},
+        {'b', 2},
+        {'c', 3},
+        {'d', 4},
+        {'e', 5},
+    };
+
+    cout << "\n\nMap contains following elements in reverse order" << endl;
+
+    for (auto it = mpp.rbegin(); it != mpp.rend(); ++it)
+        cout << it->first << " = " << it->second << endl;
     return 0;
 }

@@ -8,8 +8,7 @@ int main()
     vector<int> v = {9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1, -2};
 
     /*
-    void partial_sort(RandomAccessIterator first, RandomAccessIterator middle,
-                      RandomAccessIterator last);
+    void partial_sort(RandomAccessIterator first, RandomAccessIterator middle, RandomAccessIterator last);
 
     first: Random-Access iterator to the first element in the container.
     last: Random-Access iterator to the last element in the container.

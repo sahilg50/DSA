@@ -39,7 +39,7 @@ int main()
     /*
     UPPER BOUND
     It returns the pointer to element greater than the element to be found.
-    If that is not present, then it returns the pointer to the nth index.
+    If that is not present, then it returns the pointer to the nth index or container.end().
     */
     ptr = upper_bound(arr, arr + n, 3);
     if (ptr == (arr + n))
