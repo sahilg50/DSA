@@ -24,7 +24,6 @@ int main()
     /*
     Note that the new keys are inserted in the beginning of the unrdered_map but if we define the key values while declaring the map itself then the key value pairs are inserted in the order we write them
     */
-
     unordered_map<string, int> map;
     // Insert
     pair<string, int> p("s", 225);
@@ -34,7 +33,6 @@ int main()
 
     // find or access
     cout << map["s"] << endl;
-
     cout << map["akul"] << endl; // creates a new key value pair with the default value 0
     // cout << map.at("rishav") << endl; // throws error is the key is not present
 
