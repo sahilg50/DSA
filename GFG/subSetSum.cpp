@@ -35,6 +35,10 @@ public:
         solve(0, arr, ans, 0);
         return ans;
     }
+    /*
+    TC-> O(2^n)
+    SC-> O(2^n) ASC
+    */
 };
 
 int main()
