@@ -1,3 +1,4 @@
+// Approach 1
 class Solution {
 private:
     void recurPermute(int ind, vector<int>&nums, vector<int>&ds, vector<bool>&map, vector<vector<int>>&ans){
@@ -31,4 +32,31 @@ public:
 /*
 TC-> O(N! * N), N! permutations and for each permutation there are N for loops
 SC-> Ans: O(N!)ASC + Recursion Stack: O(N)ASC + DS: O(N) + Map: O(N)
+*/
+
+
+// Approach 2
+class Solution{
+private:
+    void recurPermute(int ind, vector<int>& nums, vector<vector<int>>& ans){
+        if(ind==nums.size()){
+            ans.push_back(nums);
+            return;
+        }
+        for(int i=ind; i<nums.size(); i++){
+            swap(nums[ind], nums[i]);
+            recurPermute(ind+1, nums, ans);
+            swap(nums[ind], nums[i]);
+        }
+    }
+public:
+    vector<vector<int>> permute(vector<int> &nums){
+        vector<vector<int>> ans; 
+        recurPermute(0, nums, ans);
+        return ans;
+    }
+};
+/*
+    TC-> O(N! * N)
+    SC-> Recursion Stack: O(N)ASC, Ans: O(N!)ASC
 */

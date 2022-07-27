@@ -1,0 +1,95 @@
+// Brute Force
+class Solution {
+private:
+    bool isSafe(int row, int col, vector<string>&board, int n){
+        // Check column
+        int r=row, c=col;
+        for(r; r>=0; r--) if(board[r][c]=='Q') return false;
+        
+        // Check left diagonal
+        r=row, c=col;
+        for(r,c; r>=0 && c>=0; r--,c--) if(board[r][c]=='Q') return false;
+        
+        // Check right diagonal
+        r=row, c=col;
+        for(r,c; r>=0 && c<n; r--,c++) if(board[r][c]=='Q') return false;
+        
+        return true;
+    }
+    
+    vector<vector<string>> ans; // Answer to be returned
+    void solve(int row, vector<string>& board, int n){
+        if(row==n){
+            ans.push_back(board);
+            return;
+        }
+        
+        for(int col=0; col<n; col++){
+            if(isSafe(row, col, board, n)){
+                board[row][col]='Q';
+                solve(row+1, board, n);
+                // Backtrack
+                board[row][col]='.';
+            }
+        }
+    }
+public:
+    vector<vector<string>> solveNQueens(int n) {
+        
+        vector<string> board(n);
+        string s(n, '.');
+        for(int i=0; i<n; i++) board[i]=s;
+        solve(0, board, n); 
+        return ans;
+    }
+};
+/*
+TC-> O(N! * N)
+SC-> O(n^2) ASC,
+*/
+
+// Optimized
+class Solution{
+private:
+    vector<vector<string>> Ans;
+    void solve(int row, vector<string> &board, int n, vector<int> &upperRow, vector<int> &upperDiagonal, vector<int> &lowerDiagonal){
+        if(row==n){
+            Ans.push_back(board);
+            return;
+        }
+        
+        for(int col=0; col<n; col++){
+            if(upperRow[col]==0 &&
+              upperDiagonal[n-1 + col - row]==0 &&
+              lowerDiagonal[row+col]==0){
+                board[row][col] = 'Q';
+                upperRow[col] = 1;
+                upperDiagonal[n-1+ col-row] = 1;
+                lowerDiagonal[row+col] = 1;
+                solve(row+1, board, n, upperRow, upperDiagonal, lowerDiagonal);
+                
+                //Bactrack
+                board[row][col] = '.';
+                upperRow[col] = 0;
+                upperDiagonal[n-1+ col-row] = 0;
+                lowerDiagonal[row+col] = 0;
+            }
+        }
+    }
+public:
+    vector<vector<string>> solveNQueens(int n){
+        vector<string> board(n); 
+        string s(n, '.');
+        for(int i=0; i<n; i++) board[i]=s;
+        
+        // Create maps for hashing
+        vector<int> upperRow(n,0), upperDiagonal(2*n-1, 0), lowerDiagonal(2*n-1, 0);
+        solve(0, board, n, upperRow, upperDiagonal, lowerDiagonal);
+        return Ans;
+    }
+};
+
+/*
+TC-> O(N!*N), but in this case the TC of O(N^2) is reduced of isSafe function
+SC-> Recursion Stack: O(N^2) ASC + Map: 5 * O(N)
+*/
