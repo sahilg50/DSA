@@ -1,0 +1,98 @@
+// Maximum number of consecutive 1s after flipping all 0s in a K length substring
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int maximumLength(string S, int k)
+{
+
+    int trav, i;
+    int c = 0, maximum = 0;
+    int n = S.size();
+
+    for (i = 0; i < n - k + 1; i++)
+    {
+        trav = i - 1;
+        c = 0;
+        while (trav >= 0 && S[trav] == '1')
+        {
+            trav--;
+            c++;
+        }
+        trav = i + k;
+
+        while (trav < n && S[trav] == '1')
+        {
+            trav++;
+            c++;
+        }
+        c += k;
+
+        if (c > maximum)
+            maximum = c;
+    }
+    return maximum;
+}
+
+int main()
+{
+    int K = 0;
+    string S = "1111010000";
+    int ans = maximumLength(S, K);
+    cout << endl
+         << ans << endl;
+    return 0;
+}
+
+
+
+
+/*
+Problem Description
+Each Bytelandian gold coin has an integer number written on it. A coin n can be exchanged in a bank into three coins: n/2, n/3 and n/4. But these numbers are all rounded down (the banks have to make a profit).
+
+You can also sell Bytelandian coins for American dollars. The exchange rate is 1:1. But you can not buy Bytelandian coins.
+
+You have one gold coin of value n, 0 <= n <= 1000000000. What is the maximum amount of American dollars you can get for it?
+
+Problem Solution
+This is a Dynamic programming problem. We can observe that for amount upto 8, we can’t get more money by dividing (into n/2, n/3 and n/4). We will create an array to memoize the values. For any value, min. amount we can get out of it=n. We will compare this value with the value we get after dividing n and select the bigger value.
+*/
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+long calculate(vector<long> &dp, long n)
+{
+    // base case
+    if (n <= 10)
+        return n;
+    if (dp[n] != -1)
+        return dp[n];
+
+    long x = calculate(dp, n / 2) + calculate(dp, n / 3) + calculate(dp, n / 4);
+
+    return dp[n] = max(n, x);
+}
+
+long maxCoins(long N)
+{
+    vector<long> dp(1000000, -1);
+    return calculate(dp, N);
+}
+
+int main()
+{
+    long i, j, k, n;
+    long x, y, z;
+    int t;
+
+    cout << "Enter the amount of bytelandian coin you have ?" << endl;
+    cin >> n;
+    cout << "Maximum amount of american dollars you can make from this is " << endl;
+
+    return 0;
+}

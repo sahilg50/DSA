@@ -1,0 +1,57 @@
+// Approach 1
+class Solution {
+public:
+    int countNodes(TreeNode* root) {
+        
+        // Base case
+        if(root==NULL) return 0;
+        
+        int left = countNodes(root->left);
+        int right = countNodes(root->right);
+        
+        return 1+left+right; 
+    }
+};
+/*
+TC-> O(N)
+SC-> Rescursion Stack: O(N) ASC, N is the number of node in the binary tree
+*/
+
+
+// Approach 2
+class Solution {
+private:
+    int leftHeight(TreeNode* node){
+        int H=0;
+        while(node){
+            H++;
+            node = node->left;
+        }
+        return H;
+    }
+    int rightHeight(TreeNode *node){
+        int H = 0;
+        while(node){
+            H++;
+            node = node->right;
+        }
+        return H;
+    }
+public:
+    int countNodes(TreeNode* root) {
+        
+        // Base case
+        if(root==NULL) return 0;
+        
+        int lh = leftHeight(root);
+        int rh = rightHeight(root);
+        if(lh==rh) return (1<<rh) - 1;
+        
+        return 1 + countNodes(root->left) + countNodes(root->right);
+    }
+};
+
+/*
+TC-> O(loglogN)
+SC-> O(N) ASC, N is the number of nodes in the tree
+*/
