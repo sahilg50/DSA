@@ -163,5 +163,10 @@ int main()
     vector<int> v20 = {1, 2, 3};
     v20.pop_back();
     cout << v20.front(); // cout << v20[0]
+
+    // Resizing the vectors
+    vector<int> RV;
+    RV.resize(100, -1); // vector.resize(new size, const value);
+
     return 0;
 }
