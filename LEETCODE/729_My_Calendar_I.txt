@@ -1,0 +1,26 @@
+// Approach 1
+class MyCalendar {
+private:
+    vector<pair<int, int>> bookings;
+public:
+    // Constructor
+    MyCalendar() {}
+    
+    // Returns true if the booking is possible else returns false
+    bool book(int start, int end) {
+        for(auto it:bookings){
+            if(start<it.second && end>it.first) return false;
+        }
+        bookings.push_back({start, end});
+        return true;
+    }
+};
+/*
+TC-> O(N^2)
+SC-> O(N)
+*/
+/**
+ * Your MyCalendar object will be instantiated and called as such:
+ * MyCalendar* obj = new MyCalendar();
+ * bool param_1 = obj->book(start,end);
+ */
