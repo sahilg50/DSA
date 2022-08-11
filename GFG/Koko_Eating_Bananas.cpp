@@ -44,6 +44,6 @@ int main()
 }
 
 /*
-TC-> O(log N), N = max(arr) - min(arr)
+TC-> O(Nlog W), W = max(arr) - min(arr), N is the size of the array(Piles)
 SC-> O(I)
 */

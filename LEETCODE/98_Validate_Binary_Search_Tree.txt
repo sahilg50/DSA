@@ -1,0 +1,45 @@
+// Approach 1
+class Solution {
+private:
+    void inOrder(TreeNode* root, vector<int> &nodes){
+        if(root==nullptr) return;
+        inOrder(root->left, nodes);
+        nodes.push_back(root->val);
+        inOrder(root->right, nodes);
+    }
+public:
+    bool isValidBST(TreeNode* root) {
+        vector<int> nodes;
+        inOrder(root, nodes);
+        
+        for(int i=1; i<nodes.size(); i++){
+            if(nodes[i]<=nodes[i-1]) return false;
+        }
+        return true;
+    }
+};
+/*
+TC-> O(N), N is the number of nodes in the binary tree
+SC-> Recursion Stack:O(N)ASC, Array:O(N) for storing the node values.
+*/
+
+
+// Approach 2
+class Solution {
+private:
+    bool dfs(TreeNode *node, long long L, long long H){
+        if(!node) return true;
+        
+        if(node->val<=L || node->val>=H) return false;
+        
+        return dfs(node->left, L, node->val) && dfs(node->right, node->val, H);
+    }
+public:
+    bool isValidBST(TreeNode* root) {
+        return dfs(root, LONG_MIN, LONG_MAX);
+    }
+};
+/*
+TC-> O(N), N is the number fo nodes in the binary tree
+SC-> Recursion Stack: O(N) ASC
+*/
