@@ -1,6 +1,6 @@
 /*
 AIRBNB:
-For a given string s and an integer k, find the maximum number of palindrome substrings that can be formed such that no two substrings should overlap each other and the length of the substring should be greater than or equal to k.
+For a given string s and an integer k, find the maximum number of palindrome substrings that can be formed such that no two substrings should overlap each other and the length of each substring should be greater than or equal to k.
 */
 
 #include <iostream>
