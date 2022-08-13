@@ -63,7 +63,7 @@ int main()
 {
     string str = "ababaeocco";
     Solution S;
-    cout << S.maxPaliSubStrings(str, 4);
+    cout << S.maxPaliSubStrings(str, 4); // ababa, occo
     return 0;
 }
 
