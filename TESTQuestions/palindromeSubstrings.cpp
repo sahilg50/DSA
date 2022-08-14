@@ -68,6 +68,6 @@ int main()
 }
 
 /*
-TC-> O(N*W), N is the size of the array and W=N-K+1
+TC-> O(N*W*N/2), N is the size of the array and W=N-K+1
 SC-> O(N)
 */
