@@ -4,31 +4,7 @@
 #include <algorithm>
 using namespace std;
 
-vector<vector<int>> memo(1000, vector<int>(1000, -1));
-
-//Using Tabular form
-int LCS_Tabular(string a, string b)
-{
-    int m = a.length();
-    int n = b.length();
-
-    int longest_subSequence = 0;
-
-    for (int i = 0; i < m; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            if (a.at(i) == b.at(j))
-            {
-                longest_subSequence++;
-                break;
-            }
-        }
-    }
-    return longest_subSequence;
-}
-
-//Using Recursion
+// Using Recursion
 int LCS_Recursion(string &s1, string &s2, int m, int n)
 {
 
@@ -43,13 +19,82 @@ int LCS_Recursion(string &s1, string &s2, int m, int n)
         return max(LCS_Recursion(s1, s2, m - 1, n), LCS_Recursion(s1, s2, m, n - 1));
     }
 }
+/*
+TC-> O(2^n * 2^m)
+SC-> Recursion stack: O(n+m)
+*/
+
+// Using Tabular form
+int LCS_Tabular(string s1, string s2)
+{
+
+    int n = s1.size();
+    int m = s2.size();
+
+    vector<vector<int>> dp(n + 1, vector<int>(m + 1, -1));
+    for (int i = 0; i <= n; i++)
+    {
+        dp[i][0] = 0;
+    }
+    for (int i = 0; i <= m; i++)
+    {
+        dp[0][i] = 0;
+    }
+
+    for (int ind1 = 1; ind1 <= n; ind1++)
+    {
+        for (int ind2 = 1; ind2 <= m; ind2++)
+        {
+            if (s1[ind1 - 1] == s2[ind2 - 1])
+                dp[ind1][ind2] = 1 + dp[ind1 - 1][ind2 - 1];
+            else
+                dp[ind1][ind2] = 0 + max(dp[ind1 - 1][ind2], dp[ind1][ind2 - 1]);
+        }
+    }
+    return dp[n][m];
+}
+/*
+TC-> O(n*m)
+SC-> DP array: O(n*m)
+*/
+
+// Tabulation with Space Optimization
+int LCS_Tabular_Space_Optimization(string s1, string s2)
+{
+
+    int n = s1.size();
+    int m = s2.size();
+
+    vector<int> prev(m + 1, 0), cur(m + 1, 0);
+
+    // Base Case is covered as we have initialized the prev and cur to 0.
+
+    for (int ind1 = 1; ind1 <= n; ind1++)
+    {
+        for (int ind2 = 1; ind2 <= m; ind2++)
+        {
+            if (s1[ind1 - 1] == s2[ind2 - 1])
+                cur[ind2] = 1 + prev[ind2 - 1];
+            else
+                cur[ind2] = 0 + max(prev[ind2], cur[ind2 - 1]);
+        }
+        prev = cur;
+    }
+
+    return prev[m];
+}
+/*
+TC-> O(n*m)
+SC-> prev: O(m) + curr: O(m)
+*/
 
 int main()
 {
     string a = "Sahil";
     string b = "SaRahil";
-    ;
+
+    cout << LCS_Recursion(a, b, a.length(), b.length()) << endl;
     cout << LCS_Tabular(a, b) << endl;
-    cout << LCS_Recursion(a, b, a.length(), b.length());
+    cout << LCS_Tabular_Space_Optimization(a, b) << endl;
     return 0;
 }
