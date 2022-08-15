@@ -1,3 +1,7 @@
+/*
+The price of Amazon common stock is analyzed over a period of several months. A group of k consecutive months is said to be observable if no two months in the group have the same stock price. In other words, all the prices in the period are distinct. The sum of stock prices of an observable group of months is called the cumulative observable sum. Given the price of Amazon stock for n months, find the maximum possible cumulative observable sum among all the observable groups of months. If there is no observable group, return -1. Example Monthly stock prices are given as stockPrice =[1,2,7,7,4,3,6], and the number of consecutive months to consider is k=3.
+*/
+
 #include <iostream>
 #include <vector>
 #include <unordered_map>
@@ -64,3 +68,8 @@ int main()
     cout << findMaximumSum(a, k);
     return 0;
 }
+
+/*
+TC-> Creating Map:O(N) + FindMaxSum:O(N)
+SC-> Map:O(N)
+*/

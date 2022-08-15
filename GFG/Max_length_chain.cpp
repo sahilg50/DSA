@@ -63,6 +63,6 @@ int main()
 }
 
 /*
-    TC-> O(NlogN), N is the size of the array
+    TC-> Sorting: O(NlogN) + Iterating: O(N), N is the size of the array
     SC-> O(1)
 */
