@@ -7,6 +7,9 @@ Test Cases:
 3-> SP=[1,2,7,7,4,3,6] k=3
 4-> SP=[20,1,2,3,40,4,1] k=4
 5-> SP=[10] k = 1
+
+Constraints:
+1<=k<=n<=2*(10^5)
 */
 
 #include <iostream>
@@ -70,8 +73,8 @@ long findMaximumSum(vector<int> &SP, int k)
 
 int main()
 {
-    vector<int> a = {20, 1, 2, 3, 40, 4, 1};
-    int k = 4;
+    vector<int> a = {0, 10, 0, 10, 10, 0};
+    int k = 1;
     cout << findMaximumSum(a, k);
     return 0;
 }
