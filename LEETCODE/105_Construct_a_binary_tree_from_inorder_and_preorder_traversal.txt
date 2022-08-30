@@ -1,0 +1,31 @@
+class Solution {
+private:
+    TreeNode* buildTreeUtil(vector<int> &preorder, int preStart, int preEnd, vector<int> &inorder, int inStart, int inEnd, unordered_map<int,int> &map){
+        
+        if(preStart>preEnd || inStart>inEnd) return nullptr;
+        
+        TreeNode *root = new TreeNode(preorder[preStart]);
+        
+        int inRoot = map[root->val];
+        int numsLeft = inRoot - inStart;
+        
+        root->left = buildTreeUtil(preorder, preStart+1, preStart+numsLeft, inorder, inStart, inRoot-1, map);
+        root->right = buildTreeUtil(preorder, preStart+numsLeft+1, preEnd, inorder, inRoot+1, inEnd, map);
+        
+        return root;
+    }
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        
+        int n = preorder.size();
+        unordered_map<int, int> map;
+        for(int i=0; i<n; i++) map[inorder[i]] = i;
+        
+        TreeNode *root = buildTreeUtil(preorder, 0, n-1, inorder, 0, n, map);
+        
+        return root;
+    }
+};
+
+TC->O(N)
+SC->O(N)
