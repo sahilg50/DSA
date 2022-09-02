@@ -25,5 +25,7 @@ int main()
     long long int z = 1LL * x * y;
     cout << z << endl;
 
+    cout << char('0' + 9) << endl;
+
     return 0;
 }

@@ -1,3 +1,7 @@
+/*
+BARCO: Decode the ceaser cipher
+It is given in the question that cipher was formed by replacing the string alphabets by the 3rd alphabet to its left;
+*/
 #include <iostream>
 #include <string>
 #include <unordered_map>
@@ -31,13 +35,12 @@ char *decrypt(char *input1)
 int main()
 {
     char name[] = "nrfzh";
-    // decrypt(name);
-    // cout << endl
-    //      << endl;
-    // for (int i = 0; i < sizeof(name); i++)
-    // {
-    //     cout << name[i];
-    // }
-    cout << 'a' - 'a';
+    decrypt(name);
+    cout << endl
+         << endl;
+    for (int i = 0; i < sizeof(name); i++)
+    {
+        cout << name[i];
+    }
     return 0;
 }

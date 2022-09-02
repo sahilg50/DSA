@@ -6,8 +6,7 @@ using namespace std;
 
 void permute(string s, int l, int r)
 {
-
-    //base case
+    // base case
     if (l == r)
     {
         cout << s << endl;
@@ -16,12 +15,9 @@ void permute(string s, int l, int r)
 
     for (int i = l; i <= r; i++)
     {
-
         swap(s[i], s[l]);
-
         permute(s, l + 1, r);
-
-        //backtrack
+        // backtrack
         swap(s[i], s[l]);
     }
 }
@@ -39,5 +35,5 @@ int main()
 /*
 It is a backtracing problem.
 TC: O(n!) because the total number of permutations are n!
-SC: O(r-l) where the r-l represents the size of the string 
+SC: O(r-l) where the r-l represents the size of the string
 */
