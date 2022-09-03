@@ -60,8 +60,8 @@ int main()
         cout << "The string abc is empty!" << endl;
     }
 
-    // Deleteing from a particular indexes.
-    s1.erase(2, 2);
+    // Delete from idx and atmost n elements-> s.erase(idx, n)
+    s1.erase(2, 2); // will delete 2 elements starting from 2nd index
     cout << s1 << endl;
 
     // finding substring and returning starting index

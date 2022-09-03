@@ -1,3 +1,5 @@
+// https://www.geeksforgeeks.org/static-keyword-cpp/
+// Follow the above link to get the complete info on static keyword
 #include <iostream>
 using namespace std;
 
@@ -29,5 +31,3 @@ int main()
     cout << "End Of Main\n";
     return 0;
 }
-
-// https://www.geeksforgeeks.org/static-keyword-cpp/

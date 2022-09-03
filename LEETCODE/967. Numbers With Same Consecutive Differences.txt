@@ -1,0 +1,23 @@
+class Solution {
+    vector<int> ans;
+    void dfs(int num,int n,int k){
+        if(n==0) {ans.push_back(num);return;}
+        int lower=((num==0)?1:0);
+        for(int i=lower;i<10;i++){
+            if(num and abs(i-num%10)!=k) continue;
+            num*=10;num+=i;
+            dfs(num,n-1,k);
+            num/=10;
+        }
+    }
+public:
+    vector<int> numsSameConsecDiff(int n, int k) {
+        int num=0;
+        dfs(0, n, k);
+        return ans;
+    }
+};
+/*
+TC-> O(9^n)
+SC-> O(n), n is the max length of the valid integer
+*/

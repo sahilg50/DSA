@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cmath>
+#include <algorithm>
+#include <string>
 using namespace std;
 
 int main()
@@ -26,6 +28,14 @@ int main()
     cout << z << endl;
 
     cout << char('0' + 9) << endl;
+
+    /*
+    C++ Algorithm remove() function is used to eliminate all the elements that are equal to val from a given range [first, last) without disturbing the order of the remaining elements. This function cannot alter the size of the container. It returns an iterator to the new end of the range.
+    Now while removing spaces from the string, the remove() will return the iterator to the new end of the string and therefore we'll call the erase() method on top on the remove fuction to drop all the elements from the new end uptil the old end.
+    */
+    string s = "Hello W O r lddd s";
+    s.erase(remove(s.begin(), s.end(), ' '), s.end());
+    cout << s;
 
     return 0;
 }
