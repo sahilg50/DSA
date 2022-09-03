@@ -53,7 +53,7 @@ int main()
     }
     cout << endl;
 
-    // Checking the second approach
+    // Checking the second approachc
     char name1[] = "nrfzh";
     decrypt2(name1);
     for (int i = 0; i < sizeof(name1); i++)

@@ -32,11 +32,10 @@ public:
     // Approach 2-> Recursion
     int lcsRecur(int i, int j, string S1, string S2, int count)
     {
-        if (i == 0 || j == 0)
+        if (i == -1 || j == -1)
             return count;
 
-        int match = 0, notMatch = 0;
-        if (S1[i - 1] == S2[j - 1])
+        if (S1[i] == S2[j])
         {
             count = lcsRecur(i - 1, j - 1, S1, S2, count + 1);
         }
@@ -46,7 +45,7 @@ public:
     }
     /*
     TC-> O(2^n * 2^m)
-    SC-> O(max(n,m))
+    SC-> O(max(n,m)) ASC
     */
 };
 
