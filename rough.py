@@ -1,36 +1,29 @@
-class Graph: 
-   def __init__(self, V): 
-      self.V = V  
-      self.adj = [[] for i in range(V+1)] 
-      
-   def addEdge(self, u, v): 
-      self.adj[u].append(v) 
-      
+def GetLowestNumber(num, k):
+   
+   n = len(num)
+   mystack = []
+     
+   for c in num:
+      while (len(mystack) > 0 and k > 0 and mystack[-1] > c):
+         mystack.pop()
+         k -= 1
+ 
+      if (len(mystack) > 0 or c != '0'):
+         mystack.append(c)
+ 
+   while (len(mystack) > 0 and k):
+      k -= 1
+      mystack.pop()
+   if (len(mystack) == 0): return None
+ 
+   while (len(mystack) > 0):
+      num = num.replace(num[n - 1] , mystack[-1])
+      mystack.pop()
+      n -= 1
+ 
+   return num[n:]
+ 
 
-   def countPaths(self, s, d): 
-      del self.adj[0]
-      visited = [False] * self.V 
-      pathCount = [0]  
-      self.countPathsUtil(s, d, visited, pathCount)  
-      return pathCount[0] 
-    
-   def countPathsUtil(self, u, d, visited, pathCount): 
-      visited[u] = True
-      if (u == d): pathCount[0] += 1
-      else: 
-         i = 0
-         while i < len(self.adj[u]): 
-            if (not visited[self.adj[u][i]]):  
-               self.countPathsUtil(self.adj[u][i], d, visited, pathCount) 
-               i += 1
-      
-      visited[u] = False
-
-if __name__ == '__main__': 
-   N = 10
-   g = Graph(N)  
-   for i in range(2, N+1):
-      for j in range(1, int(N/2)):
-         if(i%j==0): g.addEdge(i,j)
-
-   print(g.countPaths(1, 10)) 
+Str = "765028321"
+k = 5
+print(GetLowestNumber(Str, k))

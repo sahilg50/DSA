@@ -7,4 +7,6 @@ main()
     printf("hello\n");
     fork();
     printf("amazon");
+    char *num = "12";
+    printf(sizeof(num));
 }
