@@ -102,5 +102,10 @@ int main()
     // str2 to str1
     str1 = "React", str2 = "Native";
     str1.append(str2, 0, 5);
+
+    // str.change() -> changes the last character of the string str
+    string STR1 = "Sahil";
+    STR1.back() = 'C';
+    cout << STR1 << endl;
     return 0;
 }

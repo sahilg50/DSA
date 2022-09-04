@@ -5,6 +5,14 @@ using namespace std;
 
 int main()
 {
+     /*
+     A capture clause of lambda definition is used to specify which variables are captured and whether they are captured by reference or by value.
+     An empty capture closure [ ], indicates that no variables are used by lambda which means it can only access variables that are local to it.
+     The “capture-default” mode indicates how to capture outside the variables referenced in Lambda:
+
+     The capture closure [&] means the variables are captured by reference.
+     The capture closure [=] indicates that the variables are captured by value.
+     */
      cout << endl
           << [](int x, int y)
      { return x + y; }(2, 11);

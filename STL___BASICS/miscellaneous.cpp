@@ -37,5 +37,11 @@ int main()
     s.erase(remove(s.begin(), s.end(), ' '), s.end());
     cout << s;
 
+    /*
+    ASCII VALUES
+    'A' -> 65, 'Z' -> 90
+    'a' -> 97, 'z' -> 122
+    */
+
     return 0;
 }
