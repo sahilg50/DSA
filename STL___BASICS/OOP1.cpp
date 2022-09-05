@@ -57,6 +57,7 @@ Note:
 
     SHALLOW COPY AND DEEP COPY
     Depending upon the resources like dynamic memory held by the object, either we need to perform Shallow Copy or Deep Copy in order to create a replica of the object. In general, if the variables of an object have been dynamically allocated, then it is required to do a Deep Copy in order to create a copy of the object.
+    https://www.geeksforgeeks.org/shallow-copy-and-deep-copy-in-c/
 
     STATIC KEYWORD:
     -> Data Member
