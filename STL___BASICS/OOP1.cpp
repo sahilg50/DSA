@@ -1,5 +1,5 @@
 // https : // www.youtube.com/watch?v=i_5pvt7ag7E&t=494s
-
+// https://www.codingninjas.com/codestudio/guided-paths/basics-of-c/content/118817/offering/1381799
 #include <iostream>
 using namespace std;
 
