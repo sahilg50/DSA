@@ -9,28 +9,29 @@ int main()
 
     /*
     Note the differece between getline and cin.
-    If we enter the string: "    Hello     World" using cin, only "hello" is stored and the remaining string is taken as input in the next input command, in case 1: getline() and in case 2: cin.
+    -> If we enter the string: "    Hello     World" using cin, only "hello" is stored and the remaining string is taken as input in the next input command, in case 1: getline() and in case 2: cin.
 
-    cin ingnores the spaces in front of first input character and (everything after the last character or from the first space that occurs after the first character input)
+    -> cin ingnores the spaces in front of first input character and (everything after the last character or from the first space that occurs after the first character input)
 
     IMP-> If you want that your getline should not pickup any space left by cin, then you can use cin.ignore() after calling cin.
+
+
+    string.append() vs string.push_back(): .append() method is used to append a character or a string at the end of the string. Whereas .push_back() method is used to append only a character at the end of the string in cpp, it cannot append a string at the end.
+
+
     */
 
     // Test Case : "   Hello        World" cout << "\nCASE 1: ";
-    string str1,
-        str2;
-    cout << "\nEnter the string: ";
+    string str1;
+    cout << "CASE 1: Using getline()\nEnter the string: ";
     cin >> str1;
     cout << str1;
     getline(cin, str1);
-    cout << str1;
+    cout << "Output: " << str1 << endl;
 
-    cout << "\n\n\nCASE 2: ";
-    cout << "\nEnter the string: ";
+    cout << "\nCASE 2: Using cin\nEnter the string: ";
     cin >> str1;
-    cout << str1;
-    cin >> str1;
-    cout << str1;
+    cout << "Output: " << str1 << endl;
 
     // Comparison of two strings
     string s1 = "aa";
@@ -100,6 +101,7 @@ int main()
 
     // Appends 5 characters from 0th index of
     // str2 to str1
+    string str2;
     str1 = "React", str2 = "Native";
     str1.append(str2, 0, 5);
 

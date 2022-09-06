@@ -35,7 +35,11 @@ int main()
     */
     string s = "Hello W O r lddd s";
     s.erase(remove(s.begin(), s.end(), ' '), s.end());
-    cout << s;
+    cout << s << endl;
+
+    string str = "12345";
+    int a = stoi(str);
+    cout << a << endl;
 
     /*
     ASCII VALUES
