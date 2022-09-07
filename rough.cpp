@@ -1,42 +1,54 @@
 #include <iostream>
-#include <stack>
+#include <vector>
+#include <map>
+#include <algorithm>
 using namespace std;
 
-string removeKdigits(char *num, int k)
+void mostWanted(vector<vector<int>> &crimes)
 {
-    stack<char> mystack;
+    map<int, int> m;
 
-    char *t;
-    for (t = num; *t != '\0'; t++)
+    for (int i = 0; i < crimes.size(); i++)
     {
-        while (!mystack.empty() && k > 0 && mystack.top() > *t)
+        sort(crimes[i].begin(), crimes[i].end());
+        for (int j = 0; j < crimes[i].size(); j++)
         {
-            mystack.pop();
-            k -= 1;
+            if (j == 0 || crimes[i][j] != crimes[i][j - 1])
+                m[crimes[i][j]]++;
         }
-
-        if (!mystack.empty() || *t != '0')
-            mystack.push(*t);
     }
-
-    while (!mystack.empty() && k--)
-        mystack.pop();
-    if (mystack.empty())
-        return "0";
-
-    while (!mystack.empty())
+    for (auto id : m)
     {
-        num[n - 1] = mystack.top();
-        mystack.pop();
-        n -= 1;
+        if (id.second >= 2)
+        {
+            cout << id.first << " ";
+        }
     }
-    for (t = num + n; *t != '\0'; t++)
 }
-
 int main()
 {
-    char *num = "765028321";
-    int k = 5;
-    cout << removeKdigits(num, k);
+    vector<int> t;
+    for (int i = 0; i < 3; i++)
+    {
+        int temp;
+        cin >> temp;
+        t.push_back(temp);
+    }
+
+    vector<vector<int>> crimes(3);
+    for (int i = 0; i < 3; i++)
+    {
+        vector<int> cases;
+        for (int j = 0; j < t[i]; j++)
+        {
+            int temp;
+            cin >> temp;
+            cases.push_back(temp);
+        }
+        crimes.push_back(cases);
+    }
+
+    mostWanted(crimes);
+
     return 0;
 }

@@ -1,0 +1,39 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+private:
+    void util(TreeNode *node, string &ans){
+        ans.append(to_string(node->val));
+        if(node->left){
+            ans.append("(");
+            util(node->left, ans);
+            ans.append(")");
+        }
+        if(!node->left and node->right) ans.append("()");
+        if(node->right){
+            ans.append("(");
+            util(node->right, ans);
+            ans.append(")");
+        }
+    }
+public:
+    string tree2str(TreeNode* root) {
+        string ans = "";
+        util(root, ans);
+        return ans;
+    }
+};
+/*
+TC-> O(N)
+SC-> Recursion Stack:O(N)ASC + String ans:O(N)ASC
+N is the number of nodes in the binary tree
+*/
