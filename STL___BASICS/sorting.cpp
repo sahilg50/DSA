@@ -8,10 +8,7 @@ using namespace std;
 
 bool cmp(pair<int, int> a, pair<int, int> b)
 {
-    if (a < b)
-        return false;
-    else
-        false;
+    return a < b;
 }
 
 int main()

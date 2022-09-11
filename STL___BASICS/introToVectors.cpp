@@ -168,5 +168,29 @@ int main()
     vector<int> RV;
     RV.resize(100, -1); // vector.resize(new size, const value);
 
+    // clear() removes all elements from vector and reducing it to size 0.
+    vector<int> myvector;
+    myvector.clear();
+
+    /*
+    .erase()
+    Input  : myvector= {1, 2, 3, 4, 5}, iterator= myvector.begin()+2
+    myvector.erase(iterator);
+    Output : 1, 2, 4, 5
+
+    Input  : myvector= {1, 2, 3, 4, 5, 6, 7, 8}, iterator1= myvector.begin()+3,iterator2= myvector.begin()+6
+    myvector.erase(iterator1, iterator2);
+    Output : 1, 2, 3, 7, 8
+
+    .remove()
+    remove(v.begin(), v.end(), 20);
+
+    erase() causes large amount of copies while remove() just does a logical delete and leaves vector unchanged by moving element around.
+
+    If you need to remove multiple elements, remove() will copy elements only once to its final position while erase() would do this multiple times.
+
+    erase() works best with elements in a position, remove() is best while working with range of elements.
+    */
+
     return 0;
 }
