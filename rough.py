@@ -1,29 +1,23 @@
-def GetLowestNumber(num, k):
+def maxUniqueStones(input1, input2, input3):
    
-   n = len(num)
-   mystack = []
-     
-   for c in num:
-      while (len(mystack) > 0 and k > 0 and mystack[-1] > c):
-         mystack.pop()
-         k -= 1
- 
-      if (len(mystack) > 0 or c != '0'):
-         mystack.append(c)
- 
-   while (len(mystack) > 0 and k):
-      k -= 1
-      mystack.pop()
-   if (len(mystack) == 0): return None
- 
-   while (len(mystack) > 0):
-      num = num.replace(num[n - 1] , mystack[-1])
-      mystack.pop()
-      n -= 1
- 
-   return num[n:]
- 
+   SUM = input1
+   maxi = -10**9
+   L = []
+   for i in range(input2): L.append(input3[i])
 
-Str = "765028321"
-k = 5
-print(GetLowestNumber(Str, k))
+   for i in range(1, input1+1):
+      SUM = SUM-i
+      count = 0
+      if(i not in L):
+         for j in range(i+1,input1+1):
+            if(j not in L) and (SUM-j>=0):
+               SUM-=j
+               count+=1
+         maxi = max(count, maxi)
+   return maxi+1
+
+
+
+
+ans = maxUniqueStones(14,4,[4,6,8,9])
+print(ans)
