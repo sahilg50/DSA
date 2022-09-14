@@ -121,6 +121,8 @@ public:
         cout << "Destructor called for: " << this->name[0] << endl;
     }
 };
+
+// Assigning value to the static variable
 int Hero::timeToComplete = 100;
 
 int main()
@@ -146,14 +148,14 @@ int main()
 
     // When copying the data of object at the time of initialization then copy is made through COPY CONSTRUCTOR
     Hero D = A;
-    D.timeToComplete = 300;
+    D.timeToComplete = 300; // Updating the value of the static variable
     D.print();
     cout << "\n\n";
 
     // When copying the data of object after initialization then the copy is done through DEFAULT ASSIGNMENT OPERATOR
     Hero E;
     E = A;
-    E.gotHit();
+    E.gotHit(); // Static method to change the value of the static variable
     E.print();
     cout << "\n\n";
     // In all the above examples, a shallow copy is being created since some of the data members have been dynammically allocated.
