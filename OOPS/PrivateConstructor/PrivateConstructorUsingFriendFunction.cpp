@@ -1,5 +1,4 @@
 // Using Friend Class : If we want that class should not be instantiated by anyone else but only by a friend class.
-
 #include <iostream>
 using namespace std;
 
