@@ -1,4 +1,7 @@
 /*
+
+https://www.scaler.com/topics/difference-between-function-overloading-and-overriding-in-cpp/
+
 -> One subtle problem with distinguishing based on data type of function is type casting (i.e. say a char type can be promoted to int or float or double). The C++ compiler follows a series of priorities when matching the function application:
 
     - It first tries to match exact type (int to int / float to float)
@@ -22,7 +25,10 @@ int main()
 {
     print(2, 2);
     /*
-    Here it is throwing error because the function call print(2,2) can be internally promoted to (int(2), float(2)) or (float(2), int(2)). This causes ambiqguity, therefore it causes errors.
+    Here, rpint(2,2) is throwing error because the function call print(2,2) can be internally promoted to (int(2), float(2)) or (float(2), int(2)). This causes ambiqguity, therefore it causes errors.
     */
+
+    print(2.0, 2); // THis function call will not throw an error because there is no ambiguity.
+
     return 0;
 }

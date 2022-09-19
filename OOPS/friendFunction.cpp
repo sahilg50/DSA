@@ -1,6 +1,3 @@
-#include <iostream>
-using namespace std;
-
 /*
 -> A class can have multiple friend functions
 -> Just declare the functions inside inside the class along with the friend keyword.
@@ -11,6 +8,10 @@ using namespace std;
     - in void foo(type arg), arg is passed by value regardless of whether type is a simple type, a pointer type or a class type,
     - in void foo(type& arg), arg is passed by reference.
 */
+
+#include <iostream>
+using namespace std;
+
 class EquilateralTriangle
 {
     float a, circumference, area;
