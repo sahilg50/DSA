@@ -136,7 +136,7 @@ int main()
     // Dynamically allocated
     Hero *B = new Hero('B', 2, 40);
     // (*B).print();
-    B->print();
+    *(B.print());
     cout << endl;
     delete B;
     cout << "\n\n";

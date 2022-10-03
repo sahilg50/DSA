@@ -1,12 +1,8 @@
-#include <stdio.h>
-main()
+#include <iostream>
+using namespace std;
+
+int main()
 {
-    int i = 0;
-    printf("hi\n");
-    fork();
-    printf("hello\n");
-    fork();
-    printf("amazon");
-    char *num = "12";
-    printf(sizeof(num));
+    float a = 5.1;
+    return 0;
 }

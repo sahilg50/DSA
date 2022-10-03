@@ -14,6 +14,8 @@ DESTRUCTOR:
     -> For statically allocated objects, the destructor is called automatically.
     -> For dynamically allocated objects, the destructor has to be called manually. (e.g. in this case: 'B')
     -> Destructor is called only once
+    -> Destructor cannot be overloaded.
+
 */
 
 #include <iostream>
