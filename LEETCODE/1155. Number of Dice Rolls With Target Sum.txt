@@ -1,0 +1,23 @@
+class Solution {
+private:
+    int mod=1e9+7;
+    int dfs(int n,int k,int target,vector<vector<int>>&dp){
+        if(n==0 || target<=0) return target==n;
+        if(dp[n][target]!=-1) return dp[n][target];
+
+        int count=0;
+        for(int i=1;i<=k;i++){
+            if((target-i)>=0) count = (count+dfs(n-1,k,target-i,dp)%(mod))%(mod);
+        }
+        return dp[n][target]=count;
+    }
+public:
+    int numRollsToTarget(int n, int k, int target) {
+        vector<vector<int>> dp(n+1,vector<int>(target+1,-1));
+        return dfs(n,k,target,dp);
+    }
+};
+/*
+TC-> O(n*target)
+SC-> Recursion Stack: O(n)ASC + DP:O(n*target)
+*/

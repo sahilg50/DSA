@@ -1,0 +1,35 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+private:
+    TreeNode* util(int depth, TreeNode* node, int val, bool left){
+        if(depth==0){
+            TreeNode *new_node;
+            if(left) new_node = new TreeNode(val, node, nullptr);
+            else new_node = new TreeNode(val, nullptr, node);
+            return new_node;
+        }
+        
+        if(node) node->left = util(depth-1, node->left, val, true);
+        if(node) node->right = util(depth-1, node->right, val, false);
+
+        return node;
+    }
+public:
+    TreeNode* addOneRow(TreeNode* root, int val, int depth) {
+        return util(depth-1, root, val, true);
+    }
+};
+/*
+TC-> O(N), N is the number of nodes in the binary tree
+SC-> Memory Stack: O(N)ASC
+*/
