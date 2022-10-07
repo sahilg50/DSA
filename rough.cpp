@@ -5,8 +5,7 @@ using namespace std;
 int main()
 {
 
-    string a = "sahil";
-    string b = "Hello";
-    cout << (a + b).length() > 40;
+    for (string str = "1"; str <= "26"; str++)
+        cout << str << " ";
     return 0;
 }
