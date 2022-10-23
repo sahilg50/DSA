@@ -1,23 +1,15 @@
-def maxUniqueStones(input1, input2, input3):
+def specialNumber(n):
+   n = n*2
+   m = {}
+   for i in range(1,10**8):
+      m.update({i: i*(i+1)})
+
+   ans = "NO"
+   for i in m:
+      if(n/m[i] in m.values()):
+         ans = "YES"
+         break
    
-   SUM = input1
-   maxi = -10**9
-   L = []
-   for i in range(input2): L.append(input3[i])
+   return ans
 
-   for i in range(1, input1+1):
-      SUM = SUM-i
-      count = 0
-      if(i not in L):
-         for j in range(i+1,input1+1):
-            if(j not in L) and (SUM-j>=0):
-               SUM-=j
-               count+=1
-         maxi = max(count, maxi)
-   return maxi+1
-
-
-
-
-ans = maxUniqueStones(14,4,[4,6,8,9])
-print(ans)
+print(specialNumber(256))
