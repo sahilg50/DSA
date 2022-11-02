@@ -1,8 +1,9 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
 
 int main()
 {
-    float a = 5.1;
+    char *s = "hackerearth";
+    char *p = s+2;
+    printf("%c\t%c",*p,s[1]);
     return 0;
 }

@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int minMutation(string start, string end, vector<string>& bank) {
+        set<string> B(bank.begin(), bank.end());
+        vector<char> N  = {'A', 'C', 'T', 'G'};
+        queue<pair<string, int>> Q({{start, 0}});
+        unordered_map<string, int> visited;
+        visited[start] = 1;
+
+        while(!Q.empty()){
+            auto [gene, level] = Q.front(); Q.pop();
+            if(gene==end) return level;
+            for(int i=0; i<gene.size(); i++){
+                for(char n: N){
+                    string new_gene = gene; new_gene[i]=n;
+                    if(B.count(new_gene) && (visited[new_gene]==0)){
+                        visited[new_gene] = 1;
+                        Q.push({new_gene, level+1});
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+};
+/*
+TC-> O(N^4)
+SC-> Visited: O(N^4); N is the lenght of the start string; len(start) = len(end);
+*/
