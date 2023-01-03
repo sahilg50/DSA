@@ -1,12 +1,15 @@
-a= 0
-b = 0
-n = 4
-array = [[5,6,7,8],
-         [9,4,2,5],
-         [1,2,3,4],
-         [7,8,9,0]]
-for i in range(n):
-   a+=array[i][i]
-   b+=array[i][n-i-1]
-if a>b: print(a-b)
-else: print(b-a)
+import numpy as np
+def CountOccurrences(str) :
+   n = len(str)
+   freq = np.zeros(26, dtype = np.int)
+   for i in range(0, n) :
+      freq[ord(str[i]) - ord('a')] += 1
+   ans = ""
+   for i in range(0, n) :
+      if (freq[ord(str[i])- ord('a')] != 0) :
+         ans+=(str[i]  + freq[ord(str[i]) - ord('a')])
+         freq[ord(str[i]) - ord('a')] = 0
+
+   return ans
+
+Countt("Sahil")

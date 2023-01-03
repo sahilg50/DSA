@@ -1,12 +1,16 @@
 #include <iostream>
+#include <map>
 #include <string>
-#include <unordered_map>
 using namespace std;
 
 int main()
 {
-    unordered_map<string, int> v;
-    v["Sahil"] = 1;
-    cout << v["sahi"];
+    string str = "gaga";
+    map<char, int> M;
+    for (char ch = 'a'; ch != 'z'; ch++)
+        M[ch] = 0;
+
+    for (auto &it : M)
+        cout << it.first << " " << it.second << endl;
     return 0;
 }
