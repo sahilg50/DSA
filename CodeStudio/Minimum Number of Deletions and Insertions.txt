@@ -1,0 +1,22 @@
+/*
+https://www.codingninjas.com/codestudio/problems/can-you-make_4244510?source=youtube&campaign=striver_dp_videos&utm_source=youtube&utm_medium=affiliate&utm_campaign=striver_dp_videos
+*/
+
+int canYouMake(string &A, string &B)
+{
+    // Task is to convert string A->B
+    int M = A.size();    
+    int N = B.size();
+    vector<vector<int>> dp(M+1, vector<int>(N+1,0));
+    
+    for(int i=1; i<=M; i++){
+        for(int j=1; j<=N; j++){
+            if(A[i-1]==B[j-1]) dp[i][j] = dp[i-1][j-1] + 1;
+            else dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+        }
+    }
+    int lcs = dp[M][N];
+    int deletions = N-lcs;
+    int insertions = M-lcs;
+    return deletions + insertions;
+}
