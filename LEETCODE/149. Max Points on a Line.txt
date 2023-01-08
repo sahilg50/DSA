@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int maxPoints(vector<vector<int>>& points) {
+        int n = points.size();
+        if(n<=2) return n;
+
+        int maxPoints = 2;
+        for(int i=0; i<n; i++){
+            unordered_map<double, int> tangentMap;
+            for(int j=0; j<n; j++){
+                if(i==j) continue;
+                int x1 = points[i][0];
+                int y1 = points[i][1];
+                int x2 = points[j][0];
+                int y2 = points[j][1];
+                double tangent = atan2((y2-y1),(x2-x1)); // calculate tangent in radians
+                tangentMap[tangent]++; // increase the count
+
+                // to include point itself add 1 to the values
+                maxPoints = max(maxPoints, tangentMap[tangent]+1); 
+            }
+        }
+        return maxPoints;
+    }
+};
+/*
+TC-> O(N^2)
+SC-> O(N), where N is the number of points
+*/
