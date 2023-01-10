@@ -1,0 +1,89 @@
+// Approach 1: (Recursion) TLE
+class Solution {
+private:
+    int util(int i, int j, string &word1, string &word2){
+        // Base case
+        if(j<0) return i+1;
+        if(i<0) return j+1;
+
+        if(word1[i]==word2[j]) return util(i-1, j-1, word1, word2);
+        else{
+            int del = util(i-1, j, word1, word2);
+            int replace = util(i-1, j-1, word1, word2);
+            int insert = util(i, j-1, word1, word2);
+            return 1 + min(del, min(replace, insert));
+        }
+    }
+public:
+    int minDistance(string word1, string word2) {
+        int m = word1.size(), n = word2.size();
+        return util(m-1, n-1, word1, word2);
+    }
+};
+/*
+TC-> O(3^m * 3^n), because at each index we've 3 options, insert, del or replace.
+SC-> Recursion stack:O(m+n), where m and n are the size of word1 and word2
+*/
+
+
+// Approach 2: (Memoization) (top down approach)
+class Solution {
+private:
+    int util(int i, int j, string &word1, string &word2, vector<vector<int>> &dp){
+        // Base case
+        if(j<0) return i+1;
+        if(i<0) return j+1;
+
+        if(dp[i][j]!=-1) return dp[i][j];
+
+        if(word1[i]==word2[j]) return dp[i][j] = util(i-1, j-1, word1, word2, dp);
+        else{
+            int del = util(i-1, j, word1, word2, dp);
+            int replace = util(i-1, j-1, word1, word2, dp);
+            int insert = util(i, j-1, word1, word2, dp);
+            return dp[i][j] = 1 + min(del, min(replace, insert));
+        }
+    }
+public:
+    int minDistance(string word1, string word2) {
+        int m = word1.size(), n = word2.size();
+        vector<vector<int>> dp(m+1, vector<int>(n+1, -1)); // dp array for memoization
+        return util(m-1, n-1, word1, word2, dp);
+    }
+};
+/*
+TC-> O(m*n)
+SC-> dp Array:O(m*n) + Recursion stack:O(m+n), where m and n are the size of word1 and word2
+*/
+
+
+// Approach 3: Tabulation (Bottom Up)
+class Solution {
+public:
+    int minDistance(string word1, string word2) {
+        int m = word1.size(), n = word2.size();
+        vector<vector<int>> dp(m+1, vector<int>(n+1, 0)); // dp array for memoization
+        
+        // Base case
+        for(int i=0; i<=m; i++) dp[i][0] = i;
+        for(int j=0; j<=n; j++) dp[0][j] = j;
+
+        for(int i=1; i<=m; i++){
+            for(int j=1; j<=n; j++){
+                if(word1[i-1]==word2[j-1]) dp[i][j] = dp[i-1][j-1];
+                else{
+                    int del = dp[i-1][j];
+                    int replace = dp[i-1][j-1];
+                    int insert = dp[i][j-1];
+                    dp[i][j] = 1 + min(del, min(replace, insert));
+                }
+            }
+        }
+        return dp[m][n];
+
+    }
+};
+/*
+TC-> O(m*n)
+SC-> DP:O(m*n), where m and n are the size of word1 and word2
+*/
