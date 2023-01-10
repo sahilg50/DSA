@@ -19,5 +19,5 @@ public:
 };
 /*
 TC-> O(N)
-SC-> O(N), required to store and return the preorder traversal
+SC-> Stack:O(N) + Answer:O(N)ASC
 */
