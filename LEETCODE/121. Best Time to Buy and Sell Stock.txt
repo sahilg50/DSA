@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& P) {
+        /*
+        L: Buying day
+        R: Selling day
+        */
+        int L=0, R=1, maxProfit=0;
+        while(R<P.size()){
+            if(P[R]<P[L]){
+                L=R;
+            }
+            maxProfit = max(maxProfit, (P[R]-P[L]));
+            R++;
+        }
+        return maxProfit;
+    }
+};
+/*
+TC-> O(N)
+SC-> (1), constant
+*/
