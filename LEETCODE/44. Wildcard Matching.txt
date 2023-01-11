@@ -1,0 +1,73 @@
+// Approach 1: Recursion + Memoization (Top Down Approach)
+class Solution {
+private:
+    bool isAllStars(int j, string &p){
+        for(int idx=0; idx<=j; idx++) if(p[idx]!='*') return false;
+        return true;
+    }
+
+    bool util(int i, int j, string &s, string &p, vector<vector<int>> &dp){
+        // Base case
+        if (i < 0 && j < 0) return true;
+        if (i >= 0 && j < 0) return false;
+        if (i < 0 && j >= 0) return isAllStars(j, p);
+
+        if(dp[i][j]!=-1) return dp[i][j];
+
+        if(s[i]==p[j] || p[j]=='?') return dp[i][j] = util(i-1, j-1, s, p, dp);
+        else{
+            if(p[j]=='*') return dp[i][j] = (util(i-1, j, s, p, dp) || util(i, j-1, s, p, dp));
+            else return false;
+        }
+    }
+public:
+    bool isMatch(string s, string p) {
+        int m = s.size(), n = p.size();
+        vector<vector<int>> dp(m+1, vector<int>(n+1, -1));
+        return util(m-1, n-1, s, p, dp);
+    }
+};
+/*
+1. Recursion: 
+    TC-> exponential
+    SC-> Recursion Stack: O(n+m)ASC
+
+2. Recursion + Memoization:
+    TC-> O(n*m)
+    SC-> DP Array: O(n*m) + Recursion Stack: O(n+m)ASC
+*/
+
+
+
+// Approach 2: Tabulation (Bottom Up Approach)
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int m = s.size(), n = p.size();
+        vector<vector<bool>> dp(m+1, vector<bool>(n+1, false));
+
+        // Base cases
+        dp[0][0] = true;
+        // All Stars case of recursion solution.
+        for(int j=1; j<=n; j++){
+            if(p[j-1]=='*') dp[0][j] = true;
+            else break;
+        }
+
+        for(int i=1; i<=m; i++){
+            for(int j=1; j<=n; j++){
+                if(s[i-1]==p[j-1] || p[j-1]=='?') dp[i][j] = dp[i-1][j-1];
+                else{
+                    if(p[j-1]=='*') dp[i][j] = dp[i-1][j] || dp[i][j-1];
+                    else dp[i][j] = false;
+                }
+            }
+        }
+        return dp[m][n];
+    }
+};
+/*
+1. Recursion: 
+    TC-> O(n*m)
+    SC-> DP Array: O(n*m)
+*/
