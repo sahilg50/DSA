@@ -1,0 +1,43 @@
+// Approach 1: Recursion + Memoization (Bottom Up Approach because time series data)
+class Solution {
+private:
+    int util(int ind, int buy, vector<int> &prices, vector<vector<vector<int>>> &dp, int T){
+        // Base case
+        if(ind==prices.size() || T<=0) return 0;
+
+        if(dp[ind][buy][T]!=-1) return dp[ind][buy][T];
+
+        // buy=1 means can buy, buy=0 means can sell
+        int op1, op2;
+        if(buy){
+            op1 = util(ind+1, 1, prices, dp, T);
+            op2 = -prices[ind] + util(ind+1, 0, prices, dp, T-1);
+        }
+        else{
+            op1 = util(ind+1, 0, prices, dp, T);
+            op2 = prices[ind] + util(ind+1, 1, prices, dp, T-1);
+        }
+
+        return dp[ind][buy][T] = max(op1, op2);
+    }
+public:
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        /*
+        T transactions remaining
+        we'll take buy and sell as different transactions, so a total of (2*2 = 4) transactions are allowed.
+        */
+        int T = 4; 
+        vector<vector<vector<int>>> dp(n+1, vector<vector<int>>(2,vector<int>(T+1, -1)));
+        return util(0, 1, prices, dp, T);
+    }
+};
+/*
+1. Recursion:
+    TC-> O(exponential) ~= O(2^N), where N is the size of the array
+    SC-> Recursion Stack: O(N)ASC
+
+2.Recursion + Memoization
+    TC-> O(N*2*4)
+    SC-> DP Array: O(N*2*4) + Recursion Stack: O(N)ASC
+*/
