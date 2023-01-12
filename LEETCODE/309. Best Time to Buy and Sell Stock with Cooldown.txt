@@ -1,0 +1,48 @@
+// 1. Approach: Recursion + Memoization
+class Solution {
+private:
+    int util(int ind, int buy, int coolDown, vector<int> &prices, vector<vector<vector<int>>> &dp){
+
+        // If prices array is completed return 0
+        if(ind==prices.size()) return 0;
+
+        if(dp[ind][buy][coolDown]!=-1) return dp[ind][buy][coolDown];
+
+        // On coolDown day we cannot do any transaction therefore move to the next index
+        if(coolDown) return dp[ind][buy][coolDown] = util(ind+1, 1, 0, prices, dp);
+
+        // Do all operations possible according to given instructions        
+        int op1, op2;
+        // buy==1 means we can buy, else we can only sell
+        if(buy){
+            // Don't do anything and move to the next index.
+            op1 = util(ind+1, 1, 0, prices, dp);
+            // we're buying therefore subtract the price from the profit.
+            op2 = -prices[ind] + util(ind+1, 0, 0, prices, dp); 
+        }
+        else{
+            // Don't do anything and move to the next index.
+            op1 = util(ind+1, 0, 0, prices, dp);
+            // we're selling therefore add the prices to the profit.
+            op2 = prices[ind] + util(ind+1, 1, 1, prices, dp);  
+        }
+
+        return dp[ind][buy][coolDown] = max(op1, op2);
+    }
+
+public:
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        vector<vector<vector<int>>> dp(n, vector<vector<int>>(2, vector<int>(2, -1)));
+        return util(0, 1, 0, prices, dp);
+    }
+};
+/*
+1. Recursion:
+    TC-> O(exponential) ~= O(2^N)
+    SC-> Recursion Stack: O(N)ASC
+
+2. Recursion + Memoization
+    TC-> O(N*2*2)
+    Sc-> DP Array: O(N*2*2) + Recursion Stack: O(N)ASC
+*/

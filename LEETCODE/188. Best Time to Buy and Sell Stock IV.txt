@@ -21,13 +21,15 @@ private:
 
         return dp[ind][buy][T] = max(op1, op2);
     }
+
 public:
-    int maxProfit(vector<int>& prices) {
+    int maxProfit(int k, vector<int>& prices) {
+        
         int n = prices.size();
         /*
         T transactions remaining
         */
-        int T = 2; 
+        int T = k; 
         vector<vector<vector<int>>> dp(n+1, vector<vector<int>>(2,vector<int>(T+1, -1)));
         return util(0, 1, prices, dp, T);
     }
