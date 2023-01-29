@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/longest-increasing-subsequence/
+
 // 1. Recursion + Memoization
 class Solution {
 private:
@@ -55,7 +57,7 @@ TC-> O(N^2)
 SC-> DP Array: O(N^2)
 */
 
-// Approach 3: Tabulation (Bottom Up)
+// Approach 3: algorithmic (Bottom Up)
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
