@@ -56,5 +56,5 @@
 		"xtr1common": "cpp",
 		"sstream": "cpp"
 	},
-	"cSpell.words": ["nullptr", "preorder"]
+	"cSpell.words": ["nullptr", "preorder", "tribonacci"]
 }
