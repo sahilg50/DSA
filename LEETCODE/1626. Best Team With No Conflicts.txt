@@ -1,0 +1,69 @@
+// Approach 1: Recursion(TLE) + Memoization (Bottom Up)
+class Solution {
+private:
+    int lcs(int ind, int prevInd, vector<vector<int>> &players, vector<vector<int>> &dp){
+
+        // Base case
+        if(ind>=players.size()) return 0;
+
+        if(dp[ind][prevInd+1]!=-1) return dp[ind][prevInd+1];
+
+        int pick=0, notPick=0;
+        
+        if(prevInd==-1 || players[ind][1]>=players[prevInd][1]) 
+            pick = players[ind][1] + lcs(ind+1, ind, players, dp);
+
+        notPick = lcs(ind+1, prevInd, players, dp);
+
+        return dp[ind][prevInd+1] = max(pick, notPick);
+    }
+public:
+    int bestTeamScore(vector<int>& scores, vector<int>& ages) {
+        
+        // Combine both vectors
+        vector<vector<int>> players;
+        int n = scores.size();
+        for(int i=0; i<n; i++) players.push_back({ages[i], scores[i]});
+        sort(players.begin(), players.end());
+
+        vector<vector<int>> dp(n+1, vector<int>(n+1, -1));
+        return lcs(0, -1, players, dp);
+    }
+};
+/*
+If N is the number of players then:
+TC-> Sorting: O(NLogN) + O(N^2)
+SC-> Combined Array: O(2*N) + DP Array: O(N^2) + Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: Tabulation (Bottom Up)
+class Solution {
+public:
+    int bestTeamScore(vector<int>& scores, vector<int>& ages) {
+        
+        // Combine both vectors
+        vector<pair<int,int>> players;
+        int n = scores.size();
+        // first -> age, second -> score
+        for(int i=0; i<n; i++) players.push_back({ages[i], scores[i]});
+        sort(players.begin(), players.end());
+
+        vector<int> dp(n, 0);
+
+        for(int i=0; i<n; i++){
+            dp[i] = players[i].second;
+            for(int j=0; j<i; j++){
+                if(players[i].second >= players[j].second){
+                    dp[i] = max(dp[i], dp[j] + players[i].second);
+                }
+            }
+        }
+        return *max_element(dp.begin(), dp.end());
+    }
+};
+/*
+If N is the number of players then:
+TC-> Sorting: O(NLogN) + O(N^2)
+SC-> Combined Array: O(2*N) + DP Array: O(N)
+*/

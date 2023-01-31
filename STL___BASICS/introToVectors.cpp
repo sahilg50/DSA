@@ -98,7 +98,7 @@ int main()
     }
 
     // Array of vectors
-    // Note: Its's like the a 2D matrix, where we can increase the number of olumns but we cannot increase the number of rows.
+    // Note: Its's like the a 2D matrix, where we can increase the number of columns but we cannot increase the number of rows.
     cout << endl
          << "Array of Vectors explanation: ";
     vector<int> va[3];
