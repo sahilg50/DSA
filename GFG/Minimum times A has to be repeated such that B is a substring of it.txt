@@ -1,0 +1,23 @@
+// https://practice.geeksforgeeks.org/problems/fda70097eb2895ecfff269849b6a8aace441947c/1
+
+class Solution {
+  public:
+    int minRepeats(string A, string B) {
+        string S = A;
+        int repeat = 1;
+        while(A.size() < B.size()){
+            A.append(S);
+            repeat++;
+        }
+        if(A.find(B)!=-1) return repeat;
+        
+        A.append(S), repeat++;
+        if(A.find(B)!=-1) return repeat;
+        
+        return -1;
+    }
+};
+/*
+TC-> Append(): O(N) + Find(): O(N^2),
+SC-> O(max(A, B)), This is because we're expanding A
+*/

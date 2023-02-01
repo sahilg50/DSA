@@ -56,5 +56,10 @@
 		"xtr1common": "cpp",
 		"sstream": "cpp"
 	},
-	"cSpell.words": ["nullptr", "preorder", "tribonacci"]
+	"cSpell.words": [
+		"nullptr",
+		"preorder",
+		"Sahil",
+		"tribonacci"
+	]
 }
