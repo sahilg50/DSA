@@ -127,5 +127,9 @@ int main()
         So TC = N*(N+1) / 2 ->O(N^2)
     */
 
+    // TOPIC: const keyword
+    const string C = "Sahil";
+    // ! C.push_back('G');  This method is not allowed because of the const keyword.
+
     return 0;
 }
