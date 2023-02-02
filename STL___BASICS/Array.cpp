@@ -6,7 +6,7 @@ using namespace std;
  - Collection of datatypes is array
  - local array size limit = order of 10^5
  - global array size limit = order of 10^7
- - global and static arrays are stored in data segemnt of the memory.
+ - global and static arrays are stored in data segment of the memory.
  - local arrays or pointer to dynamic array(array stored in heap) are stored in stack.
  - With dynamic arrays, you have to handle the memory by yourself, so it is preferred to use vectors where the memory management is hidden from the user.
 */
@@ -24,7 +24,7 @@ int main()
     cin >> n;
     int *arr = new int[n]; // Dynamic array
 
-    // set all the elments equal to zero
+    // set all the elements equal to zero
     memset(arr, 0, n * sizeof(int)); // (array address, default value, size occupied by array)
 
     // printing all the elements

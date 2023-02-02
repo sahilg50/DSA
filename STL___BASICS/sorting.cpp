@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <string>
 #include <utility>
 #include <random>
 
@@ -70,5 +71,26 @@ int main()
         cout << endl
              << pv.first << " " << pv.second;
     }
+
+    /*
+    TOPIC: is_sorted()
+    https://www.educative.io/answers/how-to-use-the-issorted-function-in-cpp
+
+    The is_sorted() function accepts the following parameters.
+        -> first: This is the start position of your search space. It is an iterator that usually points to the start of an array.
+
+        -> last: This is the end position of your search space. It is an iterator that usually points to the last position of an array.
+
+        -> comparator: This is an optional parameter. It is a binary function that accepts two elements of the same type as you have in your list. It then returns a Boolean value that indicates which element to be considered first among the two elements passed to the function.
+    */
+    vector<string> words = {"What", "a", "sunny", "day"};
+    bool sorted = is_sorted(words.begin(), words.end());
+    cout << "\n\nIs the vector of strings sorted? " << boolalpha << sorted;
+    /*
+    Note: "boolalpha" specifies "cout" to print in true and false format.
+    In case of numbers: TC-> O(N), SC-> O(1), N = length of array
+    In case of strings: TC-> O(N*W), SC-> O(1), N = number of words, W = max length of string
+    */
+
     return 0;
 }

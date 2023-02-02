@@ -4,8 +4,7 @@ using namespace std;
 
 int main()
 {
-    string A = "Sahil";
-    A.push_back('A');
-    cout << A;
+    int a;
+    cout << a;
     return 0;
 }

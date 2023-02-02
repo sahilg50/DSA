@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/greatest-common-divisor-of-strings/
+
 // Approach 1: GCD
 class Solution {
 public:

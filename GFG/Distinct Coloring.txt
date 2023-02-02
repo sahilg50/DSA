@@ -1,0 +1,32 @@
+// https://practice.geeksforgeeks.org/problems/844b4fdcd988ac5461324d62d43f7892749a113c/1
+
+// Approach 1: Recursion(TLE) + Memoization
+class Solution{
+private:
+    long long int util(int ind, char prevColor, int R[], int G[], int B[], int N, vector<vector<long long int>> &dp){
+        
+        if(ind>=N) return 0;
+        if(dp[ind][prevColor-'A']!=-1) return dp[ind][prevColor-'A'];
+        
+        // Perform all operations
+        long long int paintR=1e18, paintG=1e18, paintB=1e18;
+        
+        if(prevColor != 'R') paintR = R[ind] + util(ind+1, 'R', R, G, B, N, dp);
+        if(prevColor != 'G') paintG = G[ind] + util(ind+1, 'G', R, G, B, N, dp);
+        if(prevColor != 'B') paintB = B[ind] + util(ind+1, 'B', R, G, B, N, dp);
+        
+        // return min of all operations
+        return  dp[ind][prevColor-'A'] = min(paintR, min(paintG, paintB));
+    }
+public:
+    long long int distinctColoring(int N, int R[], int G[], int B[]){
+        vector<vector<long long int>> dp(N+1, vector<long long int>(26, -1));
+        return util(0, 'A', R, G, B, N, dp);
+    }
+};
+/*
+If N is the number of houses then: 
+TC-> O(N*4)
+SC-> DP Array: O(N*4) + Recursion Stack: O(N)ASC
+*/
+
