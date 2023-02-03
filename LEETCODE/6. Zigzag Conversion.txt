@@ -1,0 +1,35 @@
+// https://leetcode.com/problems/zigzag-conversion/description/
+
+// Approach 1
+class Solution {
+public:
+    string convert(const string &s, int numRows) {
+
+        if(numRows==1) return s;
+
+        vector<vector<char>> M(numRows);
+
+        int r=0;
+        bool down = true;
+        for(int i=0; i<s.size(); i++){
+
+            M[r].push_back(s[i]);
+
+            if(r==0) down = true;
+            if(r==numRows-1) down = false;
+
+            down ? r++ : r--;
+        }
+
+        string result = "";
+        for(auto &row : M){
+            for(auto &col : row) result.push_back(col);
+        }
+        return result;
+    }
+};
+/*
+If N = size(s) then:
+TC-> O(N)
+SC-> O(N)
+*/
