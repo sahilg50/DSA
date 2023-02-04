@@ -20,7 +20,7 @@ public:
 
             down ? r++ : r--;
         }
-
+                         
         string result = "";
         for(auto &row : M){
             for(auto &col : row) result.push_back(col);

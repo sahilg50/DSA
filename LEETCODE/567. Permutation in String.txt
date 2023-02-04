@@ -1,0 +1,38 @@
+// https://leetcode.com/problems/permutation-in-string/description/
+
+// Approach 1: Sliding Window (Optimal Solution)
+class Solution {
+private:
+    bool isAnagram(vector<int> &a, vector<int> &b){
+        for(int i=0; i<26; i++) if(a[i]!=b[i]) return false;
+        return true;
+    }
+public:
+    bool checkInclusion(string s1, string s2) {
+        if(s1.size()>s2.size()) return false;
+        
+        vector<int> freqS1(26, 0);
+        for(char &ch : s1) freqS1[ch-'a']++;
+
+        vector<int> freqS2(26, 0);
+        int L=0, R=0;
+        while(R<s2.size()){
+            freqS2[s2[R]-'a']++;
+        
+            if(R-L+1 == s1.size()) if(isAnagram(freqS1, freqS2)) return true;
+            
+            if(R-L+1 < s1.size()) R++;
+            
+            else{
+                freqS2[s2[L]-'a']--;
+                L++, R++;
+            }
+        }
+        
+        return false;
+    }
+};
+/*
+TC-> O(N*26)
+SC-> O(26 + 26), O(1) or constant
+*/
