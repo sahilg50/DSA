@@ -1,0 +1,81 @@
+// https://practice.geeksforgeeks.org/problems/7a33c749a79327b2889d420dd80342fff33aac6d/1
+
+// Approach 1: Recursion(TLE) + Memoization
+class Solution{
+private:
+    int util(int ind, int *arr, int n, vector<int> &dp){
+        
+        if(ind>=n) return 0;
+        if(dp[ind]!=-1) return dp[ind];
+        
+        int pick=0, notPick=0;
+        pick = arr[ind] + util(ind+2, arr, n, dp);
+        notPick = util(ind+1, arr, n, dp);
+        
+        return dp[ind] = max(pick, notPick);
+    }
+public:	
+	// calculate the maximum sum with out adjacent
+	int findMaxSum(int *arr, int n) {
+	    vector<int> dp(n, -1);
+	    return util(0, arr, n, dp);
+	}
+};
+/*
+If N is the size of the array then: 
+Recursion:
+    TC-> O(2^N)
+    SC-> Recursion Stack: O(N)
+    
+With Memoization:
+    TC-> O(N)
+    SC-> DP Array: O(N) + Recursion Stack: O(N)
+*/
+
+
+// Approach 2: Tabulation (Approach 1 -> tabulation)
+// This is top-down but We can also write it bottom-up approach
+class Solution{
+public:	
+	int findMaxSum(int *arr, int n) {
+	    vector<int> dp(n+2, 0);
+	    
+	    for(int ind=n-1; ind>=0; ind--){
+	        int pick=0, notPick=0;
+            pick = arr[ind] + dp[ind+2];
+            notPick = dp[ind+1];
+            dp[ind] = max(pick, notPick);
+	    }
+	    return dp[0];
+	}
+};
+/*
+If N is the size of the array then: 
+TC-> O(N)
+SC-> DP Array: O(N)
+*/
+
+
+// Approach 3: Space Optimization
+class Solution{
+public:	
+	int findMaxSum(int *arr, int n) {
+	    
+	    int a=0, b=0, c=0;
+	    
+	    for(int ind=n-1; ind>=0; ind--){
+	        int pick=0, notPick=0;
+            pick = arr[ind] + a;
+            notPick = b;
+            c = max(pick, notPick);
+            a = b;
+            b = c;
+	    }
+	    return c;
+	}
+};
+/*
+If N is the size of the array then: 
+TC-> O(N)
+SC-> O(1)
+*/
