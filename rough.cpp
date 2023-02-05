@@ -5,7 +5,13 @@ using namespace std;
 
 int main()
 {
-    char a = 'a' + 1;
-    cout << a;
+    unordered_map<char, int> M;
+    M['a'] = 1;
+    if (M['b'] > 20)
+        cout << "hello World";
+
+    for (auto &it : M)
+        cout << it.first << " " << it.second << endl;
+
     return 0;
 }

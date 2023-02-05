@@ -1,0 +1,41 @@
+// https://leetcode.com/problems/find-all-anagrams-in-a-string/description/
+
+// Approach 1: Sliding Window (Optimal Solution)
+class Solution {
+private:
+    bool isAnagram(vector<int> &a, vector<int> &b){
+        for(int i=0; i<26; i++) if(a[i]!=b[i]) return false;
+        return true;
+    }
+public:
+    vector<int> findAnagrams(string &S, string &P) {
+
+        vector<int> result;
+
+        if(S.size()<P.size()) return result;
+        
+        vector<int> freqP(26, 0), freqS(26, 0);
+        for(char &ch : P) freqP[ch-'a']++;
+
+        int L=0, R=0;
+        while(R<S.size()){
+            freqS[S[R]-'a']++;
+        
+            if(R-L+1 == P.size()) if(isAnagram(freqS, freqP)) result.push_back(L);
+            
+            if(R-L+1 < P.size()) R++;
+            
+            else{
+                freqS[S[L]-'a']--;
+                L++, R++;
+            }
+        }
+        
+        return result;
+    }
+};
+/*
+If N = size(S), then
+TC-> O(N*26)
+SC-> O(26 + 26), O(1) or constant
+*/
