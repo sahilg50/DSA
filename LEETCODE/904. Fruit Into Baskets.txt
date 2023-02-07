@@ -1,0 +1,119 @@
+// https://leetcode.com/problems/fruit-into-baskets/description/
+
+// Approach 1: Recursion(TLE) (Bottom-Up)
+class Solution {
+private:
+    int util(int ind, vector<int> &fruits, unordered_set<int> &S){
+
+        // Base cases
+        if(ind >= fruits.size()) return 0;
+
+        S.insert(fruits[ind]);
+        if(S.size()>2) return 0;
+        
+        // Perform all possible operations at an index and return count
+        return 1 + util(ind+1, fruits, S);
+        
+    }
+public:
+    int totalFruit(vector<int>& fruits) {
+        
+        int maxPicked = 1;
+
+        for(int i=0; i<fruits.size(); i++){
+            unordered_set<int> S;
+            maxPicked = max(maxPicked, util(i, fruits, S));
+        }
+        return ans;
+    }
+};
+/*
+If N is the size of fruits array then:
+TC-> O(N^2)
+SC-> Recursion Stack: O(N)ASC
+*/
+
+
+
+
+// https://leetcode.com/problems/fruit-into-baskets/solutions/2960000/fruit-into-baskets/
+
+// Approach 2: Brute Force (TLE)
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+        int maxPicked = 0;
+
+        for(int L=0; L<fruits.size(); L++){
+            for(int R=0; R<fruits.size(); R++){
+
+                set<int> basket;
+                for(int ind=L; ind<=R; ind++){
+                    basket.insert(fruits[ind]);
+                    if(basket.size()>2) break;
+                }
+
+                if(basket.size()<=2) maxPicked = max(maxPicked, R-L+1);                
+            }
+        }
+        return maxPicked;
+    }
+};
+/*
+If N is the size of fruits array then:
+TC-> O(N^3), Because we're forming all the subArrays and then iterating each one of them.
+SC-> O(1), Because at max we're storing only 3 unique elements in the set(basket).
+*/
+
+
+// Approach 3: Optimized Brute Force (TLE)
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+        int maxPicked = 0;
+
+        for(int L=0; L<fruits.size(); L++){
+            set<int> basket;
+            for(int R=L; R<fruits.size(); R++){
+
+                basket.insert(fruits[R]);
+                if(basket.size()>2) break;
+                maxPicked = max(maxPicked, R-L+1);                
+            }
+        }
+        return maxPicked;
+    }
+};
+/*
+If N is the size of fruits array then:
+TC-> O(N^2), We only have two nested loops that can.
+SC-> O(1), Because at max we're storing only 3 unique elements in the set(basket).
+*/
+
+
+// Approach 4: Sliding Window (Optimal Solution)
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+        int maxPicked = 0;
+        unordered_map<int, int> basket;
+
+        int L=0;
+        for(int R=0; R<fruits.size(); R++){
+            basket[fruits[R]]++;
+
+            if(basket.size()>2){
+                basket[fruits[L]]--;
+                if(basket[fruits[L]]==0) basket.erase(fruits[L]);
+                L++;
+            }
+            maxPicked = max(maxPicked, R-L+1);
+        }
+        return maxPicked;
+    }
+};
+/*
+If N is the size of fruits array then:
+TC-> O(N), Both indexes left and right only monotonically increased during the iteration, thus we have at most 2*N steps
+SC-> O(1), Because at max we're storing only 3 unique elements in the map(basket).
+*/

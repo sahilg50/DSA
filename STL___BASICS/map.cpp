@@ -5,10 +5,10 @@ using namespace std;
 
 int main()
 {
-    // Maps are implmenete using red black trees and the
+    // Maps are implement using red black trees and the
     // Elements are arranged in the sorted order in map
     map<int, string> m;
-    m[1] = "abc"; // TC-> O(Olog(n)), wehere n is the current size of the map
+    m[1] = "abc"; // TC-> O(Olog(n)), where n is the current size of the map
     m[5] = "cbc";
     m[3] = "acd";
     m.insert({4, "doifj"});
