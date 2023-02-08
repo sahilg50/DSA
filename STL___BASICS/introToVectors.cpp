@@ -35,9 +35,6 @@ int main()
     int n = 10, m = 5;
     vector<vector<int>> vec(n, vector<int>(m, 0));
 
-    // Dynamically allocates the memory
-    vector<int> *dv = new vector<int>();
-
     // we're initializing a vector with size 10 and default value -2
     vector<int> V(10, -2);
 
@@ -52,8 +49,8 @@ int main()
     cout << "\nElement at index 1: " << v[100];
     // Returns the garbage value if the index is out of range
 
-    // TOPIC: Methods of vector class
-    cout << "\n\n\n\nMethods of vector class:";
+    // TOPIC: Methods of vector container
+    cout << "\n\n\n\nMethods of vector container:";
 
     cout << "\nSize of vector: " << v.size();
     // Returns the size
@@ -64,6 +61,9 @@ int main()
     cout << "\nLast element: " << v.back();
     // Returns the last element
 
+    cout << "\nIs empty? " << boolalpha << v.empty();
+    // Returns true if array is empty, false otherwise.
+
     v.push_back(10);
     // Appends an element at the end.
 
@@ -71,10 +71,34 @@ int main()
     // Removes the last element and does not return anything.
 
     v.clear();
-    // Removes all elements from vector and reducing it to size 0
+    /*
+    Removes all elements from vector and reducing it to size 0.
+    All elements are destroyed one by one. TC-> O(N)
+    */
+
+    v.begin();
+    // Returns a bidirectional iterator pointing to the first element of the vector container. Bidirectional iterator can be incremented as well as decremented.
+
+    v.end();
+    // Returns a bidirectional iterator pointing right next to the last element of the vector container.
+
+    v.rbegin();
+    // Returns a reverse bidirectional iterator pointing to the last element of the vector container.
+
+    v.rend();
+    // Returns a reverse bidirectional iterator pointing right before the first element of the vector container.
 
     v.insert(v.end(), 10);
     // Can insert 10 at any position from v.begin() to v.end() (both inclusive). But not any other position, that we cause an error.
+
+    n = 30;
+    int val = -1;
+    v.resize(n, val);
+    /*
+    This method alters the container’s content in actual by inserting or deleting the elements from it.
+    If n < size of vector, then extra elements are demolished.
+    Else If n > size of vector, then upcoming elements are appended at the end of the vector with value = val. Default value of val is 0.
+    */
 
     /*
     TOPIC: Useful functions for vectors
@@ -101,9 +125,15 @@ int main()
     TC-> O(N) SC-> O(1)
     */
 
+    sort(v.begin(), v.end(), greater<int>());
+    /*
+    Sorts the specified range in descending format. Does not return anything.
+    TC->O(NlogN) SC->O(1)
+    */
+
     sort(v.begin(), v.end());
     /*
-    Sorts the vector from the specified range. Inclusive of lower limit and inclusive of upper limit. Does not return anything.
+    Sorts the specified range in ascending format. Does not return anything.
     TC->O(NlogN) SC->O(1)
     */
 
@@ -183,17 +213,11 @@ int main()
     vector<vector<vector<int>>>
         dp(n, vector<vector<int>>(m, vector<int>(m, -1)));
 
-    // vector of structures
-    cout << "\nVector of structures: ";
-    vector<struct node> SV;
-    SV.push_back({1, 2});
-    struct node *test = &SV[0];
-    cout << endl
-         << test->x << " " << test->y;
-
-    // Resizing the vectors
-    vector<int> RV;
-    RV.resize(100, -1); // vector.resize(new size, const value);
+    // TOPIC: Vector of structures
+    cout << "\n\n\n\nVector of structures:\n";
+    vector<struct node> VS;
+    VS.push_back({1, 2});
+    cout << VS[0].x << " " << VS[0].y << endl;
 
     /*
     .erase()
@@ -215,5 +239,12 @@ int main()
     erase() works best with elements in a position, remove() is best while working with range of elements.
     */
 
+    // TOPIC: Dynamically allocate the memory to vector
+    cout << "\n\n\n\nDynamically allocate the memory to vector:";
+    vector<int> *dv = new vector<int>(3, -2);
+    cout << "\nSize of vector: " << dv->size() << endl;
+    dv->push_back(20), dv->push_back(10);
+    for (int i = 0; i < dv->size(); i++)
+        cout << dv->at(i) << " ";
     return 0;
 }
