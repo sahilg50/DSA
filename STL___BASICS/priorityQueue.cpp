@@ -46,7 +46,7 @@ int main()
 
     /*
     Method 2: Inserting all the elements at once
-    This method is effecient
+    This method is efficient
     TC-> O(N)
     SC-> O(N)
     */

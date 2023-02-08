@@ -13,9 +13,9 @@ struct node
 void printVec(vector<int> v)
 {
 
-    // In this function, a copy of the vector is recieved, so the changes made in this function won't reflect in the original vector.
+    // In this function, a copy of the vector is received, so the changes made in this function won't reflect in the original vector.
 
-    // To reflect the chages, the vector should passed by reference, i.e. void printVec(vector<int> &v)
+    // To reflect the changes, the vector should passed by reference, i.e. void printVec(vector<int> &v)
     for (int i = 0; i < v.size(); i++)
     {
         cout << v[i] << " ";
@@ -26,7 +26,7 @@ void printVec(vector<int> v)
 // NOTE: All the vectors are stored in contiguous memory locations.
 int main()
 {
-    // 2D vector intitailization where n, m is the rows, cols respectively
+    // 2D vector initialization where n, m is the rows, cols respectively
     int n = 10, m = 5;
     vector<vector<int>> vec(n, vector<int>(m, 0));
 
@@ -169,17 +169,17 @@ int main()
     RV.resize(100, -1); // vector.resize(new size, const value);
 
     // clear() removes all elements from vector and reducing it to size 0.
-    vector<int> myvector;
-    myvector.clear();
+    vector<int> myVector;
+    myVector.clear();
 
     /*
     .erase()
-    Input  : myvector= {1, 2, 3, 4, 5}, iterator= myvector.begin()+2
-    myvector.erase(iterator);
+    Input  : myVector= {1, 2, 3, 4, 5}, iterator= myVector.begin()+2
+    myVector.erase(iterator);
     Output : 1, 2, 4, 5
 
-    Input  : myvector= {1, 2, 3, 4, 5, 6, 7, 8}, iterator1= myvector.begin()+3,iterator2= myvector.begin()+6
-    myvector.erase(iterator1, iterator2);
+    Input  : myVector= {1, 2, 3, 4, 5, 6, 7, 8}, iterator1= myVector.begin()+3,iterator2= myVector.begin()+6
+    myVector.erase(iterator1, iterator2);
     Output : 1, 2, 3, 7, 8
 
     .remove()

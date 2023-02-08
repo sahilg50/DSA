@@ -28,7 +28,7 @@ int main()
     }
     // NOTE: (*it).first <==> (it->first)
 
-    // In C++11 owards
+    // In C++11 onwards
     cout << endl
          << endl
          << "RANGE BASED LOOPS" << endl;
@@ -68,7 +68,7 @@ int main()
     }
     cout << endl;
 
-    // another exmaple wehere we can use auto keyword
+    // another example where we can use auto keyword
     cout << endl
          << endl
          << "AUTO IN CASE OF VECTOR PAIRS";

@@ -1,0 +1,73 @@
+// https://leetcode.com/problems/house-robber-iv/description/
+
+
+// Approach 1: Recursion(TLE) + Memoization(TLE) (Bottom-Up)
+class Solution {
+private:
+    int util(int ind, int k, vector<int> &nums, vector<vector<int>> &dp){
+        
+        if(k==0) return 0;
+        if(ind >= nums.size()) return INT_MAX;
+        if(dp[ind][k]!=-1) return dp[ind][k];
+
+        // These helps in finding the maximum element in the subsequence
+        int rob = max(nums[ind], util(ind+2, k-1, nums, dp));
+        int notRob = util(ind+1, k, nums, dp);
+        
+        // These helps in finding the minimum sub subsequence
+        return dp[ind][k] = min(rob, notRob);
+    }
+public:
+    int minCapability(vector<int>& nums, int k) {
+        vector<vector<int>> dp(nums.size(), vector<int>(k+1, -1));
+        return util(0, k, nums, dp);
+    }
+};
+/*
+If N is the number of houses and K is the number of houses to steal from then: 
+Recursion:
+    TC-> O(2^N)
+    SC-> Recursion Stack: O(N)ASC
+
+With Memoization:
+    TC-> O(N*K)
+    SC-> DP Array: O(N*K) + Recursion Stack: O(N)ASC
+*/
+
+
+
+/* Approach 2: Binary Search (Optimal Solution)
+
+We can observe that the range of our answer(capability) will be from 1 to 1e9. We can simply check for each of these values starting from 1, whether it is possible to have at least k elements with current value as the minimum capability. To improve the TC, we can simply use BS. We first need to write the helper function which will tell us if it is possible to select at least "k" elements with current capability as minimum. If the answer is "yes", we look for a lower value of capability, if not, we search for a higher one.
+
+*/
+class Solution {
+private:
+    bool isPossible(int m, vector<int> &nums, int k){
+        int i=0;
+        while(i<nums.size()){
+            if(nums[i]<=m) k--, i+=2;
+            else i++;
+            
+            if(k==0) return true;
+        }
+        return false;
+    }
+public:
+    int minCapability(vector<int>& nums, int k) {
+
+        int L = 1, R = *max_element(nums.begin(), nums.end());
+        
+        while(L<R){
+            int M = (L+R)/2;
+            if(isPossible(M, nums, k)) R = M;
+            else L = M + 1;
+        }
+        return R;
+    }
+};
+/*
+If N is the number of houses and K is the number of houses to steal from then: 
+TC-> O(N*log(N))
+SC-> O(1)
+*/
