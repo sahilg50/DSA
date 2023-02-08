@@ -2,11 +2,12 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <algorithm>
 using namespace std;
 
 int main()
 {
-    vector<int> v = {1, 2};
-    cout << *v.begin();
+    bool a = 4 % 2;
+    cout << boolalpha << a;
     return 0;
 }

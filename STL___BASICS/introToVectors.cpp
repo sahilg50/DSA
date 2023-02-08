@@ -12,15 +12,20 @@ struct node
 
 void printVec(vector<int> v)
 {
+    /*
+    In this function, a copy of the vector is received, so the changes made in this function won't reflect in the original vector.
 
-    // In this function, a copy of the vector is received, so the changes made in this function won't reflect in the original vector.
-
-    // To reflect the changes, the vector should passed by reference, i.e. void printVec(vector<int> &v)
+    To reflect the changes, the vector should passed by reference ->
+    void printVec(vector<int> &v)
+    */
     for (int i = 0; i < v.size(); i++)
-    {
         cout << v[i] << " ";
-    }
     cout << endl;
+}
+
+bool isEven(int i)
+{
+    return !(i % 2);
 }
 
 // NOTE: All the vectors are stored in contiguous memory locations.
@@ -34,143 +39,161 @@ int main()
     vector<int> *dv = new vector<int>();
 
     // we're initializing a vector with size 10 and default value -2
-    vector<int> v3(10, -2);
+    vector<int> V(10, -2);
 
     // statically allocates the memory
-    vector<int> v;
+    vector<int> v = {5, 4, 8, -1};
 
-    // insert
-    v.push_back(10); // TC-> O(1)
-    v.push_back(90);
-    v.push_back(80);
+    // TOPIC: Accessing Elements of vectors
+    cout << "Accessing elements of vectors:";
+    cout << "\nElement at index 1: " << v.at(1);
+    // Returns error if the range is index is out the range
 
-    // access
-    cout << "Index 1: " << v.at(1) << endl; // returns error if the range is index is out the range
-    cout << "Index 1: " << v[1] << endl;    // returns the garbage value if the index is out of range
+    cout << "\nElement at index 1: " << v[100];
+    // Returns the garbage value if the index is out of range
 
-    // size
-    cout << "Size: " << v.size() << endl; // returns the size of the vector
+    // TOPIC: Methods of vector class
+    cout << "\n\n\n\nMethods of vector class:";
 
-    // deleting the last element
-    cout << "Size: " << v.size() << endl;
+    cout << "\nSize of vector: " << v.size();
+    // Returns the size
+
+    cout << "\nFirst element: " << v.front();
+    // Returns the first element
+
+    cout << "\nLast element: " << v.back();
+    // Returns the last element
+
+    v.push_back(10);
+    // Appends an element at the end.
+
     v.pop_back();
-    cout << "Size: " << v.size() << endl;
+    // Removes the last element and does not return anything.
 
-    // access the out of range indices
-    cout << "Index 5: " << v[5] << endl; // returns the garbage value because the index is out of range
-    // cout << "Index 5: " << v.at(5) << endl; //returns error because the range is index is out the range
-    v.pop_back(); // TC-> O(1)
+    v.clear();
+    // Removes all elements from vector and reducing it to size 0
 
-    // find the underlying capacity and the size of the array
+    v.insert(v.end(), 10);
+    // Can insert 10 at any position from v.begin() to v.end() (both inclusive). But not any other position, that we cause an error.
+
+    /*
+    TOPIC: Useful functions for vectors
+    All the functions below are inclusive of lower limit and exclusive of upper limit.
+    */
+    cout << "\n\n\n\nUseful functions for vectors:\n";
+
+    v = {1, 8, 2, 3, 4, 4, 1, 100};
+    cout << "Count of 4 in vector v is: " << count(v.begin(), v.end(), 4);
+    /*
+    Returns the frequency of the number in the specified range.
+    TC-> O(N) SC-> O(1)
+    */
+
+    cout << "\nFind in vector v is: " << *find(v.begin(), v.end(), 2);
+    /*
+    Returns an iterator to the first element found. If not present then points to v.end(). To check if certain element is present or not, we can write: if(find(v.begin(), v.end(), 10) != v.end())
+    TC-> O(N) SC-> O(1)
+    */
+
+    cout << "\nFind_If in vector v returns: " << *find_if(v.begin(), v.end(), isEven);
+    /*
+    Returns an iterator to the first element found that meets the specified condition. If not present then points to v.end(). Here in this case it returns the iterator to 8 because that is the first even element in the vector.
+    TC-> O(N) SC-> O(1)
+    */
+
+    sort(v.begin(), v.end());
+    /*
+    Sorts the vector from the specified range. Inclusive of lower limit and inclusive of upper limit. Does not return anything.
+    TC->O(NlogN) SC->O(1)
+    */
+
+    cout << "\nBinary search on vector: " << binary_search(v.begin(), v.end(), 100);
+    /*
+    Returns 1 if element is found and 0 if not found. But only works correctly on a sorted array.
+    TC-> O(logN) SC-> O(1)
+    */
+
+    // TOPIC: Capacity and Size of the vectors
     vector<int> v2;
+    cout << "\n\n\n\nCapacity and Size of the vectors:";
     for (int i = 0; i < 100; i++)
     {
         v2.push_back(i);
-        cout << "Value: " << v2[i] << " Size: " << v2.size() << " Capacity: " << v2.capacity() << endl;
+        cout << "\nValue: " << v2[i] << " Size: " << v2.size() << " Capacity: " << v2.capacity();
     }
 
+    // TOPIC: Deep Copy and Shallow Copy
     // Making a copy, TC-> O(n)
-    cout << endl
-         << endl
-         << "When making copy: " << endl;
-    vector<int> v4 = v;
-    v4.push_back(34);
-    printVec(v4);
-    printVec(v);
+    cout << "\n\n\n\nWhen making a deep copy: \n";
+    vector<int> v3 = v;
+    v3.push_back(34);
+    printVec(v3), printVec(v);
 
     // Making a reference to the vector
-    cout << endl
-         << endl
-         << "When making a reference: " << endl;
-    vector<int> &v5 = v;
-    v5.push_back(24);
-    printVec(v5);
-    printVec(v);
+    cout << "\nWhen making a reference(shallow copy): \n";
+    vector<int> &v4 = v;
+    v4.push_back(24);
+    printVec(v4), printVec(v);
 
-    // Now we'll declare the vector of pair
-    cout << endl
-         << "Vector of pairs: ";
+    // TOPIC: Creating a vector of pairs
+    cout << "\n\n\n\nCreating a vector of pairs: ";
     vector<pair<int, int>> vp = {{1, 2}, {3, 4}};
     vp.push_back({5, 6});
     for (int i = 0; i < vp.size(); i++)
     {
-        cout << vp[i].first << " " << vp[i].second << endl;
-    }
-
-    // Array of vectors
-    // Note: Its's like the a 2D matrix, where we can increase the number of columns but we cannot increase the number of rows.
-    cout << endl
-         << "Array of Vectors explanation: ";
-    vector<int> va[3];
-    for (int i = 0; i < 3; i++)
-    {
-        //  taking user input to input the number of elements to input in the vector va[i]
         cout << endl
-             << "The values in the vectors will be inserted using rand(), just enter the size of the vector at index " << i << ": ";
-        int n;
-        cin >> n;
-        for (int j = 0; j < n; j++)
-        {
-            va[i].push_back(rand());
-        }
+             << vp[i].first << " " << vp[i].second;
     }
-
-    // Vector of vectors
-    // Note: THe vector of vectors is like a 2D matrix where we can increase the number fo rows as well the number of columns. The number of rows can be increased by pushing(push_back()) an entire vector into the vector of vectors and we can also decrease the number of rows by poping (pop_back()) an entire vector from the vector of vectors.
-
-    cout << endl
-         << "Vector of Vectors: ";
-    int N;
-    cin >> N;
-    vector<vector<int>> vv;
-    for (int i = 0; i < N; i++)
-    {
-
-        vector<int> temp;
-        int m;
-        cin >> m;
-        for (int i = 0; i < m; i++)
-        {
-            temp.push_back(rand());
-        }
-        vv.push_back(temp);
-    }
-
-    // 3d nested Vector
-    vector<vector<vector<int>>> dp(n, vector<vector<int>>(m, vector<int>(m, -1)));
 
     /*
-    Parameter:The function accepts three parameters specified as below:
-    position – It specifies the iterator which points to the position where the insertion is to be done.
-    size – It specifies the number of times a val is to be inserted at the specified position.
-    val – It specifies the value to be inserted.
+    TOPIC: Array of vectors
+    It's a 2D matrix, where we can increase the number of columns but not the rows.
 
-    v.insert(v.begin()+index, val);
+    Static Allocation -> vector<int> AV[3];
+    Dynamic Allocation -> vector<int> *AV = new vector<int>[n];
     */
+    cout << "\n\n\n\n\nArray of Vectors: \n";
+    n = 5;
+    vector<int> *AV = new vector<int>[5];
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < 5; j++)
+            AV[i].push_back(rand() % 10);
+
+    for (int i = 0; i < n; i++)
+        printVec(AV[i]);
+
+    /*
+    TOPIC: Vector of vectors
+    It is a 2D matrix where we can increase the number fo rows as well columns. The number of rows can be increased by pushing an entire vector into the vector of vectors and we can also decrease the number of rows by poping an entire vector from the vector of vectors.
+    */
+    cout << "\n\n\n\n\nVector of Vectors: \n";
+    vector<vector<int>> VV;
+    n = 2, m = 3;
+    for (int row = 0; row < n; row++)
+    {
+        vector<int> temp;
+        for (int i = 0; i < m; i++)
+            temp.push_back(rand() % 10);
+        VV.push_back(temp);
+    }
+    for (int row = 0; row < VV.size(); row++)
+        printVec(VV[row]);
+
+    // TOPIC: 3D Vector
+    vector<vector<vector<int>>>
+        dp(n, vector<vector<int>>(m, vector<int>(m, -1)));
 
     // vector of structures
-    cout << endl
-         << "Vector of structures: ";
+    cout << "\nVector of structures: ";
     vector<struct node> SV;
     SV.push_back({1, 2});
     struct node *test = &SV[0];
     cout << endl
          << test->x << " " << test->y;
 
-    // pop_back()
-    cout << endl
-         << "POP FRONT() demo: ";
-    vector<int> v20 = {1, 2, 3};
-    v20.pop_back();
-    cout << v20.front(); // cout << v20[0]
-
     // Resizing the vectors
     vector<int> RV;
     RV.resize(100, -1); // vector.resize(new size, const value);
-
-    // clear() removes all elements from vector and reducing it to size 0.
-    vector<int> myVector;
-    myVector.clear();
 
     /*
     .erase()
