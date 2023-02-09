@@ -53,43 +53,46 @@ int main()
     cout << "\n\n\n\nMethods of vector container:";
 
     cout << "\nSize of vector: " << v.size();
-    // Returns the size
+    // Returns the size. TC-> O(1)
 
     cout << "\nFirst element: " << v.front();
-    // Returns the first element
+    // Returns the first element. TC-> O(1)
 
     cout << "\nLast element: " << v.back();
-    // Returns the last element
+    // Returns the last element. TC-> O(1)
 
     cout << "\nIs empty? " << boolalpha << v.empty();
-    // Returns true if array is empty, false otherwise.
+    // Returns true if array is empty, false otherwise. TC-> O(1)
 
     v.push_back(10);
-    // Appends an element at the end.
+    // Appends an element at the end. TC-> O(1)
 
     v.pop_back();
-    // Removes the last element and does not return anything.
+    // Removes the last element and does not return anything. TC-> O(1)
 
     v.clear();
     /*
     Removes all elements from vector and reducing it to size 0.
-    All elements are destroyed one by one. TC-> O(N)
+    All elements are destroyed one by one. TC-> O(N), SC->O(1)
     */
 
     v.begin();
-    // Returns a bidirectional iterator pointing to the first element of the vector container. Bidirectional iterator can be incremented as well as decremented.
+    // Returns a bidirectional iterator pointing to the first element of the vector container. Bidirectional iterator can be incremented as well as decremented. TC-> O(1)
 
     v.end();
-    // Returns a bidirectional iterator pointing right next to the last element of the vector container.
+    // Returns a bidirectional iterator pointing right next to the last element of the vector container. TC-> O(1)
 
     v.rbegin();
-    // Returns a reverse bidirectional iterator pointing to the last element of the vector container.
+    // Returns a reverse bidirectional iterator pointing to the last element of the vector container. TC-> O(1)
 
     v.rend();
-    // Returns a reverse bidirectional iterator pointing right before the first element of the vector container.
+    // Returns a reverse bidirectional iterator pointing right before the first element of the vector container. TC-> O(1)
 
     v.insert(v.end(), 10);
-    // Can insert 10 at any position from v.begin() to v.end() (both inclusive). But not any other position, that we cause an error.
+    /*
+    Can insert 10 at any position from v.begin() to v.end() (both inclusive). But not any other position, that we cause an error.
+    TC-> O(N + M) where N is the number of elements inserted and M is the number of the elements moved .
+    */
 
     n = 30;
     int val = -1;
@@ -98,6 +101,14 @@ int main()
     This method alters the container’s content in actual by inserting or deleting the elements from it.
     If n < size of vector, then extra elements are demolished.
     Else If n > size of vector, then upcoming elements are appended at the end of the vector with value = val. Default value of val is 0.
+    TC-> O(N), where N is the size of resized vector.
+    */
+
+    v.erase(v.begin());
+    v.erase(v.begin(), v.begin() + 2);
+    /*
+    Deletes a single element or a range of elements. TC-> O(N + M) where N is the number of the elements erased and M is the number of successive elements moved to fill the gap.
+    Note: If you want eliminate elements that fulfill a certain criterion from a container. Then don't call this method again and again, because that will result in O(N^2) TC. Instead use erase–remove idiom.
     */
 
     /*
@@ -143,8 +154,24 @@ int main()
     TC-> O(logN) SC-> O(1)
     */
 
+    v = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    auto it = remove(v.begin(), v.end(), 2);
+    it = remove_if(v.begin(), v.end(), isEven);
+    /*
+    Shifts all the elements that match a specific criterion or a value to the end of the vector container and returns an iterator pointing right next the last element that is not removed.
+    But note that the elements are still in the vector, they're not removed.
+    TC-> O(N)
+    */
+
+    v.erase(it, v.end());
+    /*
+    Now we can use the iterator returned by remove_if() inside the .erase() method to delete the unwanted elements. This is called erase-remove idiom.
+    TC-> O(N)
+    */
+
     // TOPIC: Capacity and Size of the vectors
-    vector<int> v2;
+    vector<int>
+        v2;
     cout << "\n\n\n\nCapacity and Size of the vectors:";
     for (int i = 0; i < 100; i++)
     {
@@ -219,26 +246,6 @@ int main()
     VS.push_back({1, 2});
     cout << VS[0].x << " " << VS[0].y << endl;
 
-    /*
-    .erase()
-    Input  : myVector= {1, 2, 3, 4, 5}, iterator= myVector.begin()+2
-    myVector.erase(iterator);
-    Output : 1, 2, 4, 5
-
-    Input  : myVector= {1, 2, 3, 4, 5, 6, 7, 8}, iterator1= myVector.begin()+3,iterator2= myVector.begin()+6
-    myVector.erase(iterator1, iterator2);
-    Output : 1, 2, 3, 7, 8
-
-    .remove()
-    remove(v.begin(), v.end(), 20);
-
-    erase() causes large amount of copies while remove() just does a logical delete and leaves vector unchanged by moving element around.
-
-    If you need to remove multiple elements, remove() will copy elements only once to its final position while erase() would do this multiple times.
-
-    erase() works best with elements in a position, remove() is best while working with range of elements.
-    */
-
     // TOPIC: Dynamically allocate the memory to vector
     cout << "\n\n\n\nDynamically allocate the memory to vector:";
     vector<int> *dv = new vector<int>(3, -2);
@@ -246,5 +253,8 @@ int main()
     dv->push_back(20), dv->push_back(10);
     for (int i = 0; i < dv->size(); i++)
         cout << dv->at(i) << " ";
+
+    delete[] dv;
+
     return 0;
 }
