@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <random>
+#include <numeric>
 
 using namespace std;
 
@@ -28,14 +29,19 @@ bool isEven(int i)
     return !(i % 2);
 }
 
+int myFunc(int x, int y)
+{
+    return x * y;
+}
+
 // NOTE: All the vectors are stored in contiguous memory locations.
 int main()
 {
-    // 2D vector initialization where n, m is the rows, cols respectively
+    // 2D vector where n = rows and m = cols and -1 = default value
     int n = 10, m = 5;
-    vector<vector<int>> vec(n, vector<int>(m, 0));
+    vector<vector<int>> vec(n, vector<int>(m, -1));
 
-    // we're initializing a vector with size 10 and default value -2
+    // Initializing a vector with size 10 and default value -2
     vector<int> V(10, -2);
 
     // statically allocates the memory
@@ -115,46 +121,99 @@ int main()
     TOPIC: Useful functions for vectors
     All the functions below are inclusive of lower limit and exclusive of upper limit.
     */
-    cout << "\n\n\n\nUseful functions for vectors:\n";
+    cout << "\n\n\n\nUseful functions for vectors:";
 
     v = {1, 8, 2, 3, 4, 4, 1, 100};
-    cout << "Count of 4 in vector v is: " << count(v.begin(), v.end(), 4);
+    cout << "\nThe minimum element is: " << *min_element(v.begin(), v.end());
+    /*
+    Return Value: It return a pointer to the smallest element in the range, and in case if there are more than one such element, then it points to the first one. It points to the last in case the range is empty.
+    TC-> O(N)  SC-> O(1)
+    */
+
+    cout << "\nThe maximum element is: " << *max_element(v.begin(), v.end());
+    /*
+    Return Value: It return a pointer to the largest element in the range, and in case if there are more than one such element, then it points to the first one. It points to the last in case the range is empty.
+    TC-> O(N)  SC-> O(1)
+    */
+
+    cout << "\nCount of 4 in vector v is: " << count(v.begin(), v.end(), 4);
     /*
     Returns the frequency of the number in the specified range.
-    TC-> O(N) SC-> O(1)
+    TC-> O(N)  SC-> O(1)
     */
 
     cout << "\nFind in vector v is: " << *find(v.begin(), v.end(), 2);
     /*
     Returns an iterator to the first element found. If not present then points to v.end(). To check if certain element is present or not, we can write: if(find(v.begin(), v.end(), 10) != v.end())
-    TC-> O(N) SC-> O(1)
+    TC-> O(N)  SC-> O(1)
     */
 
     cout << "\nFind_If in vector v returns: " << *find_if(v.begin(), v.end(), isEven);
     /*
     Returns an iterator to the first element found that meets the specified condition. If not present then points to v.end(). Here in this case it returns the iterator to 8 because that is the first even element in the vector.
-    TC-> O(N) SC-> O(1)
+    TC-> O(N)  SC-> O(1)
     */
 
     sort(v.begin(), v.end(), greater<int>());
     /*
     Sorts the specified range in descending format. Does not return anything.
-    TC->O(NlogN) SC->O(1)
+    TC-> O(NlogN)  SC->O(1)
     */
 
     sort(v.begin(), v.end());
     /*
     Sorts the specified range in ascending format. Does not return anything.
-    TC->O(NlogN) SC->O(1)
+    TC-> O(NlogN)  SC->O(1)
     */
 
     cout << "\nBinary search on vector: " << binary_search(v.begin(), v.end(), 100);
     /*
     Returns 1 if element is found and 0 if not found. But only works correctly on a sorted array.
-    TC-> O(logN) SC-> O(1)
+    TC-> O(logN)  SC-> O(1)
+    */
+
+    v = {5, 10, 15};
+    cout << "\nAccumulate() returns: " << accumulate(v.begin(), v.end(), 0);
+    /*
+    0 is the initial value of the sum.
+    Step 1: 0+5 = 5
+    Step 2: 5+10 = 15
+    Step 3: 15+15 = 750.
+    It returns the final sum.
+
+    TC-> O(N)  SC-> O(1)
+    */
+
+    cout << "\nAccumulate() with myFunc returns: " << accumulate(v.begin(), v.end(), 1, myFunc);
+    /*
+    1 is the initial value of the sum.
+    myFunc is performing the task of updating the sum with sum * current number. It will work as:
+    Step 1: 1*5 = 5
+    Step 2: 5*10 = 50
+    Step 3: 50*15 = 750.
+    Adding myFunc is optional. It returns the final sum.
+
+    TC-> O(N)  SC-> O(1)
+    */
+
+    cout << "\nAccumulate() with minus<int>() returns: " << accumulate(v.begin(), v.end(), 2, minus<int>());
+    /*
+    2 is the initial value of the sum.
+    Step 1: 2-5 = -3
+    Step 2: -3-10 = -13
+    Step 3: -13-15 = -28
+    It returns the final sum.
+
+    TC-> O(N)  SC-> O(1)
     */
 
     v = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    reverse(v.begin(), v.end());
+    /*
+    Reverses the vector container. Does not return anything.
+    TC-> O(N)  SC-> O(1)
+    */
+
     auto it = remove(v.begin(), v.end(), 2);
     it = remove_if(v.begin(), v.end(), isEven);
     /*
@@ -170,8 +229,7 @@ int main()
     */
 
     // TOPIC: Capacity and Size of the vectors
-    vector<int>
-        v2;
+    vector<int> v2;
     cout << "\n\n\n\nCapacity and Size of the vectors:";
     for (int i = 0; i < 100; i++)
     {
