@@ -1,0 +1,66 @@
+// https://leetcode.com/problems/add-to-array-form-of-integer/
+
+
+// Approach 1: Additional Vector
+class Solution {
+public:
+    vector<int> addToArrayForm(vector<int>& num1, int k) {
+        vector<int> num2;
+        while(k){
+            int rem = k%10;
+            num2.push_back(rem);
+            k/=10;
+        }
+        reverse(num2.begin(), num2.end());
+
+        vector<int> result;
+
+        int i=num1.size()-1, j=num2.size()-1, c=0;
+        while(i>=0 || j>=0 || c){
+            c += i>=0 ? num1[i--] : 0;
+            c += j>=0 ? num2[j--] : 0;
+            int rem = c%10;
+            result.push_back(rem);
+            c /= 10;
+        }
+        reverse(result.begin(), result.end());
+        return result;
+    }
+};
+/*
+If N = digits in num1 and M = digits in k then:
+TC-> O(max(N,M))
+SC-> num2: O(M) + result: O(max(N,M))ASC
+*/
+
+
+// Approach 2: Take K itself as a Carry
+class Solution {
+public:
+    vector<int> addToArrayForm(vector<int>& num, int k) {
+        reverse(num.begin(), num.end());
+
+        for(int i=0; i<num.size() && k>0; i++){
+            num[i] += k;
+            k = num[i]/10;
+            num[i] %= 10;
+        }
+
+        while(k>0){
+            num.push_back(k%10);
+            k /= 10;
+        } 
+
+        reverse(num.begin(), num.end());
+
+        return num;
+    }
+};
+/*
+If N = digits in num and M = digits in k then:
+TC-> O(N+M)
+SC-> O(max(N,M))ASC, since we're modifying the num vector itself
+*/
+
+
+
