@@ -1,0 +1,34 @@
+// https://leetcode.com/problems/minimum-fuel-cost-to-report-to-the-capital/
+
+// Approach 1: Recursion (DFS)
+class Solution {
+private:
+    int dfs(int node, int parent, vector<vector<int>> &graph, int seats, long long &fuel){
+        int people = 1;
+        for(auto child : graph[node]){
+            if(child != parent) people += dfs(child, node, graph, seats, fuel);
+        }
+       if(node>0) fuel += ceil(1.0*people/seats);
+       return people;
+    }
+
+public:
+    long long minimumFuelCost(vector<vector<int>>& roads, int seats) {
+        vector<vector<int>> graph(roads.size()+1);
+
+        for(auto const &road : roads){
+            int u = road[0], v = road[1];
+            graph[u].push_back(v);
+            graph[v].push_back(u);
+        }
+
+        long long fuel = 0;
+        dfs(0, -1, graph, seats, fuel);
+        return fuel;
+    }
+};
+/*
+If N is the number of cities then:
+TC-> O(N)
+SC-> Recursion Stack: O(N)ASC
+*/
