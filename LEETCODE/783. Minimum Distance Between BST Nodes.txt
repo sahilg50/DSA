@@ -1,0 +1,63 @@
+// https://leetcode.com/problems/minimum-distance-between-bst-nodes/description/
+
+
+// Approach 1: Using Recursion and Extra Array
+class Solution {
+private:
+    void insertNodes(TreeNode *root, vector<int> &nums){
+        if(root->left) findMin(root->left, nums);
+        nums.push_back(root->val);
+        if(root->right) findMin(root->right, nums);
+    }
+public:
+    int minDiffInBST(TreeNode* root) {
+       vector<int> nums;
+       insertNodes(root, nums);
+
+       int diff = INT_MAX;
+       for(int i=1; i<nums.size(); i++) diff = min(diff, nums[i]-nums[i-1]);
+       return diff;
+    }
+};
+/*
+If N is the number of nodes in the binary tree then:
+TC-> Recursion: O(N) + Array Traversal: O(N)
+SC-> Nums Array: O(N) + Recursion Stack: O(N)ASC
+*/
+
+
+
+// Approach 2: Keeping track of previous variable
+class Solution {
+private:
+    void inOrder(TreeNode *root, int &diff, int &prev){
+        if(root==nullptr) return;
+
+        inOrder(root->left, diff, prev);
+        if(prev!=-1) diff = min(diff, root->val-prev);
+
+        prev = root->val;
+        inOrder(root->right, diff, prev);
+    }
+public:
+    int minDiffInBST(TreeNode* root) {
+        int diff = INT_MAX, prev = -1;
+        inOrder(root, diff, prev);
+        return diff;
+    }
+};
+/*
+If N is the number of nodes in the BST then:
+TC-> O(N)
+SC-> O(N)
+*/
+
+
+
+
+
+
+
+
+
+
