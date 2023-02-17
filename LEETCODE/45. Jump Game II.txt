@@ -1,0 +1,64 @@
+//https://leetcode.com/problems/jump-game-ii/description/
+
+
+// Approach 1: Recursion(TLE) + Memoization
+class Solution {
+private:
+    long long int util(int ind, vector<int> &nums, vector<int> &dp){      
+
+        if(ind==nums.size()-1) return 0; 
+        if(ind>=nums.size()) return INT_MAX;
+        if(dp[ind]!=-1) return dp[ind];
+        
+        long long int jumps=INT_MAX;
+        for(int i=1;i<=nums[ind];i++)
+        {
+            jumps=min(jumps,1+util(ind+i, nums, dp));  
+        }
+
+        return dp[ind] = jumps;  
+    }
+public:
+    int jump(vector<int>& nums){ 
+        int n = nums.size();
+        vector<int> dp(n+1, -1);
+        return util(0, nums, dp);
+    }
+};
+/*
+If K = 1000(given that the max value of element can  be 1000 only) and N = size(nums) then:
+Recursion:
+    TC-> O(K^N)
+    SC-> Recursion Stack: O(N)ASC
+
+With Memoization:
+    TC-> O(K*N)
+    SC-> DP Array: O(N) + Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: From NeetCode
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        
+        int steps = 0;
+        int l = 0, r = 0;
+        while(r<nums.size()-1){
+            int farthest = 0;
+            for(int i=l; i<=r; i++){
+                farthest = max(farthest, i+nums[i]);
+            }
+            l = r + 1;
+            r = farthest;
+            steps += 1;
+        }
+        return steps;
+    }
+};
+/*
+If N = size(nums) then:
+TC-> O(N)
+SC-> O(1)
+*/
+
