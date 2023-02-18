@@ -1,0 +1,24 @@
+// https://leetcode.com/problems/invert-binary-tree/description/
+
+// Approach 1: Recursion
+class Solution {
+private:
+    void invert(TreeNode *node){
+        
+        swap(node->right, node->left);
+
+        if(node->left) invert(node->left);
+        if(node->right) invert(node->right);
+    }
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        
+        if(root) invert(root);
+        return root;
+    } 
+};
+/*
+If N is the number of nodes in the tree then:
+TC-> O(N)
+SC-> Recursion Stack: O(N)
+*/

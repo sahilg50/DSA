@@ -28,6 +28,6 @@ public:
 };
 /*
 If N is the size of the nums array then:
-TC-> Increasing Subsequence: O(N) + Decreasing Subsequence: O(N)
+TC-> Increasing Subsequence: O(N*N) + Decreasing Subsequence: O(N*N)
 SC-> DP1 Array: O(N) + DP2 Array: O(N)
 */

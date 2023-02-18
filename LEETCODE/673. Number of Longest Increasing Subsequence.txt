@@ -1,0 +1,33 @@
+// Approach 1: Tabulation
+class Solution {
+public:
+    int findNumberOfLIS(vector<int>& nums) {
+
+        int n = nums.size(), LIS=1;
+        vector<int> dp(n, 1), cnt(n, 1);
+
+        for(int ind=0; ind<n; ind++){
+            for(int prev=0; prev<ind; prev++){
+                if(nums[ind]>nums[prev] && dp[ind] < dp[prev] + 1){
+                    dp[ind] = dp[prev] + 1;
+                    cnt[ind] = cnt[prev];
+                }
+                else if(nums[ind]>nums[prev] && dp[ind] == dp[prev] + 1){
+                    cnt[ind] += cnt[prev];
+                }
+            }
+            LIS = max(LIS, dp[ind]);
+        }
+
+        int ans = 0;
+        for(int i=0; i<n; i++){
+            if(dp[i]==LIS) ans+=cnt[i];
+        }
+        return ans;
+    }
+};
+/*
+If N is the size of the array nums then:
+TC-> Nested Loop: O(N*N) + Finding total count(ans): O(N)
+SC-> DP Array: O(N) + CNT Array: O(N)
+*/ 
