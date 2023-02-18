@@ -1,0 +1,111 @@
+// https://leetcode.com/problems/longest-string-chain/
+
+// Approach 1: Recursion(TLE) + Memoization
+class Solution {
+private:
+    static bool cmp(string &a, string &b)
+    {
+        if (a.size() == b.size()) return a < b;
+        return a.size() < b.size();
+    }
+
+    bool isChain(string &a, string &b){
+        if(a.size()+1!=b.size()) return false;
+
+        int k=1, i=0, j=0;
+        while(i<a.size()){
+            if(a[i]==b[j]) i++, j++;
+            else{
+                if(k) j++,k--;
+                else return false;
+            }
+        }
+        return true;
+    }
+
+    int util(int ind, int prevInd, vector<string> &words, vector<vector<int>> &dp){
+
+        if(ind>=words.size()) return 0;
+
+        if(dp[ind+1][prevInd+1]!=-1) return dp[ind+1][prevInd+1];
+
+        int pick=0, notPick=0;
+        if(prevInd==-1 || isChain(words[prevInd], words[ind]))
+            pick = 1 + util(ind+1, ind, words, dp);
+        
+        notPick = util(ind+1, prevInd, words, dp);
+
+        return dp[ind+1][prevInd+1] = max(pick, notPick);
+    }
+
+public:
+    int longestStrChain(vector<string>& words) {
+        sort(words.begin(), words.end(), cmp);
+
+        int n = words.size();
+        vector<vector<int>> dp(n+2, vector<int>(n+2, -1));
+
+        return util(0, -1, words, dp);
+    }   
+};
+/*
+If N is the size of the words array then:
+Recursion:
+    TC-> Sorting: O(N*logN) + Util: O(2^N)
+    SC-> Recursion Stack: O(N)ASC
+
+With Memoization:
+    TC-> Sorting: O(N*logN) + Util: O(N*N)
+    SC-> DP Array: O(N*N) + Recursion Stack: O(N)ASC
+*/
+
+
+
+// Approach 2: Tabulation (Using 1D Dp Array)
+class Solution {
+private:
+    static bool cmp(string &a, string &b)
+    {
+        if (a.size() == b.size()) return a < b;
+        return a.size() < b.size();
+    }
+
+    bool isChain(string &a, string &b){
+        if(a.size()+1!=b.size()) return false;
+
+        int k=1, i=0, j=0;
+        while(i<a.size()){
+            if(a[i]==b[j]) i++, j++;
+            else{
+                if(k) j++,k--;
+                else return false;
+            }
+        }
+        return true;
+    }
+
+public:
+    int longestStrChain(vector<string>& words) {
+        sort(words.begin(), words.end(), cmp);
+
+        int n = words.size(), LSC=1;
+        vector<int> dp(n, 1);
+
+        for(int ind=0; ind<n; ind++){
+            for(int prevInd=0; prevInd<ind; prevInd++){
+                if(isChain(words[prevInd], words[ind]) &&
+                   dp[prevInd]+1 > dp[ind]) dp[ind] = dp[prevInd]+1;
+            }
+            LSC = max(LSC, dp[ind]);
+        }
+        return LSC;
+    }   
+};
+/*
+If N is the size of words array then:
+TC-> Sorting: O(N*logN) + Nested Loop: O(N*N)
+SC-> Dp Array: O(N)
+*/
+
+
+

@@ -77,5 +77,29 @@ public:
 };
 /*
 TC-> O(N^2)
-SC-> O(N)
+SC-> Dp Array: O(N)
+*/
+
+// Approach 4: Binary Search
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> temp;
+        temp.push_back(nums[0]);
+
+        for(int i=1; i<nums.size(); i++){
+            if(nums[i]>temp.back()) temp.push_back(nums[i]);
+            else{
+                int ind = lower_bound(temp.begin(), temp.end(), nums[i]) - temp.begin();
+                temp[ind] = nums[i];
+            }
+        }
+
+        return temp.size();
+    }
+};
+/*
+If N is the size of nums array then:
+TC-> O(N*logN), for every element implement binary search on array of size N
+Sc-> Temp Array: O(N)
 */

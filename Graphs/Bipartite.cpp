@@ -13,7 +13,7 @@ private:
     vector<int> *adj;
 
 public:
-    Graph(int n);               // Constructor, n is the total number of verticesin graph.
+    Graph(int n);               // Constructor, n is the total number of vertices in graph.
     void addEdge(int u, int v); // Method to add undirected edge between u and v.
     bool bipartiteBfs(int src); // Method to print BFS traversal starting from node s.
     bool checkBipartite();
@@ -83,7 +83,7 @@ bool Graph::checkBipartite()
 
 int main()
 {
-    // This code will check for all the componenets of the graph because checkBipartite will take care of disconnected components
+    // This code will check for all the components of the graph because checkBipartite will take care of disconnected components
     cout << endl
          << "Enter the total number of nodes and edges: ";
     int N, M;

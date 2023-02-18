@@ -42,11 +42,14 @@ void printLIS(vector<int> &nums)
     reverse(ans.begin(), ans.end());
     cout << "The LIS is: ";
     for (auto &num : ans)
-        cout
-            << num << " ";
+        cout << num << " ";
     cout << endl;
 }
-
+/*
+    If N is the size of nums array then:
+    TC-> O(N*N), because of 2 nested loops
+    SC-> Dp Array: O(N) + Hash: O(N)
+*/
 int main()
 {
     vector<int> nums = {0, 10, 20, 30, 3, 4, 5, 6, 7};

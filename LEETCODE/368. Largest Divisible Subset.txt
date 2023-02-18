@@ -1,0 +1,80 @@
+// https://leetcode.com/problems/largest-divisible-subset/
+
+// Approach 1: Backtracking(TLE)
+class Solution {
+private:
+    void util(int ind, int prevInd, vector<int> &nums, vector<int> &subSet, vector<int> &ans){
+
+        if(ind>=nums.size()){
+            if(subSet.size()>ans.size()) ans = subSet;
+            return;
+        }
+
+        if(prevInd==-1 || nums[ind]%nums[prevInd]==0){
+            subSet.push_back(nums[ind]);
+            util(ind+1, ind, nums, subSet, ans);
+            subSet.pop_back();
+        }
+
+        util(ind+1, prevInd, nums, subSet, ans);
+        return;
+    }
+public:
+    vector<int> largestDivisibleSubset(vector<int>& nums) {
+
+        sort(nums.begin(), nums.end());
+        vector<int> subSet, ans;
+
+        util(0, -1, nums, subSet, ans);
+        return ans;
+    }
+};
+/*
+If N is the size of the array then:
+TC-> O(2^N), If the array is [1, 2, 4, 8, 16, 32] then the problem becomes finding all the subsequences and then either we're picking the element and moving on to the next index or not picking and moving on to the next index.
+SC-> Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: Tabulation(Optimal by striver)
+class Solution {
+public:
+    vector<int> largestDivisibleSubset(vector<int>& nums) {
+        /*
+        Note that we're sorting the array because we need subset and not subSequence.
+        So sorting is mandatory.
+        */ 
+        sort(nums.begin(), nums.end());
+        int n=nums.size(), lastInd=0, LIS=1;
+        vector<int> dp(n, 1), hash(n);
+
+        for(int ind=0; ind<nums.size(); ind++){
+            hash[ind]=ind;
+            for(int prevInd=0; prevInd<ind; prevInd++){
+                if(nums[ind]%nums[prevInd]==0 &&
+                dp[prevInd] + 1 > dp[ind]){
+                    dp[ind] = 1 + dp[prevInd];
+                    hash[ind] = prevInd;
+                }
+            }
+            if(dp[ind]>LIS){
+                LIS = dp[ind];
+                lastInd = ind;
+            }
+        }
+
+        vector<int> ans;
+        ans.push_back(nums[lastInd]);
+        while(hash[lastInd]!=lastInd){
+            lastInd = hash[lastInd];
+            ans.push_back(nums[lastInd]);
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
+/*
+If N is the size of the array nums then:
+TC-> Two nested loops: O(N^2) + Reversing ans: O(N)
+SC-> Dp Array: O(N) + Hash Array: O(N)
+*/
