@@ -1,0 +1,33 @@
+// Approach 1: Tabulation
+class Solution{
+public:
+	int LongestBitonicSequence(vector<int>nums)
+	{
+	    int n = nums.size();
+        vector<int> dp1(n, 1), dp2(n, 1);
+        
+        for(int ind=0; ind<n; ind++){
+            for(int prevInd=0; prevInd<ind; prevInd++){
+                if(nums[ind] > nums[prevInd] &&
+                   dp1[prevInd]+1 > dp1[ind]) dp1[ind] = dp1[prevInd] + 1;
+            }
+        }
+        
+        for(int ind=n-1; ind>=0; ind--){
+            for(int prevInd=n-1; prevInd>ind; prevInd--){
+                if(nums[ind] > nums[prevInd] &&
+                   dp2[prevInd]+1 > dp2[ind]) dp2[ind] = dp2[prevInd] + 1;
+            }
+        }
+        
+        int LBS = 1;
+        for(int i=0; i<n; i++) LBS = max(LBS, (dp1[i]+dp2[i]-1));
+        
+        return LBS;
+	}
+};
+/*
+If N is the size of the nums array then:
+TC-> Increasing Subsequence: O(N) + Decreasing Subsequence: O(N)
+SC-> DP1 Array: O(N) + DP2 Array: O(N)
+*/
