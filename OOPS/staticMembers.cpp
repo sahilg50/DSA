@@ -1,6 +1,6 @@
 /*
 TOpic: What are static members?
-The variables declared as static are initialized only once as they are allocated space in separate static storage so, the static variables in a class are shared by the objects. There can not be multiple copies of same static variables for different objects. Also because of this reason static variables can not be initialized using constructors.
+The variables declared as static are initialized only once as they are allocated space in separate static storage, so the objects share the static variables in a class. There can not be multiple copies of the same static variables for different objects. Also, because of this reason, static variables can not be initialized using constructors.
 
 TOPIC: Properties of Static Members:
     -> The values of static members are carried through the function calls.
@@ -11,10 +11,10 @@ TOPIC: Properties of Static Members:
 STATIC KEYWORD:
     TOPIC: Data Member
         - Data member declared using static keyword belongs to the class and we do not need to create an object to access it.
-        - Firstly, the static data members should be explicitly assigned values by the user by only using scope resolution operator outside the class (int Box::objectCount = 0) and only then ew can modify it:
+        - Firstly, the static data members should be explicitly assigned values by the user by only using the scope resolution operator outside the class (int Box::objectCount = 0), and only then you can modify it:
         - Ways to Modify the value:
             -> The value can also be modified from inside the static or non-static method.
-            -> If an object of that class exists then it can also be modified using the '.' operator.
+            -> If an object of that class exists, then it can also be modified using the '.' operator.
 
     TOPIC: Member Functions-
         - Methods declared using static keyword belongs to the class and we do not need to create an object to access it.

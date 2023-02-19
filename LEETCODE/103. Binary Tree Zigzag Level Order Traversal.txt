@@ -1,0 +1,38 @@
+// https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/description/
+
+
+// Approach 1: Level-Order-Traversal (Using Queue)
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> result; 
+        if(root==NULL) return result;
+        
+        queue<TreeNode *>Q; //Node queue
+        TreeNode *node = root;
+        Q.push(node);
+        bool LToR = true;
+        
+        while(!Q.empty()){
+            int size = Q.size();
+            vector<int> temp;
+            for(int i=0; i<size; i++){
+                node = Q.front();
+                Q.pop();
+                temp.push_back(node->val);
+                if(node->left) Q.push(node->left);
+                if(node->right) Q.push(node->right);
+            }
+
+            if(!LToR) reverse(temp.begin(), temp.end());
+            result.push_back(temp);
+            LToR = !LToR;
+        }
+        return result;
+    }
+};
+/*
+If N is the number of nodes in the BT then:
+TC-> Traverse Tree: O(N) + Reverse Temp Array: O(N)
+SC-> Queue: O(N) + Temp Array: O(N)
+*/
