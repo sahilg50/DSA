@@ -1,3 +1,5 @@
+// TOPIC: Member Function of Another Class as Friend Function
+
 #include <iostream>
 using namespace std;
 
@@ -27,18 +29,12 @@ public:
     }
 
     friend void Trainer::train(Client &C);
-    friend void cheer(Client &C);
 };
 
 void Trainer::train(Client &C)
 {
     C.muscle += 2;
 };
-
-void cheer(Client &C)
-{
-    cout << C.muscle;
-}
 
 int main()
 {
