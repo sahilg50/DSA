@@ -1,16 +1,32 @@
 /*
--> Pure Abstract Classes:
-An abstract class is one in which there is a declaration but no definition for a member function. The way this concept is expressed in C++ is to have the member function declaration assigned to zero.
+TOPIC: Abstract Class:
+    -> A class that has at least one pure virtual function is called an abstract class. It can have a data member, abstract method, method body (non-abstract method), and a constructor.
 
-A pure Abstract class has only abstract member functions and no data or concrete member functions. In general, a pure abstract class is used to define an interface and is intended to be inherited by concrete classes. It's a way of forcing a contract between the class designer and the users of that class. The users of this class must declare a matching member function for the class to compile.
+    -> An abstract class is one in which there is a declaration but no definition for a member function.
+
+    -> This concept is implemented in C++  by declaring a  member function as virtual and assigning it to zero.
+
+TOPIC: Pure Abstract Class
+    -> A pure Abstract class has only abstract member functions and no data or concrete member functions.
+
+    -> A pure abstract class is used to define an interface and is intended to be inherited by concrete classes. It's a way of forcing a contract between the class designer and the users of that class. The users of this class must declare a matching member function for the class to compile.
+
+TOPIC: Points TO Note
+    -> If we do not override the pure virtual function in derived class, then derived class also becomes abstract class.
+
+TOPIC: Use Case
+    -> Sometimes implementation of all function cannot be provided in a base class because we don’t know the implementation. Such a class is called abstract class. For example, let Shape be a base class. We cannot provide implementation of function area() in Shape, but we know every derived class must have implementation of area()
+
 */
 
 #include <iostream>
 using namespace std;
 
+// This is pure abstract class
 class SmartPhone
 {
 public:
+    // Pure Virtual Function
     virtual void makeCall() = 0;
     virtual void takeSelfie() = 0;
 };

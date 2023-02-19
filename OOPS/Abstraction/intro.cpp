@@ -1,4 +1,5 @@
 /*
+TOPIC: What is Abstraction?
 Abstraction means displaying only essential information and hiding the unimportant and complex details. Data abstraction refers to providing only essential information about the data to the outside world, hiding the background details or implementation.
 */
 
@@ -11,12 +12,10 @@ private:
     int a, b;
 
 public:
-    // method to set values of
-    // private members
     void set(int x, int y)
     {
-        a = x;
-        b = y;
+        this->a = x;
+        this->b = y;
     }
 
     void display()
