@@ -1,46 +1,51 @@
 #include <iostream>
-#include <cmath>
-#include <vector>
-#include <string>
-#include <algorithm>
 using namespace std;
 
-bool cmp(string &a, string &b)
+class Box
 {
-    if (a.size() == b.size())
-        return a < b;
-    return a.size() < b.size();
-}
+private:
+    double l, b, h;
 
-bool isChain(string &a, string &b)
-{
-    if (a.size() + 1 != b.size())
-        return false;
+public:
+    static int objectCount; // Static data member
 
-    int k = 1, i = 0, j = 0;
-    while (i < a.size())
+    // Constructor definition
+    Box(double l = 2.0, double b = 2.0, double h = 2.0)
     {
-        if (a[i] == b[j])
-            i++, j++;
-        else
-        {
-            if (k)
-                j++, k--;
-            else
-                return false;
-        }
+        cout << "Constructor called." << endl;
+        l = l;
+        b = b;
+        h = h;
+
+        // Increase every time object is created
+        objectCount++;
     }
+    double Volume()
+    {
+        return l * b * h;
+    }
+    static int getCount()
+    {
+        // objectCount = 0;
+        return objectCount;
+    }
+};
 
-    return true;
-}
-int main()
+// Initialize static member of class Box
+int Box::objectCount = 0;
+
+int main(void)
 {
-    // vector<string> words = {"sahil", "zb", "a", "sa"};
-    // sort(words.begin(), words.end(), cmp);
-    // for (auto &word : words)
-    //     cout << word << " ";
+    // Print total number of objects before creating object.
+    cout << "Inital Stage Count: " << Box::getCount() << endl;
 
-    string a = "ab", b = "abc";
-    cout << boolalpha << isChain(a, b);
+    Box Box1(3.3, 1.2, 1.5); // Declare box1
+    Box Box2(8.5, 6.0, 2.0); // Declare box2
+    Box1.objectCount++;
+
+    // Print total number of objects after creating object.
+    cout << "Final Stage Count: " << Box::getCount() << endl;
+    // cout << "Final Stage Count: " << Box2.getCount() << endl;
+
     return 0;
 }
