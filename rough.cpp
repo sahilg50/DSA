@@ -1,55 +1,21 @@
 #include <iostream>
 using namespace std;
 
-// Forward definition needed in which friend function is gonna be defined.
-class Client;
-class Trainer
-{
-public:
-    void train(Client &C);
-};
-
-class Client
+class Hero
 {
 private:
-    int muscle;
+    int weight, height;
 
 public:
-    Client(int muscle)
+    Hero(int w, int h)
     {
-        this->muscle = muscle;
+        this->weight = w;
+        this->weight = h;
     }
-    void getPR()
-    {
-        cout << "\nMuscle Mass(KG): " << this->muscle;
-        cout << "\nChest PR(KG): " << this->muscle * 2;
-        cout << "\nShoulder PR(KG): " << this->muscle * 0.5;
-    }
-
-    friend void Trainer::train(Client &C);
-    friend void cheer(Client &C);
 };
-
-void Trainer::train(Client &C)
-{
-    C.muscle += 2;
-};
-
-void cheer(Client &C)
-{
-    cout << C.muscle;
-}
 
 int main()
 {
-    Client A(10);
-    A.getPR();
-
-    Trainer T;
-    T.train(A);
-
-    cout << "\n\nAfter Training:\n";
-    A.getPR();
-
+    Hero H(10, 20);
     return 0;
 }

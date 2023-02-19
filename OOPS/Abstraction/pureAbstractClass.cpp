@@ -15,7 +15,7 @@ TOPIC: Points TO Note
     -> If we do not override the pure virtual function in derived class, then derived class also becomes abstract class.
 
 TOPIC: Use Case
-    -> Sometimes implementation of all function cannot be provided in a base class because we don’t know the implementation. Such a class is called abstract class. For example, let Shape be a base class. We cannot provide implementation of function area() in Shape, but we know every derived class must have implementation of area()
+    -> Sometimes implementation of all functions cannot be provided in a base class because we don’t know the implementation. Such a class is called an abstract class. For example, let Shape be a base class. We cannot provide the implementation of function area() in Shape, but we know every derived class must have the implementation of area()
 
 */
 
