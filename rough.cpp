@@ -4,18 +4,22 @@ using namespace std;
 class Hero
 {
 private:
-    int weight, height;
-
 public:
-    Hero(int w, int h)
+    int life = 10, health = 100;
+    void getInfo()
     {
-        this->weight = w;
-        this->weight = h;
+        cout << endl
+             << this->life << " " << this->health;
     }
 };
 
 int main()
 {
-    Hero H(10, 20);
+    Hero H1;
+    H1.getInfo();
+    Hero H2(H1);
+    H2.life = 20;
+    H2.getInfo();
+
     return 0;
 }

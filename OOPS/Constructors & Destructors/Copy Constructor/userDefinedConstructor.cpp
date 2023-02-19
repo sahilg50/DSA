@@ -1,8 +1,6 @@
 /*
-NOTE:
-    -The copy constructor has to pass by reference otherwise if we pass by value then it will get caught in the infinite loop of creating and copying the constructor.
-    - When copying the data of object at the time of initialization then copy is made through COPY CONSTRUCTOR Hero D = A;
-    - When copying the data of object after initialization then the copy is done through DEFAULT ASSIGNMENT OPERATOR
+TOPIC: Note
+    -> The copy constructor has to be passed by reference otherwise if we pass by value then it will get caught in the infinite loop of creating and copying the constructor.
 */
 
 #include <iostream>
@@ -15,23 +13,22 @@ private:
     int level, health;
 
 public:
-    Hero() { cout << "Initialization constructor called." << endl; }
+    Hero() { cout << "\nInitialization constructor called."; }
     Hero(char name, int level, int health)
     {
-        cout << "Initialization constructor called." << endl;
+        cout << "\nInitialization constructor called.";
         this->name = name, this->level = level, this->health = health;
     }
     Hero(const Hero &temp)
     {
-        cout << "Copy constructor called." << endl;
+        cout << "\nCopy constructor called.";
         this->name = temp.name;
         this->level = temp.level;
         this->health = temp.health;
     }
     void print()
     {
-        cout << "[ " << this->name << ", " << this->health << ", " << this->level << " ]"
-             << "\n\n";
+        cout << "\n[ " << this->name << ", " << this->health << ", " << this->level << " ]\n\n";
     }
 };
 
@@ -40,12 +37,13 @@ int main()
     Hero S('S', 10, 100);
     S.print();
 
-    // When copying the data of object after initialization then the copy is done through DEFAULT ASSIGNMENT OPERATOR
+    // When copying the data after initialization then the copy is done through DEFAULT ASSIGNMENT OPERATOR
     Hero A;
     A = S;
     A.print();
 
-    // When copying the data of object at the time of initialization then copy is made through COPY CONSTRUCTOR Hero D = A;
+    // When copying the data at the time of initialization then copy is made through COPY CONSTRUCTOR
+    // Hero C(S);
     Hero C = S;
     C.print();
     return 0;

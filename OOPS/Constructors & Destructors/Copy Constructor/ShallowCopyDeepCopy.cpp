@@ -19,12 +19,12 @@ public:
     // Non-Parameterized constructor
     Hero()
     {
-        cout << "Inititalization construtor is called " << endl;
+        cout << "Initialization constructor is called " << endl;
     }
     // Parameterized constructor
     Hero(char name, int level, int health)
     {
-        cout << "Construtor called.\n";
+        cout << "Constructor called.\n";
         this->name = new char[1];
         this->name[0] = name;
         this->level = level;
@@ -48,7 +48,7 @@ public:
 
     ~Hero()
     {
-        cout << "Destructor called for: " << this->name[0] << endl;
+        cout << "\nDestructor called for: " << this->name[0];
     }
 };
 
@@ -64,7 +64,6 @@ int main()
     Hero *B = new Hero('B', 2, 40);
     // (*B).print();
     B->print();
-    cout << endl;
     delete B;
     cout << "\n\n";
 

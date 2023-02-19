@@ -1,4 +1,4 @@
-// Using Friend Class : If we want that class should not be instantiated by anyone else but only by a friend class.
+// Using Friend Class : If we want that class to be instantiated only by a friend class.
 #include <iostream>
 using namespace std;
 
@@ -8,7 +8,7 @@ class A
 private:
     A()
     {
-        cout << "constructor of A\n";
+        cout << "Constructor of A\n";
     }
     friend class B; // Declaring class B as the friend of class A
 };
