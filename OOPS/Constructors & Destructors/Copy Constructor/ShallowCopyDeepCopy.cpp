@@ -1,12 +1,19 @@
 // https : // www.youtube.com/watch?v=i_5pvt7ag7E&t=494s
 // https://www.codingninjas.com/codestudio/guided-paths/basics-of-c/content/118817/offering/1381799
-#include <iostream>
-using namespace std;
+
 /*
-SHALLOW COPY AND DEEP COPY:
-    Depending upon the resources like dynamic memory held by the object, either we need to perform Shallow Copy or Deep Copy in order to create a replica of the object. In general, if the variables of an object have been dynamically allocated, then it is required to do a Deep Copy in order to create a copy of the object.
+TOPIC: SHALLOW COPY AND DEEP COPY
+    -> Depending upon the resources like dynamic memory held by the object, either we need to perform Shallow Copy or Deep Copy in order to create a replica of the object. In general, if the variables of an object have been dynamically allocated, then it is required to do a Deep Copy in order to create a copy of the object.
+
+    -> Suppose one of the data members is a pointer to an array. When we create a copy of this object, the address stored in this pointer will be copied to the other pointer(data member of the new object). Now, when we make any change in the array using any object, it will be reflected in both objects because both pointers are pointing to the same array.
+
+    -> Suppose one of the data member is an integer variable. When we create a copy of this object, the value stored in that integer variable will be copied to the other integer variable(data member of the new object). Now, if we change value of this data member of the new object then the change won't be reflected in the other object because both the data members hold their separate copies of the integer.
+
     https://www.geeksforgeeks.org/shallow-copy-and-deep-copy-in-c/
 */
+
+#include <iostream>
+using namespace std;
 
 class Hero
 {

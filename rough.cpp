@@ -1,20 +1,18 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
-class Number
+int init(int num)
 {
-public:
-    int a = 10, b = 20;
-};
+    cout << "\nFunc. to init the variable called!\n";
+    return num;
+}
 
 int main()
 {
-    Number N1;
-    Number N2;
-    N2 = N1;
-    N2.a = 30;
-    cout << &N1 << endl
-         << &N2;
+    int a(init(10));
+    cout << a;
+
+    int b = 20;
+    cout << b;
     return 0;
 }

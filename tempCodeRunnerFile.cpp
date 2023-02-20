@@ -1,0 +1,2 @@
+user->Action();
+    // delete user;
