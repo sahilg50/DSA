@@ -14,6 +14,7 @@ TOPIC: Different Ways to Initialize Variables
 
     -> auto c = 7.5;    The initialization is OK
     -> auto c(7.5);     The initialization is OK
+    -> auto c{7.5};     The initialization is OK
 
 
     TOPIC: Unsafe Initialization: '=' or '()'
@@ -30,18 +31,22 @@ TOPIC: Different Ways to Initialize Variables
 #include <typeinfo>
 using namespace std;
 
+// Custom function initialize integer
 int init(int num)
 {
-    cout << "\nInit Func. called!\n";
+    cout << "\n\nInit Func. called!";
     return num;
 }
 
 int main()
 {
     int a(30.4);
-    cout << "a: " << typeid(a).name() << endl;
+    cout << "\na : " << a << ", Type: " << typeid(a).name();
 
     int b(init(20.10));
-    cout << " b : " << typeid(b).name() << endl;
+    cout << "\nb : " << b << ", Type: " << typeid(b).name();
+
+    auto c{40.90};
+    cout << "\n\nc-: " << c << ", Type: " << typeid(c).name();
     return 0;
 }
