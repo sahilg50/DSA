@@ -1,25 +1,20 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
-class Hero
+class Number
 {
-private:
 public:
-    int life = 10, health = 100;
-    void getInfo()
-    {
-        cout << endl
-             << this->life << " " << this->health;
-    }
+    int a = 10, b = 20;
 };
 
 int main()
 {
-    Hero H1;
-    H1.getInfo();
-    Hero H2(H1);
-    H2.life = 20;
-    H2.getInfo();
-
+    Number N1;
+    Number N2;
+    N2 = N1;
+    N2.a = 30;
+    cout << &N1 << endl
+         << &N2;
     return 0;
 }
