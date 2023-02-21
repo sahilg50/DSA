@@ -1,26 +1,13 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
-class A
+int main()
 {
-private:
-protected:
-    int a;
-
-public:
-};
-
-class B : public A
-{
-private:
+    int a = 0;
     int b = a;
+    b = 20;
+    cout << a;
 
-protected:
-public:
-}
-
-int
-main()
-{
     return 0;
 }

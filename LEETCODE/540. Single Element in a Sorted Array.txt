@@ -1,0 +1,52 @@
+// https://leetcode.com/problems/single-element-in-a-sorted-array/description/
+
+
+// Approach 1: Brute Force (Nested For Loops) (TLE)
+class Solution {
+public:
+    int singleNonDuplicate(vector<int>& nums) {
+        for(const int &x : nums){
+            int count = 0;
+            for(int y : nums) if(y==x) count++;
+            if(count==1) return x;
+        }
+        return 0;
+    }
+};
+/*
+TC-> Nested Loop: O(N^2)
+Sc-> O(1)
+*/
+
+
+// Approach 2: Hash Map (TLE)
+class Solution {
+public:
+    int singleNonDuplicate(vector<int>& nums) {
+        unordered_map<int, int> M;
+        for(int v : nums) M[v]++;
+        for(auto &it : M) if(it.second==1) return it.first;
+        return 0;
+    }
+};
+/*
+TC-> O(N)
+Sc-> Map: O(N)
+*/
+
+
+// Approach 3: XOR
+class Solution {
+public:
+    int singleNonDuplicate(vector<int>& nums) {
+        int ans = 0;
+        for(auto c : nums) ans ^= c; 
+        return ans;
+    }
+};
+
+/*
+TC-> O(N)
+Sc-> O(1)
+*/
+
