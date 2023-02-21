@@ -1,6 +1,7 @@
 /*
 TOPIC: What are static members?
     -> The variables declared as static are initialized only once as they are allocated space in separate static storage, so the objects share the static variables in a class.
+
     -> There can not be multiple copies of the same static variables for different objects. Also, because of this reason, static variables can not be initialized using constructors.
 
 TOPIC: Properties of Static Members:
@@ -12,16 +13,24 @@ TOPIC: Properties of Static Members:
 
 STATIC KEYWORD:
     TOPIC: Data Member
-        - Data member declared using static keyword belongs to the class and we do not need to create an object to access it.
-        - Firstly, the static data members should be explicitly assigned values by the user by only using the scope resolution operator outside the class (int Box::objectCount = 0), and only then you can modify it:
-        - Ways to Modify the value:
-            -> The value can also be modified from inside the static or non-static method.
-            -> If an object of that class exists, then it can also be modified using the '.' operator.
+        -> Data member declared using static keyword belongs to the class and we do not need to create an object to access it.
+
+        -> Firstly, the static methods should be explicitly defined by the user by only using the scope resolution operator outside the class (int Box::objectCount = 0), and only then you can modify it.
+
+        -> Ways to Modify the value:
+            - The value can also be modified from inside the static or non-static method.
+            - If an object of that class exists, then it can also be modified using the '.' operator.
 
     TOPIC: Member Functions
-        - Methods declared using static keyword belongs to the class and we do not need to create an object to access it.
-        - Static methods can only access static data members.
-        - Static methods do no have 'this' keyword. This is because 'this' keyword belongs to the object and not the class.
+        -> Methods declared using static keyword belongs to the class and we do not need to create an object to access it.
+
+        -> Firstly, the static data members should be explicitly assigned values by the user by only using the scope resolution operator outside the class
+        (void Box::getType() { cout << "\nThe type of boxes is: " << type; }),
+        and only then you can modify it.
+
+        -> Static methods can only access static data members.
+
+        -> Static methods do no have 'this' keyword. This is because 'this' keyword belongs to the object and not the class.
 
 TOPIC: Note
     -> A static member can be called/accessed even if no objects of the class exist and in that case the static members are called/accessed using only the class name and the scope resolution operator '::'.
@@ -30,7 +39,7 @@ TOPIC: Note
 
 
 TOPIC: Use Case
-Suppose you're initializing a private data member as static. In that case, you won't be able to initialize its value by using the '::' operator outside the class because now it's private and can only be accessed from inside the class. So the other way is to make it constant and initialize its value (const static int objectCount = 0), but in this case, you won't be able to change the value.
+    -> Suppose you're initializing a private data member as static. In that case, you won't be able to initialize its value by using the '::' operator outside the class because now it's private and can only be accessed from inside the class. So the other way is to make it constant and initialize its value (const static int objectCount = 0), but in this case, you won't be able to change the value.
 */
 
 #include <iostream>
@@ -74,10 +83,7 @@ public:
 int Box::objectCount = 0;
 
 // Initializing static method of class Box
-void Box::getType()
-{
-    cout << "\nThe type of boxes is: " << type;
-}
+void Box::getType() { cout << "\nThe type of boxes is: " << type; }
 
 int main(void)
 {
