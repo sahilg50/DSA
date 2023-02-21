@@ -11,8 +11,10 @@ TOPIC: In this example
 
     -> Therefore, in derived3, there is only one copy of base and ob.i = 10 is perfectly valid and unambiguous.
 */
+
 #include <iostream>
 using namespace std;
+
 class base
 {
 public:

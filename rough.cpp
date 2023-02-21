@@ -1,18 +1,26 @@
 #include <iostream>
 using namespace std;
 
-int init(int num)
+class A
 {
-    cout << "\nFunc. to init the variable called!\n";
-    return num;
+private:
+protected:
+    int a;
+
+public:
+};
+
+class B : public A
+{
+private:
+    int b = a;
+
+protected:
+public:
 }
 
-int main()
+int
+main()
 {
-    int a(init(10));
-    cout << a;
-
-    int b = 20;
-    cout << b;
     return 0;
 }

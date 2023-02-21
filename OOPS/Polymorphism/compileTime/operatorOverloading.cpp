@@ -13,10 +13,9 @@ public:
         this->real = real;
         this->imaginary = imaginary;
     }
-    void print()
-    {
-        cout << real << " + i" << imaginary;
-    }
+
+    void print() { cout << this->real << " + i" << this->imaginary; }
+
     ComplexNumber operator+(const ComplexNumber &c2)
     {
         ComplexNumber c3(0, 0);

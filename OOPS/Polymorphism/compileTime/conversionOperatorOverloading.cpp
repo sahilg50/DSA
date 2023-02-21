@@ -4,6 +4,7 @@ Conversion Operator: We can also write conversion operators that can be used to 
 
 #include <iostream>
 using namespace std;
+
 class Fraction
 {
 private:
@@ -12,8 +13,8 @@ private:
 public:
     Fraction(int n, int d)
     {
-        num = n;
-        den = d;
+        this->num = n;
+        this->den = d;
     }
 
     // Conversion operator: return float value of fraction

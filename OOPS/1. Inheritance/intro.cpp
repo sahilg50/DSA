@@ -1,7 +1,8 @@
 /*
 https://www.codingninjas.com/codestudio/library/inheritance-in-c
 
-- Inheritance is a mechanism of reusing and extending existing classes without modifying them, thus producing hierarchical relationships between them.
+TOPIC: What is inheritance?
+    -> Inheritance is a mechanism of reusing and extending existing classes without modifying them, thus producing hierarchical relationships between them.
 */
 
 // Example of hybrid inheritance.
