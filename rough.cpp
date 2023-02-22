@@ -2,12 +2,16 @@
 #include <vector>
 using namespace std;
 
+class A
+{
+protected:
+    int a = 0;
+};
+
 int main()
 {
-    int a = 0;
-    int b = a;
-    b = 20;
-    cout << a;
 
+    A obj;
+    obj.a;
     return 0;
 }

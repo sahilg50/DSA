@@ -1,11 +1,12 @@
 /*
 TOPIC: Global Function as Friend Function
     -> A class can have multiple friend functions
+
     -> We can declare a friend class in C++ by using the friend keyword.
 
     -> Arguments are passed by value, unless the function signature specifies otherwise:
-        - in void foo(type arg), arg is passed by value regardless of whether type is a simple type, a pointer type or a class type,
-        - in void foo(type& arg), arg is passed by reference.
+        - In void foo(type arg), arg is passed by value regardless of whether type is a simple type, a pointer type or a class type.
+        - In void foo(type& arg), arg is passed by reference.
 */
 
 #include <iostream>

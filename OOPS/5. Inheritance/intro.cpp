@@ -1,8 +1,29 @@
 /*
 https://www.codingninjas.com/codestudio/library/inheritance-in-c
 
-TOPIC: What is inheritance?
+TOPIC: What is Inheritance?
     -> Inheritance is a mechanism of reusing and extending existing classes without modifying them, thus producing hierarchical relationships between them.
+
+TOPIC: Types of Access Specifiers
+    -> Public
+    -> Protected
+    -> Private
+
+TOPIC: Types of Inheritance
+    -> Single Inheritance
+    -> Multiple Inheritance
+    -> Hierarchical Inheritance
+    -> MultiLevel Inheritance
+    -> Hybrid Inheritance
+
+TOPIC: NOTE
+    -> Protected and Private members cannot be accessed in the driver function(main function) directly.
+
+    -> Private members are never inherited.
+
+    -> If publicly inherited, public members will be public and protected members will be protected.
+
+    -> If we inherit under a protected specifier, public and protected members become protected.
 */
 
 // Example of hybrid inheritance.
@@ -29,7 +50,7 @@ public:
     }
 };
 
-// deriving class B from class A
+// Deriving class B from class A
 class B : public A
 {
 public:
@@ -39,7 +60,7 @@ public:
     }
 };
 
-// deriving class C from class A
+// Deriving class C from class A
 class C
 {
 public:
@@ -49,7 +70,7 @@ public:
     }
 };
 
-// deriving class D from B and C
+// Deriving class D from B and C
 class D : public B, public C
 {
 public:
@@ -59,7 +80,7 @@ public:
     }
 };
 
-// driver function
+// Driver function
 int main()
 {
 

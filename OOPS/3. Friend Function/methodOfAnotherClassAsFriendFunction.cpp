@@ -1,4 +1,4 @@
-// TOPIC: Member Function of Another Class as Friend Function
+// TOPIC: Method of Another Class as Friend Function
 
 #include <iostream>
 using namespace std;

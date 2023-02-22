@@ -1,6 +1,4 @@
 /*
-https://www.geeksforgeeks.org/static-keyword-cpp/
-
 
 TOPIC: Proof that static variables' lifetime (or "extent") is the entire run of the program.
     -> In the code we declare a class and then create an object from it inside the while loop. So the destructor should be called as soon as the while loop ends. But this does not happen because it is a static object and it is only destroyed when the main function ends.

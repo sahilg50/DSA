@@ -1,11 +1,16 @@
 /*
-In normal terms Encapsulation is defined as wrapping up of data and information under a single unit. In Object Oriented Programming, Encapsulation is defined as binding together the data and the functions that manipulates them. Consider a real life example of encapsulation, in a company there are different sections like the accounts section, finance section, sales section etc. The finance section handles all the financial transactions and keep records of all the data related to finance. Similarly the sales section handles all the sales related activities and keep records of all the sales. Now there may arise a situation when for some reason an official from finance section needs all the data about sales in a particular month. In this case, he is not allowed to directly access the data of sales section. He will first have to contact some other officer in the sales section and then request him to give the particular data. This is what encapsulation is. Here the data of sales section and the employees that can manipulate them are wrapped under a single name “sales section”.
+TOPIC: What is Encapsulation ?
+    -> Encapsulation is defined as binding together the data and the functions that manipulates them under a single unit.
 
-We can not access any function from class directly. We need an object to access that function which is using the member the variable of that class.
+    -> It is done to make sure that "sensitive" data is hidden from users. It increases security.
 
-The function which we are making inside the class ,it must use the all member variable then only it is called encapsulation.
+TOPIC: How to Achieve Encapsulation ?
+    -> Declare class variables/attributes as private (cannot be accessed from outside the class).
 
-If we  don’t  make function inside the class which is using the member  variable of the class then we don’t call it encapsulation.
+    -> If you want others to read or modify the value of a private member, you can provide public get and set methods.
+
+TOPIC: Real Life Example of Encapsulation
+    -> A company has different sections like accounts, finance, sales, etc. The finance section handles all the financial transactions and records all the finance-related data. Similarly, the sales section manages all the sales-related activities and keeps records of all the sales. For some reason, a finance section official needs all the sales data in a particular month. In this case, he is not allowed to access the data of the sales section directly. He will first have to contact some other officer in the sales section and then request him to give the particular data. Here the data of the sales section and the employees that can manipulate them are wrapped under a single name, “sales section.” This is called encapsulation.
 */
 
 #include <iostream>
