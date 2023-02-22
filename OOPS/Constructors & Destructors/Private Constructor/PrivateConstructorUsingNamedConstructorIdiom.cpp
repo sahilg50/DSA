@@ -1,6 +1,7 @@
 /*
 TOPIC: Named Constructor Idiom
     -> Since the constructor has the same name as of class, different constructors are differentiated by their parameter list, but if the number of constructors is more, implementation can become error-prone.
+
     -> With the Named Constructor Idiom, you declare all the class’s constructors in the private or protected sections, and then for accessing objects of the class, you create public static functions whose return type is that class.
 
 TOPIC: Note

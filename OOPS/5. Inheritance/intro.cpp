@@ -9,6 +9,8 @@ TOPIC: Types of Access Specifiers
     -> Protected
     -> Private
 
+    -> Default access specifier while declaring member or while inheritance is private.
+
 TOPIC: Types of Inheritance
     -> Single Inheritance
     -> Multiple Inheritance
