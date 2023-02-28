@@ -1,11 +1,32 @@
 #include <iostream>
-#include <vector>
 using namespace std;
+
+class Hero
+{
+private:
+    char name;
+
+public:
+    Hero(char ch) { this->name = ch; }
+
+    Hero &set()
+    {
+        cout << "\nSet method called!";
+        // Return the object which called this method as reference.
+        return *this;
+    }
+
+    void get() { cout << endl
+                      << this->name; }
+};
 
 int main()
 {
-    vector<int> v = {1, 2, 3, 1, 1, 1, 1, 1, 1, 1, 10};
-    v.resize(7, 0);
-    cout << v.size() << " " << v.capacity();
+
+    Hero A('a');
+    Hero B('b');
+    A = B.set();
+    A.get();
+
     return 0;
 }
