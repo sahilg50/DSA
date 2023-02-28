@@ -10,7 +10,7 @@ TOPIC: Default Copy Constructor:
 
     -> The default version of the copy constructor (created by the compiler) always makes a shallow copy. It means that the object is copied exactly as it is. Each data member value is copied exactly over to the corresponding data member location in the new object.
 
-    -> Both the existing object and new object shares the different memory locations but the data members may share same memory location depending upon the type of copy(Shallow copy or deep copy) as we've seen shallow copy and deep copy.
+    -> Both the existing object and new object shares the different memory locations but the data members may share same memory location depending upon the type of copy(Shallow copy or deep copy).
 */
 
 #include <iostream>
