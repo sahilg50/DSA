@@ -28,5 +28,6 @@ int main()
     A = B.set();
     A.get();
 
+    cout << '9' - '0';
     return 0;
 }

@@ -1,0 +1,30 @@
+// https://leetcode.com/problems/find-the-divisibility-array-of-a-string/solutions/?orderBy=most_votes
+
+
+
+// https://leetcode.com/problems/find-the-divisibility-array-of-a-string/solutions/3230950/stepwise-explanation-with-images-easy-to-understand-simple-division-rule/?orderBy=most_votes
+
+// Approach 1
+class Solution {
+public:
+    vector<int> divisibilityArray(string word, int m) {
+        
+        vector<int> div;
+        
+        long long int prevRem = 0;
+        for(char ch : word){
+            prevRem *= 10;
+            prevRem += (ch - '0');
+            prevRem = prevRem % m;
+            
+            prevRem == 0 ? div.push_back(1) : div.push_back(0);
+        }
+        
+        return div;
+    }
+};
+/*
+If N is the size of the string word:
+TC-> O(N)
+SC-> Div Array: O(N)ASC
+*/

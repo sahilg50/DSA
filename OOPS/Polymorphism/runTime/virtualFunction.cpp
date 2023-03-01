@@ -17,7 +17,7 @@
 -> Q. Why do we declare functions are virtual functions while function overriding?
     Ans: Virtual functions ensure that the correct function is called for an object, regardless of the type of reference (or pointer) used for function call.
 
--> Virtual functions should have an overrider in the derived class.
+-> Virtual functions should have an over-rider in the derived class.
 */
 
 #include <iostream>
@@ -28,7 +28,7 @@ class Instrument
 public:
     virtual void makeSound()
     {
-        cout << "Intrument is playing.....\n";
+        cout << "Instrument is playing.....\n";
     }
 };
 
