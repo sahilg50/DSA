@@ -1,0 +1,56 @@
+// https://leetcode.com/problems/unique-paths-ii/description/
+
+// Approach 1: Recursion(TLE)(Bottom - Up) + Memoization
+class Solution {
+private:
+    int move(int i, int j, vector<vector<int>> &grid, vector<vector<int>> &dp){
+
+        if(i>=grid.size() || j>=grid[0].size()) return 0;
+        if(grid[i][j] == 1) return 0;
+        if(i==grid.size()-1 && j==grid[0].size()-1) return 1;
+
+        if(dp[i][j]!=-1) return dp[i][j];
+
+        return dp[i][j] = move(i+1, j, grid, dp) + move(i, j+1, grid, dp);
+    }
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        int m = obstacleGrid.size(), n = obstacleGrid[0].size();
+        vector<vector<int>> dp(m, vector<int>(n, -1));
+        return move(0, 0, obstacleGrid, dp);
+    }
+};
+/*
+If M and N is the number of rows and columns respectively then:
+Recursion: 
+    TC-> O(2^(M*N))
+    SC-> Recursion Stack: O(M+N)ASC
+
+Memoization:
+    TC-> O(M*N)
+    SC-> Dp Array: O(M*N) + Recursion Stack: O(M+N)ASC
+*/
+
+
+// Approach 2: Tabulation (Top - Down)
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        vector<vector<long long int>> dp(m+1, vector<long long int>(n+1, 0));
+
+        for(int i=m-1; i>=0; i--){
+            for(int j=n-1; j>=0; j--){
+                if(grid[i][j]==1) dp[i][j]=0;
+                else if(i==m-1 && j==n-1) dp[i][j] = 1;
+                else dp[i][j] = dp[i+1][j] + dp[i][j+1];
+            }
+        }
+        return dp[0][0];
+    }
+};
+/*
+If M and N are the number of columns and rows of the grid then: 
+TC-> O(M*N)
+SC-> Dp Array: O(M*N)
+*/
