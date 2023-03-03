@@ -1,0 +1,29 @@
+// https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/description/
+
+
+/*
+Approach 1: Brute Force 
+For all the indexes in haystack (i), traverse from (i) to (i) + needle.size() and see if the needle exists or not.
+*/ 
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+
+        int m = haystack.size(), n = needle.size();
+
+        for(int i=0; i<m; i++){
+            int count = 0;
+            for(int j=i, k=0; k<n && j<m; j++, k++){
+                if(haystack[j] == needle[k]) count++;
+                else break;
+            }
+            if(count==n) return i;
+        }
+        return -1;
+    }
+};
+/*
+If M = size(hayStack), N = size(needle) then:
+TC-> O(M*N)
+SC-> O(1)
+*/

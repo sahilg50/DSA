@@ -1,0 +1,79 @@
+// https://leetcode.com/problems/unique-paths/submissions/908315153/
+
+
+// Approach 1: Recursion(TLE)(Bottom - Up) + Memoization
+class Solution {
+private:
+    int move(int i, int j, int m, int n, vector<vector<int>> &dp){
+        if(i>=m || j>=n) return 0;
+        if(i==m-1 && j==n-1) return 1;
+        if(dp[i][j]!=-1) return dp[i][j];
+
+        return dp[i][j] = move(i+1, j, m, n, dp) + move(i, j+1, m, n, dp);
+
+    }
+public:
+    int uniquePaths(int m, int n) {
+        vector<vector<int>> dp(m, vector<int>(n, -1));
+        return move(0, 0, m, n, dp);
+    }
+};
+/*
+If M and N are the number of rows and columns then:
+Recursion:
+    TC-> O(2^(M*N))
+    SC-> Recursion Stack: O(M+N)ASC
+With Memoization:
+    TC-> O(M*N)
+    SC-> Dp Array: O(M*N) + Recursion Stack: O(M+N)ASC
+*/
+
+
+// Approach 2: Tabulation(Top - Down)
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        vector<vector<int>> dp(m+2, vector<int>(n+2, 0));
+        for(int i=m; i>=0; i--){
+            for(int j=n; j>=0; j--){
+                if(i>=m || j>=n) dp[i][j] = 0;
+                else if(i==m-1 && j==n-1) dp[i][j] = 1;
+                else dp[i][j] = dp[i+1][j] + dp[i][j+1];
+            }
+        }
+        return dp[0][0];
+    }
+};
+/*
+If M and N are the number of rows and columns then:
+TC-> O(M*N)
+SC-> Dp Array: O(M*N)
+*/
+
+
+/*
+Approach 3: nCr
+Total steps counts = 3 [ (m-1)+(n-1) ]
+Total Right movement count in each path = 2 [m-1]
+Total Down movement count in each path = 1 [n-1]
+
+Now, we can think of having 3 places  to fill with 2 items[2 R] and one place with one item[1 D]: 3C2 * 1C1 
+                    OR
+Now, we can think of having 3 places  to fill with 1 item[1 D] and the rest two places with two items [2 R]: 3C1 * 2C2
+*/
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        int N = n+m-2; 
+        int r = min(n,m) - 1;
+        
+        double res = 1;
+        for(int i=1; i<=r; ++i, N--) res = res * (N) / i;
+        
+        return (int)res;
+    }
+};
+/*
+TC-> O(min(n, m))
+SC-> O(1), constant
+*/
