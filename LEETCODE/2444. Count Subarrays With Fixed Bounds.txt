@@ -1,0 +1,54 @@
+// https://leetcode.com/problems/count-subarrays-with-fixed-bounds/
+
+
+// Approach 1: Brute Force(Form all the subArrays)
+class Solution {
+public:
+    long long countSubarrays(vector<int>& nums, int minK, int maxK) {
+
+        int n = nums.size();
+        long long count = 0;
+        for(int i=0; i<n; i++){
+            int MIN = INT_MAX, MAX = INT_MIN;
+            for(int j=i; j<n; j++){
+                MIN = min(MIN, nums[j]);
+                MAX = max(MAX, nums[j]);
+
+                if(MIN<minK || MAX>maxK) break;
+                if(MIN == minK && MAX == maxK) count++;
+            }
+        }
+        return count;
+    }
+};
+/*
+If N is the size of the array then:
+TC-> O(N^2)
+SC-> O(1)
+*/
+
+// Approach 2: Incomplete(Not Understood)
+class Solution {
+public:
+    long long countSubarrays(vector<int>& nums, int minK, int maxK) {
+
+        int mini=-1, maxi=-1, start=0;
+        long long count=0;
+        for(int i=0; i<nums.size(); i++){
+            if(nums[i]<minK || nums[i]>maxK){
+                start = i+1, mini = i, maxi = i;
+                continue;
+            }
+            if(nums[i] == minK) mini = i;
+            if(nums[i] == maxK) maxi = i;
+            
+            count+= (i-start+1) - (i - (min(mini,maxi)+1)+1);
+        }
+        return count;
+    }
+};
+/*
+If N is the size of the array then:
+TC-> O(N)
+SC-> O(N)
+*/
