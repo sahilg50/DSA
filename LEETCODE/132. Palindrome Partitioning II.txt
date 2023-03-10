@@ -1,0 +1,84 @@
+// https://leetcode.com/problems/palindrome-partitioning-ii/
+
+
+// Approach 1: Recursion(TLE)(Top-Down) + Memoization
+class Solution {
+private:
+    bool isPalindrome(int i, int j, const string &s){
+        while(i<j){
+            if(s[i]!=s[j]) return false;
+            else i++, j--;
+        }
+        return true;
+    }
+    int util(int i, int n, const string &s, vector<int> &dp){
+        if(i==n) return 0;
+        if(isPalindrome(i, n-1, s)) return 0;
+        if(dp[i]!=-1) return dp[i];
+        
+
+        int minCost = INT_MAX;
+        for(int j=i; j<n; j++){
+            if(isPalindrome(i, j, s)){
+                int cost = 1 + util(j+1, n, s, dp);
+                minCost = min(minCost, cost);
+            }
+        }
+        return dp[i] = minCost;
+    }
+public:
+    int minCut(const string &s) {
+        int n = s.size();
+        vector<int> dp(n, -1);
+        return util(0, n, s, dp);
+    }
+};
+/*
+If N = size(s):
+Recursion:
+    TC-> Exponential ~= O(N^N)
+    SC-> Recursion Stack: O(N)ASC
+
+With Memoization:
+    TC-> States: O(N) * For loop to partition: O(N) ~= O(N^2)
+    SC-> DP Array: O(N) + Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: Tabulation
+class Solution {
+private:
+    bool isPalindrome(int i, int j, const string &s){
+        while(i<j){
+            if(s[i]!=s[j]) return false;
+            else i++, j--;
+        }
+        return true;
+    }
+public:
+    int minCut(const string &s) {
+        int n = s.size();
+        vector<int> dp(n+1, 0);
+
+        for(int i=n-1; i>=0; i--){
+            if(isPalindrome(i, n-1, s)){
+                dp[i]=0;
+                continue;
+            }
+            int minCost = INT_MAX;
+            for(int j=i; j<n; j++){
+                if(isPalindrome(i, j, s)){
+                    int cost = 1 + dp[j+1];
+                    minCost = min(minCost, cost);
+                }
+            }
+            dp[i] = minCost;
+        }
+        return dp[0];
+    }
+};
+/*
+If N = size(s):
+TC-> States: O(N) * For loop to partition: O(N) ~= O(N^2)
+SC-> DP Array: O(N)
+*/
