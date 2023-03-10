@@ -28,12 +28,43 @@ public:
 /*
 If C is the size of the cuts array then:
 Recursion:
-    TC-> Exponential ~= O(C^C)
+    TC-> Sort: O(ClogC) + Recursion: Exponential ~= O(C^C)
     SC-> Recursion Stack: O(C)ASC
 
 With Memoization:
-    TC-> O(C^3)
+    TC-> Sort: O(ClogC) + Recursion: O(C^3)
     There are 2 variables i and j, therefore, C*C states and we explicitly run a loop inside the function which will run for C times, therefore at max ‘C*C*C’ new problems will be solved.
-    
+
     SC-> Dp Array: O(C^2) + Recursion Stack: O(C)ASC
+*/
+
+
+// Approach 2: Tabulation (Bottom-Up)
+class Solution {
+public:
+    int minCost(int n, vector<int>& cuts) {
+        cuts.push_back(0);
+        cuts.push_back(n);
+        sort(cuts.begin(), cuts.end());
+        int c = cuts.size();
+        vector<vector<int>> dp(c+3, vector<int>(c+3, 0));
+
+        for(int i=c-2; i>=1; i--){
+            for(int j=1; j<=c-2; j++){
+                if(i>j) continue;
+                int ans = INT_MAX;
+                for(int k=i; k<=j; k++){
+                    int cost = cuts[j+1] - cuts[i-1] + dp[i][k-1] + dp[k+1][j];
+                    ans = min(ans, cost);
+                }
+                dp[i][j] = ans;
+            }
+        }
+        return dp[1][c-2];
+    }
+};
+/*
+If C is the size of the cuts array then:
+TC-> Sort: O(ClogC) + Recursion: O(C^3)
+SC-> Dp Array: O(C^2)
 */
