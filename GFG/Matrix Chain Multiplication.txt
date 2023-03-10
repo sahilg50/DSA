@@ -1,6 +1,7 @@
 // https://practice.geeksforgeeks.org/problems/matrix-chain-multiplication0303/1?utm_source=geeksforgeeks&utm_medium=article_practice_tab&utm_campaign=article_practice_tab
 
 
+// https://www.youtube.com/watch?v=D1U74eFLg_g
 // Approach 1: Recursion(TLE)(Top-Down) + Memoization
 class Solution{
 private:
@@ -32,6 +33,7 @@ With Memoization:
     TC-> O(N^3)
     SC-> Dp Array: O(N^2) + Recursion Stack: O(N)
 */
+
 
 
 // Approach 2: Tabulation (Bottom-Up)
