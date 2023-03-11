@@ -1,0 +1,38 @@
+// https://leetcode.com/problems/partition-array-for-maximum-sum/description/
+
+
+// Approach 1: Recursion(TLE)(Top-Down) + Memoization
+class Solution {
+private:
+    int util(int i, int n, vector<int> &arr, int k, vector<int> &dp){
+        if(i>=n) return 0;
+        if(dp[i]!=-1) return dp[i];
+
+        // Perform all operations
+        int maxSum = INT_MIN;
+        for(int j=i; j<i+k && j<n; j++){
+            int maxEle = *max_element(arr.begin()+i, arr.begin()+j+1);
+            int sum = (maxEle*(j-i+1)) + util(j+1, n, arr, k, dp);
+            maxSum = max(maxSum, sum);
+        }
+        return dp[i] = maxSum;
+    }
+public:
+    int maxSumAfterPartitioning(vector<int>& arr, int k) {
+        int n = arr.size();
+        vector<int> dp(n, -1);
+        return util(0, n, arr, k, dp);
+    }
+};
+/*
+If N = size(arr) and k = max size of subArray then:
+Recursion:
+    TC-> Exponential ~= O(N^N)
+    SC-> Recursion Stack: O(N)ASC
+
+With Memoization:
+    TC-> O(N*k)
+    SC-> Dp Array: O(N) + Recursion Stack: O(N)ASC
+*/
+
+
