@@ -36,3 +36,27 @@ With Memoization:
 */
 
 
+// Approach 2: Tabulation
+class Solution {
+public:
+    int maxSumAfterPartitioning(vector<int>& arr, int k) {
+        int n = arr.size();
+        vector<int> dp(n+2, 0);
+
+        for(int i=n-1; i>=0; i--){
+            int maxSum = INT_MIN;
+            for(int j=i; j<i+k && j<n; j++){
+                int maxEle = *max_element(arr.begin()+i, arr.begin()+j+1);
+                int sum = (maxEle*(j-i+1)) + dp[j+1];
+                maxSum = max(maxSum, sum);
+            }
+            dp[i] = maxSum;
+        }    
+        return dp[0];
+    }
+};
+/*
+If N = size(arr) and k = max size of subArray then:
+TC-> O(N*k)
+SC-> Dp Array: O(N)
+*/
