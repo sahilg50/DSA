@@ -1,22 +1,44 @@
+// https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/
+
+
+// Approach 1: Recursion 
+class Solution {
+private:    
+    int util(int ind, vector<int> &prices, int minPrice, int maxProfit){
+        if(ind>=prices.size()) return maxProfit;
+
+        int profit = prices[ind] - minPrice;
+        maxProfit = max(maxProfit, profit);
+        minPrice = min(minPrice, prices[ind]);
+
+        return util(ind+1, prices, minPrice, maxProfit);
+    }
+public:
+    int maxProfit(vector<int>& prices) {
+        return util(1, prices, prices[0], 0);
+    }
+};
+/*
+TC-> O(N)
+SC-> Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: Simple for Loop
 class Solution {
 public:
-    int maxProfit(vector<int>& P) {
-        /*
-        L: Buying day
-        R: Selling day
-        */
-        int L=0, R=1, maxProfit=0;
-        while(R<P.size()){
-            if(P[R]<P[L]){
-                L=R;
-            }
-            maxProfit = max(maxProfit, (P[R]-P[L]));
-            R++;
+    int maxProfit(vector<int>& prices) {
+        int minPrice = prices[0];
+        int maxProfit = 0;
+        for(int ind=1; ind<prices.size(); ind++){
+            int profit = prices[ind] - minPrice;
+            maxProfit = max(maxProfit, profit);
+            minPrice = min(minPrice, prices[ind]);
         }
         return maxProfit;
     }
 };
 /*
 TC-> O(N)
-SC-> (1), constant
+SC-> O(1)
 */

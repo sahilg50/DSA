@@ -1,0 +1,26 @@
+// Approach 1: Naive(Find the same consecutive height on both the sides )
+class Solution {
+private:
+    int Left(int i, vector<int> &heights){
+        int H = heights[i];
+        int n = heights.size();
+        while(i+1<n && heights[i+1]>=H) i++;
+        return i;
+    }
+
+    int Right(int i, vector<int> &heights){
+        int H = heights[i];
+        while(i-1>=0 && heights[i-1]>=H) i--;
+        return i;
+    }
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int maxArea = heights[0];
+        for(int i=0; i<heights.size(); i++){
+            int currArea = (Left(i, heights) - Right(i, heights) + 1) * heights[i];
+            maxArea = max(maxArea, currArea);
+        }
+        return maxArea;
+    }
+};
+
