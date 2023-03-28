@@ -1,0 +1,72 @@
+// https://leetcode.com/problems/maximal-rectangle/description/
+
+
+// Solution 1: Using the stack approach from the question, "Largest area in a histogram!"
+class Solution {
+private:
+    void leftSmaller(vector<int> &H, vector<int> &LS){
+        stack<int> S;
+        for(int i=0; i<H.size(); i++){
+            while(!S.empty() && H[S.top()] >= H[i]) S.pop();
+            if(S.empty()) LS.push_back(0);
+            else LS.push_back(S.top() + 1);
+            S.push(i);
+        }
+    }
+
+    void rightSmaller(vector<int> &H, vector<int> &RS){
+        stack<int> S;
+        int n = H.size();
+        for(int i=n-1; i>=0; i--){
+            while(!S.empty() && H[S.top()] >= H[i]) S.pop();
+            if(S.empty()) RS.push_back(n-1);
+            else RS.push_back(S.top() - 1);
+            S.push(i);
+        }
+        reverse(RS.begin(), RS.end());
+    }
+
+    int largestRectangleArea(vector<int> &heights) {
+
+        vector<int> LS, RS;
+        leftSmaller(heights, LS);
+        rightSmaller(heights, RS);
+
+        int maxArea = 0;
+        for(int i=0; i<heights.size(); i++){
+            int area = heights[i] * (RS[i] - LS[i] + 1);
+            maxArea = max(maxArea, area);
+        }
+        return maxArea;
+    }
+
+public:
+    int maximalRectangle(vector<vector<char>>& matrix) {
+
+        int n = matrix.size(), m = matrix[0].size();
+        vector<int> H(m, 0);
+        int maxArea = 0;
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(matrix[i][j]=='1') H[j]++;
+                else H[j] = 0;
+            }
+            int area = largestRectangleArea(H);
+            maxArea = max(maxArea, area);
+        }
+        return maxArea;
+    }
+};
+/*
+If N = rows of matrix and M = columns of matrix
+TC-> O(N*M)
+SC-> H Array: O(M) + LS: O(M) + RS: O(M)
+*/
+
+
+
+
+
+
+

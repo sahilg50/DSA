@@ -1,3 +1,6 @@
+// https://leetcode.com/problems/largest-rectangle-in-histogram/
+
+
 // Approach 1: Naive(Find the same consecutive height on both the sides) (TLE)
 class Solution {
 private:
@@ -24,6 +27,7 @@ public:
     }
 };
 /*
+If N = size of array then
 TC-> O(N^2)
 SC-> O(1)
 */
@@ -69,6 +73,7 @@ public:
     }
 };
 /*
+If N = size of array then
 TC-> O(N)
 SC-> Stack: O(N) + LS: O(N) + RS: O(N)
 */
