@@ -1,4 +1,4 @@
-// Approach 1: Naive(Find the same consecutive height on both the sides )
+// Approach 1: Naive(Find the same consecutive height on both the sides) (TLE)
 class Solution {
 private:
     int Left(int i, vector<int> &heights){
@@ -23,4 +23,59 @@ public:
         return maxArea;
     }
 };
+/*
+TC-> O(N^2)
+SC-> O(1)
+*/
+
+
+// Approach 2: Left smaller and Right smaller for each element
+class Solution {
+private:
+    void leftSmaller(vector<int> &H, vector<int> &LS){
+        stack<int> S;
+        for(int i=0; i<H.size(); i++){
+            while(!S.empty() && H[S.top()] >= H[i]) S.pop();
+            if(S.empty()) LS.push_back(0);
+            else LS.push_back(S.top() + 1);
+            S.push(i);
+        }
+    }
+
+    void rightSmaller(vector<int> &H, vector<int> &RS){
+        stack<int> S;
+        int n = H.size();
+        for(int i=n-1; i>=0; i--){
+            while(!S.empty() && H[S.top()] >= H[i]) S.pop();
+            if(S.empty()) RS.push_back(n-1);
+            else RS.push_back(S.top() - 1);
+            S.push(i);
+        }
+        reverse(RS.begin(), RS.end());
+    }
+public:
+    int largestRectangleArea(vector<int>& heights) {
+
+        vector<int> LS, RS;
+        leftSmaller(heights, LS);
+        rightSmaller(heights, RS);
+
+        int maxArea = 0;
+        for(int i=0; i<heights.size(); i++){
+            int area = heights[i] * (RS[i] - LS[i] + 1);
+            maxArea = max(maxArea, area);
+        }
+        return maxArea;
+    }
+};
+/*
+TC-> O(N)
+SC-> Stack: O(N) + LS: O(N) + RS: O(N)
+*/
+
+
+
+
+
+
 
