@@ -1,0 +1,35 @@
+// https://practice.geeksforgeeks.org/problems/number-of-provinces/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=number_of_provinces
+
+
+// Approach 1: Dfs using recursion
+class Solution {
+private:
+    void dfs(int src, vector<vector<int>> &adj, int vis[]){
+        vis[src] = 1;
+        
+        for(int node=0; node<adj[src].size(); node++){
+            if(adj[src][node]==1 && !vis[node]){
+                dfs(node, adj, vis);
+            }
+        }
+    }
+    
+public:
+    int numProvinces(vector<vector<int>> adj, int V) {
+        
+        int vis[V] = {0};
+        int count = 0;
+        for(int src=0; src<V; src++){
+            if(!vis[src]){
+                count++;
+                dfs(src, adj, vis);
+            }
+        }
+        return count;
+    }
+};
+/*
+TC-> O(V) + O(V + 2*E)
+SC-> Vis: O(V) + Recursion stack: O(V)ASC
+*/
+
