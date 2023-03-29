@@ -38,11 +38,11 @@ int main()
     */
 
     /*
-    if we declare a vector<vector<int>> v instead of vector<int> v[], then that is also very helpful but in that case we can change the number of vertices in the graph. But when it is delcared using array of vectors then there is no chance of increasing the number of vertices in the graph, because the size of the array is fixed. Remember to free the memory allocated using new keyword.
+    if we declare a vector<vector<int>> v instead of vector<int> v[], then that is also very helpful but in that case we can change the number of vertices in the graph. But when it is declared using array of vectors then there is no chance of increasing the number of vertices in the graph, because the size of the array is fixed. Remember to free the memory allocated using new keyword.
     */
 
     /*
-    For the correct implementatio fo the graph look at the bfs code
+    For the correct implementation fo the graph look at the bfs code
     */
 
     return 0;

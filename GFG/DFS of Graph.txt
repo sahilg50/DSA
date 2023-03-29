@@ -1,0 +1,30 @@
+// https://practice.geeksforgeeks.org/problems/depth-first-traversal-for-a-graph/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=dfs_of_graph
+
+
+// Approach 1: DFS using Recursion
+class Solution {
+private:
+    void dfs(int node, vector<int> adj[], int vis[], vector<int> &ls){
+        vis[node] = 1;
+        ls.push_back(node);
+        
+        for(auto it: adj[node]){
+            if(!vis[it]){
+                dfs(it, adj, vis, ls);
+            }
+        }
+    }
+public:
+    vector<int> dfsOfGraph(int V, vector<int> adj[]) {
+        int vis[V] = {0};
+        int start = 0;
+        vector<int> ls;
+        dfs(start, adj, vis, ls);
+        return ls;
+    }
+};
+/*
+If V = number of vertices and E = number of edges then: 
+TC-> O(V) + O(2*E)
+SC-> Vis: O(V) + Recursion Stack: O(V)ASC + ls: O(V)ASC
+*/

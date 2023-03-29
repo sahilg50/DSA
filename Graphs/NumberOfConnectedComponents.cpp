@@ -11,7 +11,7 @@ private:
     vector<int> *adj;
 
 public:
-    Graph(int n);               // Constructor, n is the total number of verticesin graph.
+    Graph(int n);               // Constructor, n is the total number of vertices in graph.
     void addEdge(int u, int v); // Method to add undirected edge between u and v.
     void BFS(int s);            // Method to print BFS traversal starting from node s.
     vector<bool> visited;
