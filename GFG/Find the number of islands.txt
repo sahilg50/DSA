@@ -1,0 +1,42 @@
+// https://practice.geeksforgeeks.org/problems/find-the-number-of-islands/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=find_the_number_of_islands
+
+
+
+// Approach 1: Using Dfs
+class Solution {
+private:
+    void dfs(int i, int j, vector<vector<char>> &grid, vector<vector<int>> &vis, int n, int m){
+        if(i>=n || i<0 || j>=m || j<0) return;
+        if(grid[i][j]=='0') return;
+        if(vis[i][j]) return;
+        
+        vis[i][j] = 1;
+        
+        for(int delR=-1; delR<=1; delR++){
+            for(int delC=-1; delC<=1; delC++){
+                dfs(i+delR, j+delC, grid, vis, n, m);
+            }
+        }
+    }
+public:
+    int numIslands(vector<vector<char>> &grid) {
+        int n = grid.size(), m = grid[0].size();
+        vector<vector<int>> vis(n, vector<int>(m, 0));
+        
+        int count = 0;
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(!vis[i][j] && grid[i][j]=='1'){
+                    count++;
+                    dfs(i, j, grid, vis, n, m);
+                }
+            }
+        }
+        return count;
+    }
+};
+/*
+If N = rows and M = columns then:
+TC-> O(N*M) + O(N*M * 9)
+SC-> Vis Array: O(N*M) + Recursion Stack: O(N+M)ASC
+*/
