@@ -1,0 +1,99 @@
+// https://practice.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1?page=1&status[]=unsolved&category[]=Dynamic%20Programming&sortBy=submissions
+
+
+// Approach 1: Recursion(TLE) + Memoization(Bottom-Up)
+class Solution
+{
+private:
+    int util(int ind, int W, int wt[], int val[], int n, vector<vector<int>> &dp){
+        
+        if(W==0 || ind>=n) return 0;
+        if(dp[ind][W]!=-1) return dp[ind][W];
+        
+        int pick = 0, notPick = 0;
+        if(wt[ind]<=W) pick = val[ind] + util(ind+1, W-wt[ind],  wt, val, n, dp);
+        notPick = util(ind+1, W, wt, val, n, dp);
+        
+        return dp[ind][W] = max(pick, notPick);
+    }
+public:
+    int knapSack(int W, int wt[], int val[], int n) 
+    {
+        vector<vector<int>> dp(n, vector<int>(W+2, -1));
+        return util(0, W, wt, val, n, dp);
+    }
+};
+/*
+If N = number of items and W = max capacity then:
+Recursion:
+    TC-> O(2^N)
+    SC-> Recursion Stack: O(N)ASC
+
+With Memoization:
+    TC-> O(N*W)
+    SC-> DP Array: O(N*W) + Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: Tabulation (Top-Down)
+class Solution
+{
+public:
+    int knapSack(int W, int wt[], int val[], int n) 
+    {
+        vector<vector<int>> dp(n+2, vector<int>(W+2, -1));
+        
+        for(int ind=n; ind>=0; ind--){
+            for(int w=0; w<=W; w++){
+                if(w==0 || ind>=n) dp[ind][w]=0;
+                else{
+                    int pick = 0, notPick = 0;
+                    if(wt[ind]<=w) pick = val[ind] + dp[ind+1][w-wt[ind]];
+                    notPick = dp[ind+1][w];
+                    
+                    dp[ind][w] = max(pick, notPick);
+                }
+            }
+        }
+        return dp[0][W];
+    }
+};
+/*
+If N = number of items and W = max capacity then:
+TC-> O(N*W)
+SC-> DP Array: O(N*W)
+*/
+
+
+// Approach 3: Space Optimization (Top-Down)
+class Solution
+{
+public:
+    int knapSack(int W, int wt[], int val[], int n) 
+    {
+        vector<int> prev(W+2, -1), curr(W+2, -1);
+        
+        for(int ind=n; ind>=0; ind--){
+            for(int w=0; w<=W; w++){
+                if(w==0 || ind>=n) curr[w]=0;
+                else{
+                    int pick = 0, notPick = 0;
+                    if(wt[ind]<=w) pick = val[ind] + prev[w-wt[ind]];
+                    notPick = prev[w];
+                    
+                    curr[w] = max(pick, notPick);
+                }
+            }
+            prev = curr;
+        }
+        return prev[W];
+    }
+};
+/*
+If N = number of items and W = max capacity then:
+TC-> O(N*W)
+SC-> Prev Array: O(W) + Curr Array: O(W)
+*/
+
+
+// Approach 4: Note that greedy approach will not work in this case!
