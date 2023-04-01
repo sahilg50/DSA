@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-    vector<int> v = {1, 2};
-    cout << *max_element(v.begin() + 0, v.begin() + 2);
+    int a = (3 == 2) ? 10 : -5;
+    cout << a;
     return 0;
 }

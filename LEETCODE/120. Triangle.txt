@@ -1,0 +1,85 @@
+// https://leetcode.com/problems/triangle/description/
+
+
+// Approach 1: Recursion(TLE)(Bottom-Up) + Memoization
+class Solution {
+private:
+    int move(int r, int c, vector<vector<int>> &T, vector<vector<int>> &dp){
+        if(r==T.size()-1) return T[r][c];
+        if(dp[r][c]!=-1) return dp[r][c];
+
+        int down = move(r+1, c, T, dp);
+        int diagonal = move(r+1, c+1, T, dp);
+
+        return dp[r][c] = T[r][c] + min(down, diagonal);
+    }
+public:
+    int minimumTotal(vector<vector<int>>& triangle) {
+        int n = triangle.size();
+        vector<vector<int>> dp(n, vector<int>(n, -1));
+        return move(0, 0, triangle, dp);
+    }
+};
+/*
+If R = number of rows in the matrix and N = total places(R*(R+1)/2)
+Recursion:
+    TC-> O(2^(N)) ~= O(2^(R*R))
+    SC-> Recursion Stack: O(R)ASC
+
+With Memoization:
+    TC-> O(N) ~= O(R*R)
+    SC-> DP Array: O(R*R) + Recursion Stack: O(R)ASC
+*/
+
+
+// Approach 2: Tabulation(Top-Down)
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& T) {
+        int n = T.size();
+        vector<vector<int>> dp(n, vector<int>(n, -1));
+
+        for(int r=n-1; r>=0; r--){
+            for(int c=0; c<=r; c++){
+                if(r==n-1) dp[r][c] = T[r][c];
+                else{
+                    int down = dp[r+1][c];
+                    int diagonal = dp[r+1][c+1];
+
+                    dp[r][c] = T[r][c] + min(down, diagonal);
+                }
+            }
+        }
+        return dp[0][0];
+    }
+};
+/*
+If R = number of rows in the matrix and N = total places(R*(R+1)/2)
+With Memoization:
+    TC-> O(N) ~= O(R*R)
+    SC-> DP Array: O(R*R)
+*/
+
+
+// Approach 3: Space Optimization
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& T) {
+        int n = T.size();
+
+        for(int r=1; r<n; r++){
+            for(int c=0; c<=r; c++){
+                int top = (c==r? 1e9 : T[r-1][c]);
+                int diagonal = (c==0 ? 1e9 : T[r-1][c-1]);
+                T[r][c] += min(top, diagonal);
+            }
+        }
+        return *min_element(T[n-1].begin(), T[n-1].end());
+    }
+};
+/*
+If R = number of rows in the matrix and N = total places(R*(R+1)/2)
+With Memoization:
+    TC-> O(N) ~= O(R*R)
+    SC-> O(1), Because we're using the input array only
+*/
