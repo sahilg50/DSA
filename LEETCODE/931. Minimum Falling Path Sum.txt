@@ -1,0 +1,96 @@
+// https://leetcode.com/problems/minimum-falling-path-sum/description/
+
+
+// Approach 1: Recursion(TLE)(Bottom-Up) + Memoization
+class Solution {
+private:
+    int move(int r, int c, int n, vector<vector<int>> &M, vector<vector<int>> &dp){
+        if(c<0 || c>=n) return 1e9;
+        if(r==n-1) return M[r][c];
+        if(dp[r][c]!=-1) return dp[r][c];
+
+        int down = move(r+1, c, n, M, dp);
+        int RDiagonal = move(r+1, c+1, n, M, dp);
+        int LDiagonal = move(r+1, c-1, n, M, dp);
+
+        return dp[r][c] = M[r][c] + min(down, min(LDiagonal, RDiagonal));
+    }
+public:
+    int minFallingPathSum(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        vector<vector<int>> dp(n, vector<int>(n, -1));
+        int ans = INT_MAX;
+        for(int c=0; c<n; c++){
+            ans = min(ans, move(0, c, n, matrix, dp));
+        }
+        return ans;
+    }
+};
+/*
+If N is the number of rows and columns in the matrix then:
+Recursion:
+    TC-> O(3^(N*N))
+    SC-> Recursion Stack: O(N)ASC
+
+With Memoization:
+    TC-> O(3*N*N)
+    SC-> DP Array: O(N*N) + Recursion Stack: O(N)ASC 
+*/
+
+
+// Approach 2: Tabulation(Top-Down)
+class Solution {
+public:
+    int minFallingPathSum(vector<vector<int>>& M) {
+        int n = M.size();
+        vector<vector<int>> dp(n, vector<int>(n, -1));
+
+        for(int r=n-1; r>=0; r--){
+            for(int c=0; c<=n-1; c++){
+                if(r==n-1) dp[r][c] = M[r][c];
+                else{
+                    int down = dp[r+1][c];
+                    int RDiagonal = (c+1<n) ? dp[r+1][c+1] : 1e9;
+                    int LDiagonal = (c-1>=0) ? dp[r+1][c-1] : 1e9;
+
+                    dp[r][c] = M[r][c] + min(down, min(LDiagonal, RDiagonal));
+                }
+            }
+        }
+        return *min_element(dp[0].begin(), dp[0].end());
+    }
+};
+/*
+If N is the number of rows and columns in the matrix then:
+With Memoization:
+    TC-> O(N*N) + O(N)
+    SC-> DP Array: O(N*N)
+*/
+
+
+// Approach 3: Space Optimization(Top-Down)(No Extra Array)
+class Solution {
+public:
+    int minFallingPathSum(vector<vector<int>>& M) {
+        int n = M.size();
+
+        for(int r=n-2; r>=0; r--){
+            for(int c=0; c<=n-1; c++){
+                int down = M[r+1][c];
+                int RDiagonal = (c+1<n) ? M[r+1][c+1] : 1e9;
+                int LDiagonal = (c-1>=0) ? M[r+1][c-1] : 1e9;
+
+                M[r][c] = M[r][c] + min(down, min(LDiagonal, RDiagonal));
+            }
+        }
+        return *min_element(M[0].begin(), M[0].end());
+    }
+};
+/*
+If N is the number of rows and columns in the matrix then:
+With Memoization:
+    TC-> O(N*N) + O(N)
+    SC-> O(1), Because we're using the input matrix itself
+*/
+
+
