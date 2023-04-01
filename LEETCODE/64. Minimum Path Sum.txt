@@ -1,0 +1,63 @@
+// https://leetcode.com/problems/minimum-path-sum/description/
+
+
+// Approach 1: Recursion(TLE)(Bottom-Up) + Memoization
+class Solution {
+private:
+    int move(int i, int j, int m, int n, vector<vector<int>> &grid, vector<vector<int>> &dp){
+    
+        if(i>=m || j>=n) return 1e9;
+        if(i==m-1 && j==n-1) return grid[i][j];
+        if(dp[i][j]!=-1) return dp[i][j];
+
+        int down = move(i+1, j, m, n, grid, dp);
+        int right = move(i, j+1, m, n, grid, dp);
+
+        return dp[i][j] = grid[i][j] + min(down, right);
+    }
+public:
+    int minPathSum(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        vector<vector<int>> dp(m, vector<int>(n, -1));
+        return move(0, 0, m, n, grid, dp);
+    }
+};
+/*
+If M=rows and N=columns then:
+Recursion:
+    TC-> O(2^(M*N))
+    SC-> Recursion Stack: O(M+N)
+
+With Memoization:
+    TC-> O(M*N)
+    SC-> DP Array: O(M*N) + Recursion Stack: O(M+N)ASC
+*/
+
+
+// Approach 2: Tabulation(Top-Down)
+class Solution {
+public:
+    int minPathSum(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        vector<vector<int>> dp(m+2, vector<int>(n+2, -1));
+
+        for(int i=m; i>=0; i--){
+            for(int j=n; j>=0; j--){
+                if(i==m-1 && j==n-1) dp[i][j] = grid[i][j];
+                else if(i>=m || j>=n) dp[i][j] = 1e9;
+                else{
+                    int down = dp[i+1][j];
+                    int right = dp[i][j+1];
+
+                    dp[i][j] = grid[i][j] + min(down, right);
+                }
+            }
+        }
+        return dp[0][0];
+    }
+};
+/*
+If M=rows and N=columns then:
+TC-> O(M*N)
+SC-> DP Array: O(M*N)
+*/
