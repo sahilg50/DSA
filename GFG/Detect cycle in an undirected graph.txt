@@ -1,0 +1,47 @@
+// https://practice.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=detect-cycle-in-an-undirected-graph
+
+
+// Approach 1: Using BFS
+class Solution {
+private:
+    bool bfs(int src, vector<int> adj[], int vis[]){
+        
+        vis[src] = 1;
+        
+        queue<pair<int, int>> Q;
+        Q.push({src, -1});
+        
+        while(!Q.empty()){
+            int src = Q.front().first;
+            int parent = Q.front().second;
+            Q.pop();
+            for(int node : adj[src]){
+                if(node==parent) continue;
+                else if(vis[node]) return true;
+                else{
+                    Q.push({node, src});
+                    vis[node] = 1;
+                }
+            }
+        }
+        return false;
+    }
+public:
+    // Function to detect cycle in an undirected graph.
+    bool isCycle(int V, vector<int> adj[]) {
+        
+        int vis[V] = {0};
+        
+        for(int src=0; src<V; src++){
+            if(!vis[src]){
+                if(bfs(src, adj, vis)) return true;
+            }
+        }
+        return false;
+    }
+};
+/*
+If V = number of vertices and E = number of edges then:
+TC-> O(V + 2*E)
+SC-> Vis Array: O(V) + Queue: O(V)
+*/

@@ -1,0 +1,95 @@
+// https://practice.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1
+
+
+// Approach 1: Recursion(TLE)(Bottom-Up) + Memoization
+class Solution{   
+private:
+    int util(int ind, int sum, vector<int> &arr, vector<vector<int>> &dp){
+        if(sum==0) return 1;
+        if(ind>=arr.size() || sum<0) return 0;
+        
+        if(dp[ind][sum]!=-1) return dp[ind][sum];
+        
+        int pick = util(ind+1, sum-arr[ind], arr, dp);
+        int notPick = util(ind+1, sum, arr, dp);
+        
+        return dp[ind][sum] = pick || notPick;
+    }
+public:
+    bool isSubsetSum(vector<int>arr, int sum){
+        int n = arr.size();
+        vector<vector<int>> dp(n, vector<int>(sum+1, -1));
+        return util(0, sum, arr, dp);
+    }
+};
+/*
+If N = size(Array) and S = Target sum, then:
+Recursion:
+    TC-> O(2^N)
+    SC-> Recursion Stack: O(N)ASC
+
+With Memoization:
+    TC-> O(N*S)
+    SC-> DP Array: O(N*S) + Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: Tabulation(Top-Down)
+class Solution{   
+public:
+    bool isSubsetSum(vector<int>arr, int sum){
+        int n = arr.size();
+        vector<vector<int>> dp(n+1, vector<int>(sum+1, -1));
+        
+        for(int ind=n; ind>=0; ind--){
+            for(int s = 0; s<=sum; s++){
+                if(s==0) dp[ind][s] = 1;
+                else if(ind>=n) dp[ind][s] = 0;
+                else{
+                    int pick = 0;
+                    if(s-arr[ind]>=0) pick = dp[ind+1][s-arr[ind]];
+                    int notPick = dp[ind+1][s];
+                    
+                    dp[ind][s] = pick || notPick;
+                }
+            }
+        }
+        return dp[0][sum];
+    }
+};
+/*
+If N = size(Array) and SUM = Target Sum, then:
+TC-> O(N*SUM)
+SC-> DP Array: O(N*SUM)
+*/
+
+
+// Approach 3: Space Optimization
+class Solution{   
+public:
+    bool isSubsetSum(vector<int>arr, int sum){
+        int n = arr.size();
+        vector<int> curr(sum+1, -1), prev(sum+1, -1);
+        
+        for(int ind=n; ind>=0; ind--){
+            for(int s = 0; s<=sum; s++){
+                if(s==0) curr[s] = 1;
+                else if(ind>=n) curr[s] = 0;
+                else{
+                    int pick = 0;
+                    if(s-arr[ind]>=0) pick = prev[s-arr[ind]];
+                    int notPick = prev[s];
+                    
+                    curr[s] = pick || notPick;
+                }
+            }
+            prev = curr;
+        }
+        return curr[sum];
+    }
+};
+/*
+If N = size(Array) and SUM = Target Sum, then:
+TC-> O(N*SUM)
+SC-> DP Array: O(SUM)
+*/
