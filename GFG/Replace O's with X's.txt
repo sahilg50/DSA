@@ -1,0 +1,76 @@
+// https://practice.geeksforgeeks.org/problems/replace-os-with-xs0052/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=replace-os-with-xs
+
+
+// Approach 1: BFS using queue
+class Solution{
+public:
+    vector<vector<char>> fill(int n, int m, vector<vector<char>> &mat)
+    {
+        vector<vector<int>> vis(n, vector<int>(m, 0));
+        queue<pair<int, int>> Q;
+        
+        
+        // Finding and storing all the 'O' at the boundaries!
+        for(int r=0; r<n; r++){
+            // First column
+            if(mat[r][0]=='O' && !vis[r][0]){
+                Q.push({r, 0});
+                vis[r][0] = 1;
+            }
+            
+            // Last column
+            if(mat[r][m-1]=='O' && !vis[r][m-1]){
+                Q.push({r, m-1});
+                vis[r][m-1] = 1;
+            }
+        }
+        
+        for(int c=0; c<m; c++){
+            // First row
+            if(mat[0][c]=='O' && !vis[0][c]){
+                Q.push({0, c});
+                vis[0][c] = 1;
+            }
+            
+            // Last row
+            if(mat[n-1][c]=='O' && !vis[n-1][c]){
+                Q.push({n-1, c});
+                vis[n-1][c] = 1;
+            }
+        }
+        
+        
+        int dRow[] = {-1, 0, +1, 0};
+        int dCol[] = {0, +1, 0, -1};
+        
+        while(!Q.empty()){
+            int r = Q.front().first;
+            int c = Q.front().second;
+            Q.pop();
+            for(int i=0; i<4; i++){
+                int row = r + dRow[i];
+                int col = c + dCol[i];
+                if(row>=0 && row<n && col>=0 && col<m && !vis[row][col] && mat[row][col]=='O'){
+                    Q.push({row, col});
+                    vis[row][col] = 1;
+                }
+            }
+        }
+        
+        
+        for(int r=0; r<n; r++){
+            for(int c=0; c<m; c++){
+                if(!vis[r][c]) mat[r][c] = 'X';
+                else mat[r][c] = 'O';
+            }
+        }
+        
+        return mat;
+        
+    }
+};
+/*
+If N = rows and M = columns then:
+TC-> O(2*(M+N)) + O(4*M*N) + O(M*N)
+SC-> Vis Array: O(M*N) + Queue: O(M*N)
+*/
