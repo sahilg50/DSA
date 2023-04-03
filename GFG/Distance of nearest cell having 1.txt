@@ -1,0 +1,52 @@
+// https://practice.geeksforgeeks.org/problems/distance-of-nearest-cell-having-1-1587115620/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=distance-of-nearest-cell-having-1
+
+
+// Approach 1: Using Queue
+class Solution 
+{
+    public:
+    //Function to find distance of nearest 1 in the grid for each cell.
+	vector<vector<int>>nearest(vector<vector<int>>grid)
+	{
+	    int n = grid.size(), m = grid[0].size();
+        vector<vector<int>> vis(n, vector<int>(m, 0));
+        vector<vector<int>> dis(n, vector<int>(m, 0));
+        queue<pair<pair<int,int>, int>> Q;
+        
+        for(int r=0; r<n; r++){
+            for(int c=0; c<m; c++){
+                if(grid[r][c]){
+                    vis[r][c]=1;
+                    Q.push({{r, c}, 0});
+                }
+            }
+        }
+        
+        int dRow[] = {-1, 0, +1, 0};
+        int dCol[] = {0, +1, 0, -1};
+        
+        while(!Q.empty()){
+            int r = Q.front().first.first;
+            int c = Q.front().first.second;
+            int steps = Q.front().second;
+            Q.pop();
+            dis[r][c] = steps;
+            for(int i=0; i<4; i++){
+                int row = r + dRow[i];
+                int col = c + dCol[i];
+                if(row>=0 && row<n && col>=0 && col<m && !vis[row][col]){
+                    vis[row][col] = 1;
+                    Q.push({{row, col}, steps+1});
+                    dis[row][col] = steps+1;
+                } 
+            }
+        }
+        
+        return dis;
+	}
+};
+/*
+If N = Number of rows, and M =  Number of columns, then:
+TC-> O(4*N*M)
+SC-> Vis Array: O(N*M) + Queue: O(N*M) + Dis Array: O(N*M)ASC(Because this has to be returned)
+*/
