@@ -45,3 +45,40 @@ If V = number of vertices and E = number of edges then:
 TC-> O(V + 2*E)
 SC-> Vis Array: O(V) + Queue: O(V)
 */
+
+
+// Approach 2: Using DFS
+class Solution {
+private:
+    bool dfs(int src, int parent, vector<int> adj[], int vis[]){
+        
+        if(vis[src]) return true;
+        vis[src] = 1;
+        
+        for(int node : adj[src]){
+            if(node != parent){
+                if(dfs(node, src, adj, vis)) return true;
+            }
+        }
+        
+        return false;
+    }
+public:
+    // Function to detect cycle in an undirected graph.
+    bool isCycle(int V, vector<int> adj[]) {
+        
+        int vis[V] = {0};
+        
+        for(int src=0; src<V; src++){
+            if(!vis[src]){
+                if(dfs(src, -1, adj, vis)) return true;
+            }
+        }
+        return false;
+    }
+};
+/*
+If V = number of vertices and E = number of edges then:
+TC-> O(V + 2*E)
+SC-> Vis Array: O(V) + Recursion Stack: O(V)ASC
+*/
