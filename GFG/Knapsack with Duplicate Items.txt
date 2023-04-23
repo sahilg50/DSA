@@ -33,3 +33,34 @@ With Memoization:
     TC-> O(N*W)
     SC-> DP Array: O(N*W) + Recursion Stack: O(N)ASC
 */
+
+
+// Approach 2: Tabulation(Top-Down)
+class Solution{
+public:
+    int knapSack(int N, int W, int val[], int wt[])
+    {
+        vector<vector<int>> dp(N+1, vector<int>(W+1, -1));
+        
+        for(int ind=N; ind>=0; ind--){
+            for(int w=0; w<=W; w++){
+                
+                if(ind>=N) dp[ind][w] = 0;
+                
+                else{
+                    int pick = INT_MIN;
+                    if(wt[ind]<=w) pick = val[ind] + dp[ind][w-wt[ind]];
+                    int notPick = dp[ind+1][w];
+                    
+                    dp[ind][w] = max(pick, notPick);
+                }
+            }
+        }
+        return dp[0][W];
+    }
+};
+/*
+If N = Size of array, and W = Weight limit, then:
+TC-> O(N*W)
+SC-> DP Array: O(N*W)
+*/
