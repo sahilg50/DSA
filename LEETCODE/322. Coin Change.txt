@@ -1,0 +1,72 @@
+// https://leetcode.com/problems/coin-change/description/
+
+
+// Approach 1: Recursion(Bottom-Up)(TLE) + Memoization
+class Solution {
+private:
+    int util(int ind, vector<int> &coins, int amount, vector<vector<int>> &dp){
+        if(amount==0) return 0;
+        if(ind>=coins.size()) return 1e9;
+
+        if(dp[ind][amount]!=-1) return dp[ind][amount];
+
+        int pick = 1e9;
+        if(coins[ind]<=amount)
+            pick = 1 + util(ind, coins, amount-coins[ind], dp);
+        int notPick = util(ind+1, coins, amount, dp);
+
+        return dp[ind][amount] = min(pick, notPick);
+    }
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        int n = coins.size();
+        vector<vector<int>> dp(n, vector<int>(amount+1, -1));
+        int ans = util(0, coins, amount, dp);
+        return ans == 1e9 ? -1 : ans;
+    }
+};
+/*
+If N = number of coins, and A = amount, then:
+Recursion:
+    TC-> O(N^A)
+    SC-> Recursion Stack: O(N)ASC
+
+With Memoization:
+    TC-> O(N*A)
+    SC-> DP Array: O(N*A) + Recursion Stack: O(N)ASC
+*/
+
+ 
+// Approach 2: Tabulation(Top-Down)
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        int n = coins.size();
+        vector<vector<int>> dp(n+2, vector<int>(amount+2, -1));
+
+
+        for(int ind=n; ind>=0; ind--){
+            for(int a=0; a<=amount; a++){
+
+                if(a==0) dp[ind][a] = 0;
+                else if(ind>=n) dp[ind][a] = 1e9;
+                else{
+                    int pick = 1e9;
+                    if(coins[ind]<=a)
+                        pick = 1 + dp[ind][a-coins[ind]];
+                    int notPick = dp[ind+1][a];
+
+                    dp[ind][a] = min(pick, notPick);
+                }
+            }
+        }
+
+        int ans = dp[0][amount];
+        return ans == 1e9 ? -1 : ans;
+    }
+};
+/*
+If N = number of coins, and A = amount, then:
+TC-> O(N*A)
+SC-> DP Array: O(N*A)
+*/
