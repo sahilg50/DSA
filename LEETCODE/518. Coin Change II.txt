@@ -1,0 +1,82 @@
+// https://leetcode.com/problems/coin-change-ii/description/
+
+
+// Approach 1: Recursion(Bottom-Up)(TLE) + Memoization
+class Solution {
+private:
+    int util(int ind, int amount, vector<int> &coins, vector<vector<int>> &dp){
+
+        if(amount==0) return 1;
+        if(amount<0 || ind>=coins.size()) return 0;
+
+        if(dp[ind][amount]!=-1) return dp[ind][amount];
+
+        int pick = 0;
+        if(coins[ind]<=amount)
+            pick = util(ind, amount-coins[ind], coins, dp);
+        int notPick = util(ind+1, amount, coins, dp);
+        
+        return dp[ind][amount] = pick + notPick;
+    }
+public:
+    int change(int amount, vector<int>& coins) {
+        int n = coins.size();
+        vector<vector<int>> dp(n+1, vector<int>(amount+1, -1));
+        return util(0, amount, coins, dp);
+    }
+};
+/*
+If N = size of array, and A = Amount, then:
+Recursion:
+    TC-> O(exponential), because any number of coins can be taken
+    SC-> Recursion Stack: O(N)ASC
+
+With Memoization:
+    TC-> O(N*A)
+    SC-> DP Array: O(N*A) + Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: Tabulation(Top-Down)
+class Solution {
+private:
+    int util(int ind, int amount, vector<int> &coins, vector<vector<int>> &dp){
+
+        if(amount==0) return 1;
+        if(amount<0 || ind>=coins.size()) return 0;
+
+        if(dp[ind][amount]!=-1) return dp[ind][amount];
+
+        int pick = 0;
+        if(coins[ind]<=amount)
+            pick = util(ind, amount-coins[ind], coins, dp);
+        int notPick = util(ind+1, amount, coins, dp);
+        
+        return dp[ind][amount] = pick + notPick;
+    }
+public:
+    int change(int amount, vector<int>& coins) {
+        int n = coins.size();
+        vector<vector<int>> dp(n+1, vector<int>(amount+1, -1));
+
+        for(int ind=n; ind>=0; ind--){
+            for(int A=0; A<=amount; A++){
+                if(A==0) dp[ind][A] = 1;
+                else if(A<0 || ind>=n) dp[ind][A] = 0;
+                else{
+                    int pick = 0;
+                    if(coins[ind]<=A)
+                        pick = dp[ind][A-coins[ind]];
+                    int notPick = dp[ind+1][A];
+                    dp[ind][A] = pick + notPick;                        
+                }
+            }
+        }
+        return dp[0][amount];
+    }
+};
+/*
+If N = size of array, and A = Amount, then:
+TC-> O(N*A)
+SC-> DP Array: O(N*A)
+*/
