@@ -1,0 +1,35 @@
+// https://practice.geeksforgeeks.org/problems/knapsack-with-duplicate-items4201/1
+
+
+// Approach 1: Recursion(Bottom-Up)(TLE) + Memoization
+class Solution{
+private:
+    int util(int ind, int N, int W, int val[], int wt[], vector<vector<int>> &dp){
+        
+        if(ind>=N) return 0;
+        
+        if(dp[ind][W]!=-1) return dp[ind][W];
+        
+        int pick = INT_MIN;
+        if(wt[ind]<=W) pick = val[ind] + util(ind, N, W-wt[ind], val, wt, dp);
+        int notPick = util(ind+1, N, W, val, wt, dp);
+        
+        return dp[ind][W] = max(pick, notPick);
+    }
+public:
+    int knapSack(int N, int W, int val[], int wt[])
+    {
+        vector<vector<int>> dp(N+1, vector<int>(W+1, -1));
+        return util(0, N, W, val, wt, dp);
+    }
+};
+/*
+If N = Size of array, and W = Weight limit, then:
+Recursion:
+    TC-> O(exponential), because each item can be taken any number of times
+    SC-> Recursion Stack: O(N)ASC
+
+With Memoization:
+    TC-> O(N*W)
+    SC-> DP Array: O(N*W) + Recursion Stack: O(N)ASC
+*/
