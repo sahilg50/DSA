@@ -18,7 +18,8 @@ bool cmp(pair<int, int> a, pair<int, int> b)
 int main()
 {
     /*
-    INTRO SORT is used by c++ STL
+    TOPIC: INTRO
+    SORT is used by c++ STL
     In the sorting function, we define the starting index and the ending index + 1.
     */
     cout << "\nSorting the array using sort()" << endl;
@@ -51,9 +52,7 @@ int main()
              << pv.first << " " << pv.second;
     }
 
-    /*
-    Now let's sort the vector using inbuilt sort and the comparator function.
-    */
+    // TOPIC: Custom comparator function.
     V = {{1, 2}, {3, 4}, {9, 0}, {-1, -1}, {-1, -10}};
     sort(V.begin(), V.end(), cmp);
     cout << "\n\nPrinting the sorted vector<pair> using custom cmp inside sort(): ";
@@ -63,7 +62,7 @@ int main()
              << pv.first << " " << pv.second;
     }
 
-    // Inbuilt comparators
+    // TOPIC: Inbuilt comparator function.
     sort(V.begin(), V.end(), greater<pair<int, int>>());
     cout << "\n\nPrinting using inbuilt cmp inside sort(): ";
     for (auto &pv : V)

@@ -9,7 +9,7 @@ struct node
     int val;
     struct node *next;
 
-    node(int x) : val(x), next(nullptr) {} // constuctor for the structure
+    node(int x) : val(x), next(nullptr) {} // constructor for the structure
 };
 
 int main()

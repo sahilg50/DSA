@@ -1,0 +1,37 @@
+// https://leetcode.com/problems/target-sum/description/
+
+
+// Approach 1: Recursion(Bottom-Up)(TLE) + Memoization
+class Solution {
+private:
+    int util(int ind, int currSum, int target, int sum, vector<int> &nums, vector<vector<int>> &dp){
+
+        if(ind==nums.size()) return currSum==target;
+
+        if(dp[ind][currSum+sum]!=-1) return dp[ind][currSum+sum];
+
+        int add = util(ind+1, currSum+nums[ind], target, sum, nums, dp);
+        int sub = util(ind+1, currSum-nums[ind], target, sum, nums, dp);
+
+        return dp[ind][currSum+sum] = add+sub;
+    }
+public:
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int n = nums.size();
+        int sum = 0;
+        for(auto val : nums) sum += abs(val);
+
+        vector<vector<int>> dp(n+1, vector<int>((sum*2)+1, -1));
+        return util(0, 0, target, sum, nums, dp);
+    }
+};
+/*
+If N = size of array, T = Target, S = sum of absolute values of all elements of array, then:
+Recursion: 
+    TC-> O(2^N)
+    SC-> Recursion Stack: O(N)ASC
+
+With Memoization:
+    TC-> O(N*2*S)
+    SC-> DP Array: O(N*2*S) + Recursion Stack: O(N)ASC
+*/

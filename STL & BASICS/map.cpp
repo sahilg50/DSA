@@ -54,7 +54,7 @@ int main()
     // Note: One more point to note on the time complexity of the insertion is:
     map<string, int> M;
     M["sahil"] = 1;
-    M["Tejal"] = 2; // TC-> O(size(key)*log(n)), this is because when key is your string then the time to copare the strings is also counted while executing the program.
+    M["Tejal"] = 2; // TC-> O(size(key)*log(n)), this is because when key is your string then the time to compare the strings is also counted while executing the program.
 
     // Reverse Iterator
     map<char, int> mpp = {
