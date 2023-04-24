@@ -1,0 +1,97 @@
+// https://practice.geeksforgeeks.org/problems/minimum-number-of-deletions-and-insertions0209/1
+
+
+// Approach 1: Recursion(Bottom-Up)(TLE) + Memoization
+class Solution{
+private:
+    int lcs(int i, int j, const string &S1, const string &S2, vector<vector<int>> &dp){
+        
+        if(i>=S1.size() || j>=S2.size()) return 0;
+        
+        if(dp[i][j]!=-1) return dp[i][j];
+        
+        
+        if(S1[i]==S2[j]) return dp[i][j] = 1 + lcs(i+1, j+1, S1, S2, dp);
+        
+        return dp[i][j] = max(lcs(i, j+1, S1, S2, dp), lcs(i+1, j, S1, S2, dp));
+    }
+public:
+	int minOperations(const string &str1, const string &str2) 
+	{ 
+	    int m = str1.size(), n = str2.size();
+	    vector<vector<int>> dp(m+1, vector<int>(n+1, -1));
+	    
+	    return m+n-2*(lcs(0, 0, str1, str2, dp));
+	    
+	} 
+};
+/*
+If M = size of str1, and N = size of str2, then:
+Recursion:
+    TC-> O(2^M * 2^N), Trying out all the subsequences of both texts.
+    SC-> Recursion Stack: O(M + N)ASC
+
+With Memoization:
+    TC-> O(M*N)
+    SC-> DP Array: O(M*N) + Recursion Stack: O(M + N)ASC
+*/
+
+
+// Approach 2: Tabulation(Top-Down)
+class Solution{
+public:
+	int minOperations(const string &str1, const string &str2) 
+	{ 
+	    int m = str1.size(), n = str2.size();
+	    vector<vector<int>> dp(m+1, vector<int>(n+1, -1));
+	    
+	    for(int i=m; i>=0; i--){
+	        for(int j=n; j>=0; j--){
+	   
+	            if(i>=m || j>=n) dp[i][j]=0;
+        
+                else if(str1[i]==str2[j]) dp[i][j] = 1 + dp[i+1][j+1];
+                
+                else dp[i][j] = max(dp[i][j+1], dp[i+1][j]);
+	        }
+	    }
+	    
+	    return m+n-2*dp[0][0];
+	    
+	} 
+};
+/*
+If M = size of str1, and N = size of str2, then:
+TC-> O(M*N)
+SC-> DP Array: O(M*N)
+*/
+
+
+// Approach 3: Space Optimization(Top-Down)
+class Solution{
+public:
+	int minOperations(const string &str1, const string &str2) 
+	{ 
+	    int m = str1.size(), n = str2.size();
+	    vector<int> curr(n+1, -1), prev(n+1, -1);
+	    
+	    for(int i=m; i>=0; i--){
+	        for(int j=n; j>=0; j--){
+	   
+	            if(i>=m || j>=n) curr[j]=0;
+        
+                else if(str1[i]==str2[j]) curr[j] = 1 + prev[j+1];
+                
+                else curr[j] = max(curr[j+1], prev[j]);
+	        }
+	        prev = curr;
+	    }
+	    
+	    return m+n - (2*curr[0]);
+	} 
+};
+/*
+If M = size of str1, and N = size of str2, then:
+TC-> O(M*N)
+SC-> Prev Array: O(N) + Curr Array: O(N)
+*/
