@@ -1,0 +1,104 @@
+// https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/description/
+
+
+// Approach 1: Recursion(Bottom-Up)(TLE) + Memoization
+class Solution {
+private:
+    int lcs(int i, int j, const string &S1, const string &S2, vector<vector<int>> &dp){
+        
+        if(i>=S1.size() || j>=S2.size()) return 0;
+        
+        if(dp[i][j]!=-1) return dp[i][j];
+
+        if(S1[i]==S2[j]) return 1 + lcs(i+1, j+1, S1, S2, dp);
+
+        return dp[i][j] = max(lcs(i, j+1, S1, S2, dp), lcs(i+1, j, S1, S2, dp));
+    }
+public:
+    int minInsertions(const string &s) {
+
+        string r = s; 
+        reverse(r.begin(), r.end());
+
+        int n = s.size();
+        vector<vector<int>> dp(n+1, vector<int>(n+1, -1));
+
+        return n - lcs(0, 0, s, r, dp); 
+    }
+};
+/*
+If N = size of s, then:
+Recursion:
+    TC-> New String: O(N) + Reverse: O(N) + LCS: O(2^N * 2^N), Trying out all the subsequences 
+    of both strings.
+    SC-> Recursion Stack: O(N + N)ASC
+
+With Memoization:
+    TC-> New String: O(N) + Reverse: O(N) + LCS: O(N * N)
+    SC-> DP Array: O(N*N) + Recursion Stack: O(N + N)ASC
+*/
+
+
+// Approach 2: Tabulation(Top-Down)
+class Solution {
+public:
+    int minInsertions(const string &s) {
+
+        string r = s; 
+        reverse(r.begin(), r.end());
+
+        int n = s.size();
+        vector<vector<int>> dp(n+1, vector<int>(n+1, -1));
+
+        for(int i=n; i>=0; i--){
+            for(int j=n; j>=0; j--){
+
+                if(i>=n || j>=n) dp[i][j] = 0;
+        
+                else if(s[i]==r[j]) dp[i][j] = 1 + dp[i+1][j+1];
+
+                else dp[i][j] = max(dp[i][j+1], dp[i+1][j]);
+            }
+        }
+
+        return n - dp[0][0]; 
+    }
+};
+/*
+If N = size of s, then:
+TC-> New String: O(N) + Reverse: O(N) + LCS: O(N * N)
+SC-> DP Array: O(N*N)
+*/
+
+
+// Approach 3: Space Optimization(Top-Down)
+class Solution {
+public:
+    int minInsertions(const string &s) {
+
+        string r = s; 
+        reverse(r.begin(), r.end());
+
+        int n = s.size();
+        vector<int> curr(n+1, -1), prev(n+1, -1);
+
+        for(int i=n; i>=0; i--){
+            for(int j=n; j>=0; j--){
+
+                if(i>=n || j>=n) curr[j] = 0;
+        
+                else if(s[i]==r[j]) curr[j] = 1 + prev[j+1];
+
+                else curr[j] = max(curr[j+1], prev[j]);
+            }
+            prev = curr;
+        }
+
+        return n - curr[0]; 
+    }
+};
+/*
+If N = size of s, then:
+TC-> New String: O(N) + Reverse: O(N) + LCS: O(N * N)
+SC-> Prev Array: O(N) + Curr Array: O(N)
+*/
