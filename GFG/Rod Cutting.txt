@@ -1,0 +1,65 @@
+// https://practice.geeksforgeeks.org/problems/rod-cutting0840/1
+
+
+// Approach 1: Recursion(Bottom-Up)(TLE) + Memoization
+class Solution{
+private:
+    int util(int i, int len, int prices[], int n, vector<vector<int>> &dp){
+        
+        if(i>n) return 0;
+        
+        if(dp[i][len]!=-1) return dp[i][len];
+        
+        int cut = INT_MIN;
+        if(i<=len) cut = prices[i-1] + util(i, len-i, prices, n, dp);
+        int notCut = util(i+1, len, prices, n, dp);
+        
+        
+        return dp[i][len] = max(cut, notCut);
+    }
+public:
+    int cutRod(int prices[], int n) {
+        vector<vector<int>> dp(n+2, vector<int>(n+2, -1));
+        return util(1, n, prices, n, dp);
+    }
+};
+/*
+If N = size of rod, then:
+Recursion:
+    TC-> O(exponential)
+    SC-> Recursion Stack: O(N)ASC
+
+With Memoization:
+    TC-> O(N*N)
+    SC-> DP Array: O(N*N) + Recursion Stack: O(N)ASC
+*/
+
+
+
+// Approach 2: Tabulation(Top-Down)
+class Solution{
+public:
+    int cutRod(int prices[], int n) {
+        vector<vector<int>> dp(n+2, vector<int>(n+2, -1));
+        
+        for(int i=n+1; i>=0; i--){
+            for(int len=0; len<=n; len++){
+                
+                if(i>n) dp[i][len] = 0;
+                else{
+                    int cut = INT_MIN;
+                    if(i<=len) cut = prices[i-1] + dp[i][len-i];
+                    int notCut = dp[i+1][len];
+                    
+                    dp[i][len] = max(cut, notCut);
+                }
+            }
+        }
+        return dp[1][n];
+    }
+};
+/*
+If N = size of rod, then:
+TC-> O(N*N)
+SC-> DP Array: O(N*N)
+*/

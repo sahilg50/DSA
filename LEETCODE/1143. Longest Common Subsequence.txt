@@ -1,0 +1,60 @@
+// https://leetcode.com/problems/longest-common-subsequence/description/
+
+
+// Approach 1: Recursion(Bottom-Up)(TLE) + Memoization
+class Solution {
+private:
+    int util(int i, int j, const string &text1, const string &text2, vector<vector<int>> &dp){
+        
+        if(i>=text1.size() || j>=text2.size()) return 0;
+        
+        if(dp[i][j]!=-1) return dp[i][j];
+
+        if(text1[i]==text2[j]) return 1 + util(i+1, j+1, text1, text2, dp);
+
+        return dp[i][j] = max(util(i, j+1, text1, text2, dp), util(i+1, j, text1, text2, dp));
+    }
+public:
+    int longestCommonSubsequence(const string &text1, const string &text2) {
+        int n = text1.size(), m = text2.size();
+        vector<vector<int>> dp(n+1, vector<int>(m+1, -1));
+        return util(0, 0, text1, text2, dp);
+    }
+};
+/*
+If N = size of text1, and M = size of text2, then:
+Recursion:
+    TC-> O(2^N * 2^M), Trying out all the subsequences of each of the texts.
+    SC-> Recursion Stack: O(N + M)ASC
+
+With Memoization:
+    TC-> O(N*M)
+    SC-> DP Array: O(N*M) + Recursion Stack: O(N + M)ASC
+*/
+
+
+// Approach 2: Tabulation(Top-Down)
+class Solution {
+public:
+    int longestCommonSubsequence(const string &text1, const string &text2) {
+        int n = text1.size(), m = text2.size();
+        vector<vector<int>> dp(n+1, vector<int>(m+1, -1));
+
+        for(int i=n; i>=0; i--){
+            for(int j=m; j>=0; j--){
+
+                if(i>=n || j>=m) dp[i][j] = 0;
+        
+                else if(text1[i]==text2[j]) dp[i][j] = 1 + dp[i+1][j+1];
+
+                else dp[i][j] = max(dp[i][j+1], dp[i+1][j]);
+            }
+        }
+        return dp[0][0];
+    }
+};
+/*
+If N = size of text1, and M = size of text2, then:
+TC-> O(N*M)
+SC-> DP Array: O(N*M)
+*/
