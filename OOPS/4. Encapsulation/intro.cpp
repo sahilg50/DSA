@@ -1,6 +1,6 @@
 /*
 TOPIC: What is Encapsulation ?
-    -> Encapsulation is defined as binding together the data and the functions that manipulates them under a single unit.
+    -> Encapsulation is defined as binding together the data and the functions that manipulates that data under a single unit.
 
     -> It is done to make sure that "sensitive" data is hidden from users. It increases security.
 
