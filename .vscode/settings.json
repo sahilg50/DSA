@@ -74,5 +74,8 @@
 		"Subarrays",
 		"substr",
 		"tribonacci"
-	]
+	],
+	"editor.tokenColorCustomizations": {
+		"comments": "#e4e4e483"
+	},
 }

@@ -1,3 +1,4 @@
 *.exe
 tasks.json
 launch.json
+settings.json
