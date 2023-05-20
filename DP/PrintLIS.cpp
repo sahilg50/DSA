@@ -46,7 +46,7 @@ void printLIS(vector<int> &nums)
     cout << endl;
 }
 /*
-    If N is the size of nums array then:
+If N = size(array), then:
     TC-> O(N*N), because of 2 nested loops
     SC-> Dp Array: O(N) + Hash: O(N)
 */

@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/longest-increasing-subsequence/
 
-// 1. Recursion + Memoization
+// 1. Recursion(Bottom-Up)(TLE) + Memoization
 class Solution {
 private:
     int util(int ind, int prevInd, vector<int> &nums, vector<vector<int>> &dp){
@@ -24,7 +24,7 @@ public:
     }
 };
 /*
-If N is the size of the array nums then: 
+If N = size(array), then: 
 1. Recursion
     TC-> O(2^N)
     SC-> Recursion Stack: O(N)ASC
@@ -35,7 +35,7 @@ If N is the size of the array nums then:
     // Note: The dimension of dp array depends upon the number of indexes and states
 */
 
-// Approach 2: Tabulation (Top Down) (Recursion converted to Tabulation)
+// Approach 2: Tabulation (Top-Down) (Recursion converted to Tabulation)
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
@@ -53,11 +53,12 @@ public:
     }
 };
 /*
+If N = size(array), then: 
 TC-> O(N^2)
 SC-> DP Array: O(N^2)
 */
 
-// Approach 3: algorithmic (Bottom Up)
+// Approach 3: Algorithmic (Bottom-Up)
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
@@ -76,6 +77,7 @@ public:
     }
 };
 /*
+If N = size(array), then: 
 TC-> O(N^2)
 SC-> Dp Array: O(N)
 */
@@ -99,7 +101,7 @@ public:
     }
 };
 /*
-If N is the size of nums array then:
+If N = size(array), then: 
 TC-> O(N*logN), for every element implement binary search on array of size N
 Sc-> Temp Array: O(N)
 */

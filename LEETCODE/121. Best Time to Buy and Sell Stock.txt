@@ -19,12 +19,13 @@ public:
     }
 };
 /*
+If N = size(array), then:
 TC-> O(N)
 SC-> Recursion Stack: O(N)ASC
 */
 
 
-// Approach 2: Simple for Loop
+// Approach 2: For Loop
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
@@ -39,6 +40,7 @@ public:
     }
 };
 /*
+If N = size(array), then:
 TC-> O(N)
 SC-> O(1)
 */

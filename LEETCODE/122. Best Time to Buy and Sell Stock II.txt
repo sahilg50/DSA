@@ -1,4 +1,4 @@
-// Approach 1: Recursion + Memoization (Bottom Up approach because it's time series data)
+// Approach 1: Recursion(Bottom-Up)(TLE) + Memoization
 class Solution {
 private:
     int util(int ind, int buy, vector<int> &prices, vector<vector<int>> &dp){

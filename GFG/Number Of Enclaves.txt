@@ -1,0 +1,55 @@
+// https://practice.geeksforgeeks.org/problems/number-of-enclaves/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=number-of-enclaves
+
+
+// Approach 1: Multi-Source BFS using Queue + Visited Array
+class Solution {
+  public:
+    int numberOfEnclaves(vector<vector<int>> &grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+        int vis[m][n] = {0};
+        
+        queue<pair<int, int>> Q;
+        for(int r=0; r<m; r++){
+            for(int c=0; c<n; c++){
+                if(r==0 || r==m-1 || c==0 || c==n-1){
+                    if(grid[r][c]==1){
+                        Q.push({r, c});
+                        vis[r][c]=1;
+                    }
+                }
+            }
+        }
+        
+        int delRow[] = {-1, 0, +1, 0};
+        int delCol[] = {0, -1, 0, +1};
+        
+        while(!Q.empty()){
+            int row = Q.front().first;
+            int col = Q.front().second;
+            Q.pop();
+            for(int i=0; i<4; i++){
+                int r = row + delRow[i];
+                int c = col + delCol[i];
+                if(r>=0 && r<m && c>=0 && c<n && grid[r][c]==1 && vis[r][c]==0){
+                    Q.push({r, c});
+                    vis[r][c] = 1;
+                }
+            }
+        }   
+        
+        int count = 0;
+        for(int r=0; r<m; r++){
+            for(int c=0; c<n; c++){
+                if(grid[r][c]==1 && vis[r][c]==0) count++;
+            }
+        }
+        
+        return count;
+    }
+};
+/*
+If M = number of rows, N = number of columns, then:
+TC-> O(4*M*N)
+SC-> Vis Array: O(M*N) + Queue: O(M*N) 
+*/

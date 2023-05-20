@@ -1,27 +1,20 @@
-// 1. Approach: Recursion + Memoization
+// 1. Approach: Recursion(Bottom-Up, Because it is time series data)(TLE) + Memoization
 class Solution {
 private:
     int util(int ind, int buy, int fee, vector<int> &prices, vector<vector<int>> &dp){
 
-        // If prices array is completed return 0
         if(ind==prices.size()) return 0;
 
-        // If the solution to this subproblem already exists then return
         if(dp[ind][buy]!=-1) return dp[ind][buy];
-
-        // Do all operations possible according to given instructions        
+    
         int op1, op2;
         // buy==1 means we can buy, else we can only sell
         if(buy){
-            // Don't do anything and move to the next index.
             op1 = util(ind+1, 1, fee, prices, dp);
-            // we're buying therefore subtract the price from the profit.
             op2 = -prices[ind] + util(ind+1, 0, fee, prices, dp); 
         }
         else{
-            // Don't do anything and move to the next index.
             op1 = util(ind+1, 0, fee, prices, dp);
-            // we're selling therefore add the prices to the profit.
             op2 = prices[ind] - fee + util(ind+1, 1, fee, prices, dp);  
         }
 
@@ -36,6 +29,7 @@ public:
     }
 };
 /*
+If N = size(array), then:
 1. Recursion:
     TC-> O(exponential) ~= O(2^N)
     SC-> Recursion Stack: O(N)ASC
@@ -65,7 +59,8 @@ public:
     }
 };
 /*
+If N = size(array), then:
 1. Tabulation
     TC-> O(N*2)
-    Sc-> DP Array: O(N*2)
+    SC-> DP Array: O(N*2)
 */

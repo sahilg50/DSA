@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/wildcard-matching/
 
-// Approach 1: Recursion + Memoization (Top Down Approach)
+// Approach 1: Recursion(TLE)(Top-Down) + Memoization 
 
 class Solution {
 private:
@@ -31,13 +31,14 @@ public:
     }
 };
 /*
-1. Recursion: 
+If m = size(s), and n = size(p), then:
+Recursion: 
     TC-> exponential
-    SC-> Recursion Stack: O(n+m)ASC
+    SC-> Recursion Stack: O(m+n)ASC
 
-2. Recursion + Memoization:
-    TC-> O(n*m)
-    SC-> DP Array: O(n*m) + Recursion Stack: O(n+m)ASC
+With Memoization:
+    TC-> O(m*n)
+    SC-> DP Array: O(m*n) + Recursion Stack: O(m+n)ASC
 */
 
 
@@ -70,7 +71,7 @@ public:
     }
 };
 /*
-1. Recursion: 
-    TC-> O(n*m)
-    SC-> DP Array: O(n*m)
+If m = size(s), and n = size(p), then:
+TC-> O(m*n)
+SC-> DP Array: O(m*n)
 */

@@ -1,8 +1,8 @@
-// Approach 1: Recursion + Memoization (Bottom Up Approach because time series data)
+// Approach 1: Recursion(Bottom-Up, Because it is time series data)(TLE) + Memoization
 class Solution {
 private:
     int util(int ind, int buy, vector<int> &prices, vector<vector<vector<int>>> &dp, int T){
-        // Base case
+        
         if(ind==prices.size() || T<=0) return 0;
 
         if(dp[ind][buy][T]!=-1) return dp[ind][buy][T];
@@ -33,8 +33,9 @@ public:
     }
 };
 /*
+If N = size(array), then:
 1. Recursion:
-    TC-> O(exponential) ~= O(2^N), where N is the size of the array
+    TC-> O(exponential) ~= O(2^N)
     SC-> Recursion Stack: O(N)ASC
 
 2.Recursion + Memoization
