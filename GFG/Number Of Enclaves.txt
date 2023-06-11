@@ -1,6 +1,6 @@
 // https://practice.geeksforgeeks.org/problems/number-of-enclaves/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=number-of-enclaves
 
-
+ 
 // Approach 1: Multi-Source BFS using Queue + Visited Array
 class Solution {
   public:

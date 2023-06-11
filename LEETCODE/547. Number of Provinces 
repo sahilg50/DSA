@@ -1,0 +1,75 @@
+// https://leetcode.com/problems/number-of-provinces/description/
+
+
+// Approach 1: DFS using recursion
+class Solution {
+private:
+    void dfs(int src, vector<vector<int>> &adj, vector<int> &vis){
+        vis[src] = 1;
+        for(int node = 0; node<adj[src].size(); node++){
+            if(adj[src][node]==1 && !vis[node]){
+                dfs(node, adj, vis);
+            }
+        }
+    }
+public:
+    int findCircleNum(vector<vector<int>>& isConnected) {
+
+        int V = isConnected.size();
+        vector<int> vis(V, 0);
+        int count = 0;
+        for(int src=0; src<V; src++){
+            if(!vis[src]){
+                count++;
+                dfs(src, isConnected, vis);
+            }
+        }
+        return count;
+    }
+};
+/*
+If V = number of nodes, E = number of edges, then:
+TC-> O(V + 2*E)
+SC-> Vis Array: O(V) + Recursion Stack: O(V)ASC
+*/
+
+
+// Approach 2: BFS using recursion
+class Solution {
+private:
+    void bfs(int src, vector<vector<int>> &adj, vector<int> &vis){
+        queue<int> Q;
+        Q.push(src);
+        while(!Q.empty()){
+            int src = Q.front();
+            Q.pop();
+            vis[src]=1;
+            for(int node=0; node<adj[src].size(); node++){
+                if(adj[src][node]==1 && !vis[node]){
+                    Q.push(node);
+                }
+            }
+        }
+    }
+    
+public:
+    int findCircleNum(vector<vector<int>>& isConnected) {
+
+        int V = isConnected.size();
+        vector<int> vis(V, 0);
+
+        int count = 0;
+        for(int src=0; src<V; src++){
+            if(!vis[src]){
+                count++;
+                bfs(src, isConnected, vis);
+            }
+        }
+        return count;
+    }
+};
+/*
+If V = number of nodes, E = number of edges, then:
+TC-> O(V + 2*E)
+SC-> Vis Array: O(V) + Recursion Stack: O(V)ASC
+*/

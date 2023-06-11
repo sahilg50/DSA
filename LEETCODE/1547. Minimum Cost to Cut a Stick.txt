@@ -31,6 +31,7 @@ Recursion:
     TC-> Sort: O(ClogC) + Recursion: Exponential ~= O(C^C)
     SC-> Recursion Stack: O(C)ASC
 
+
 With Memoization:
     TC-> Sort: O(ClogC) + Recursion: O(C^3)
     There are 2 variables i and j, therefore, C*C states and we explicitly run a loop inside the function which will run for C times, therefore at max ‘C*C*C’ new problems will be solved.
