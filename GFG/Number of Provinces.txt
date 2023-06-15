@@ -33,3 +33,4 @@ TC-> O(V) + O(V + 2*E)
 SC-> Vis: O(V) + Recursion stack: O(V)ASC
 */
 
+// Approach 2: In LeetCode "547: Number of provinces"
