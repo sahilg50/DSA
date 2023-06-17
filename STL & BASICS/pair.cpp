@@ -16,7 +16,7 @@ int main()
     p1.first = 3;
     cout << p.first << " " << p.second << endl;
 
-    // When we make p2, the refernce of p, then all the changes will reflect in p if we make changes in p2.
+    // When we make p2, the reference of p, then all the changes will reflect in p if we make changes in p2.
     pair<int, string> &p2 = p;
     p2.first = 3;
     cout << p.first << " " << p.second << endl;
