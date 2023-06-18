@@ -1,0 +1,74 @@
+// https://leetcode.com/problems/set-matrix-zeroes/description/
+
+
+// Approach 1: Using Queue
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+
+        int m = matrix.size();
+        int n = matrix[0].size();
+        queue<pair<int, int>> Q;
+        for(int r=0; r<m; r++){
+            for(int c=0; c<n; c++){
+                if(matrix[r][c]==0) Q.push({r, c});
+            }
+        }
+
+        vector<bool> visRow(m, 0), visCol(n, 0);
+
+        while(!Q.empty()){
+            int r = Q.front().first;
+            int c = Q.front().second;
+            Q.pop();
+
+            if(!visRow[r]){ 
+                for(int col=0; col<n; col++) matrix[r][col] = 0;
+                visRow[r] = true;
+            }
+
+            if(!visCol[c]){
+                for(int row=0; row<m; row++) matrix[row][c] = 0;
+                visCol[c] = true;
+            }
+        }
+    }
+};
+/*
+If M = rows, and N = columns, then:
+TC -> Find initial zeros: O(M*N) + Setting rows and columns to zeros: O(M*N)
+SC -> Queue: O(M*N) + VisRow Array: O(M) + VisCol Array: O(N)
+*/
+
+
+// Approach 2: Using Array
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+
+        int m = matrix.size();
+        int n = matrix[0].size();
+        vector<int> row, col;
+        for(int r=0; r<m; r++){
+            for(int c=0; c<n; c++){
+                if(matrix[r][c]==0){
+                    row.push_back(r);
+                    col.push_back(c);
+                }
+            }
+        }
+
+        for(const int &r : row){
+            for(int c=0; c<n; c++) matrix[r][c] = 0;
+        }
+
+        for(const int &c : col){
+            for(int r=0; r<m; r++) matrix[r][c] = 0;
+        }
+    }
+};
+/*
+If M = rows, and N = columns, then:
+TC -> Find initial zeros: O(M*N) + Setting rows and columns to zeros: O(M*N)
+SC -> Row Array: O(M) + Col Array: O(N)
+*/
