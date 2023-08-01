@@ -1,7 +1,7 @@
 // https://leetcode.com/problems/number-of-provinces/description/
 
 
-// Approach 1: DFS using recursion
+// Approach 1: DFS using Recursion
 class Solution {
 private:
     void dfs(int src, vector<vector<int>> &adj, vector<int> &vis){
@@ -34,7 +34,7 @@ SC-> Vis Array: O(V) + Recursion Stack: O(V)ASC
 */
 
 
-// Approach 2: BFS 
+// Approach 2: BFS using Queue
 class Solution {
 private:
     void bfs(int src, vector<vector<int>> &adj, vector<int> &vis){

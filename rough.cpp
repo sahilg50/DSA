@@ -7,41 +7,29 @@
 
 using namespace std;
 
-long packetsRemaining(int totalPackets, int time, int rate)
+void util(int i, vector<int> &val, long currSum, long &maxSum)
 {
-    long maxTransferPossible = time * rate;
-    if (totalPackets <= maxTransferPossible)
-    {
-        return 0;
-    }
-    return totalPackets - maxTransferPossible;
+    // Base case
+    if (i >= val.size())
+        return;
+
+    if (currSum % 2 == 0)
+        maxSum = max(maxSum, currSum);
+
+    // Perform all operations
+    util(i + 1, val, currSum + val[i], maxSum);
+    util(i + 1, val, currSum, maxSum);
+
+    return;
 }
-long getNumberOfDroppedPackets(vector<vector<int>> requests, int max_packets, int rate)
+
+long getMaximumEvenSum(vector<int> val)
 {
-    sort(requests.begin(), requests.end());
-    long packetsDropped = 0, packetsPending = 0;
-    int i;
-    for (i = 0; i < requests.size() - 1; i++)
-    {
-        long time = requests[i + 1][0] - requests[i][0];
-        long totalPackets = packetsPending + requests[i][1];
-        if (totalPackets > max_packets)
-        {
-            packetsDropped += totalPackets - max_packets;
-            packetsPending = packetsRemaining(max_packets, time, rate);
-        }
-        else
-        {
-            packetsPending = totalPackets - (time * rate);
-        }
-    }
-    long totalPackets = packetsPending + requests[i][1];
-    if (totalPackets > max_packets)
-    {
-        packetsDropped += totalPackets - max_packets;
-    }
-    return packetsDropped;
+    long maxSum = 0;
+    util(0, val, 0, maxSum);
+    return maxSum;
 }
+
 int main()
 {
     return 0;
