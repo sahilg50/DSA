@@ -1,7 +1,7 @@
 // https://practice.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=detect-cycle-in-an-undirected-graph
 
 
-// Approach 1: Using BFS
+// Approach 1: BFS using Queue
 class Solution {
 private:
     bool bfs(int src, vector<int> adj[], int vis[]){
@@ -47,7 +47,7 @@ SC-> Vis Array: O(V) + Queue: O(V)
 */
 
 
-// Approach 2: Using DFS
+// Approach 2: DFS using Recursion
 class Solution {
 private:
     bool dfs(int src, int parent, vector<int> adj[], int vis[]){
