@@ -29,3 +29,11 @@ public:
         return 0;
     }
 }; 
+/*
+Where N = size of wordList Array and M = word length of words present in the wordList.
+
+TC: O(N * M * 26)
+Note that, hashing operations in an unordered set takes O(1) time, but if you want to use set here, then the time complexity would increase by a factor of log(N) as hashing operations in a set take O(log(N)) time.
+
+SC: O(N) { For creating an unordered set and copying all values from wordList into it. }
+*/

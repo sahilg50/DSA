@@ -1,12 +1,12 @@
 #include <stdio.h>
 
-int main()
+int main(int argc, char const *argv[])
 {
-   int num[] = {1, 4, 8, 12, 16};
-   int *a, *b;
-   int i;
-   a = num;
-   b = num + 2;
-   i = *a + 1;
-   printf("%d, %d, %d", i, *a, *b);
+   int *ptr;
+   int num = 0;
+   ptr = &num;
+   ptr++;
+   num = (int)(long long)ptr;
+   printf("%d\n", num);
+   return 0;
 }
