@@ -1,0 +1,42 @@
+// https://practice.geeksforgeeks.org/problems/topological-sort/1?utm_source=geeksforgeeks&utm_medium=article_practice_tab&utm_campaign=article_practice_tab
+
+
+//Approach 1: DFS with Stack
+class Solution
+{
+private:
+    stack<int> S;
+    
+    void dfs(int node, vector<bool> &vis, vector<int> adj[]){
+        vis[node] = true;
+        
+        for(const int &neighbor : adj[node]){
+            if(!vis[neighbor]) dfs(neighbor, vis, adj);
+        }
+        S.push(node);
+    }
+    
+public:
+	//Function to return list containing vertices in Topological order. 
+	vector<int> topoSort(int V, vector<int> adj[]) 
+	{
+	    vector<bool> vis(V, false);
+	    
+	    for(int node=0; node<V; node++){
+	        if(!vis[node]) dfs(node, vis, adj);
+	    }
+	    
+	    vector<int> series;
+	    while(!S.empty()){
+	        series.push_back(S.top());
+	        S.pop();
+	    }
+	    
+	    return series;
+	}
+};
+/*
+If V is vertices, and E is edges, then:
+TC -> O(V + E) + Pop from stack: O(V)
+SC -> Stack: O(V) + Series: O(V)ASC
+*/
