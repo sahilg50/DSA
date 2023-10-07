@@ -1,7 +1,37 @@
 // https://leetcode.com/problems/set-matrix-zeroes/description/
 
 
-// Approach 1: Using Queue
+// Approach 1: Brute Force -> Using "triple nested for loop" and "Dummy Matrix"
+class Solution {
+private:
+    void setDummyZeroes(vector<vector<int>> &dummy, int R, int C, int m, int n){
+        for(int r=0; r<m; r++) dummy[r][C] = 0;
+        for(int c=0; c<n; c++) dummy[R][c] = 0;
+    }
+
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+
+        vector<vector<int>> dummy = matrix;
+        
+        for(int r=0; r<m; r++){
+            for(int c=0; c<n; c++){
+                if(matrix[r][c]==0) setDummyZeroes(dummy, r, c, m, n);
+            }
+        }
+
+        matrix = dummy;
+    }
+};
+/*
+If M = rows and N = cols, then:
+TC-> Creating "dummy" matrix: O(M*N) + Setting zeroes: O(M*N)*O(M+N) + Copying "dummy" matrix to "matrix": o(M*N)
+SC-> Dummy matrix: O(M*N)
+*/
+
+// Approach 2: Better -> Using Queue + Array
 class Solution {
 public:
     void setZeroes(vector<vector<int>>& matrix) {
@@ -41,7 +71,7 @@ SC -> Queue: O(M*N) + VisRow Array: O(M) + VisCol Array: O(N)
 */
 
 
-// Approach 2: Using Array
+// Approach 3: Better 2: Using Array
 class Solution {
 public:
     void setZeroes(vector<vector<int>>& matrix) {
@@ -71,4 +101,44 @@ public:
 If M = rows, and N = columns, then:
 TC -> Find initial zeros: O(M*N) + Setting rows and columns to zeros: O(M*N)
 SC -> Row Array: O(M) + Col Array: O(N)
+*/
+
+
+// Approach 4: Optimal -> using first row and col for markings
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        int col0 = 1;
+
+        for(int r=0; r<m; r++){
+            for(int c=0; c<n; c++){
+                if(matrix[r][c]==0){
+                    matrix[r][0] = 0;
+                    if(c!=0) matrix[0][c] = 0;
+                    else col0 = 0;
+                }
+            }
+        }
+
+        for(int r=1; r<m; r++){
+            for(int c=1; c<n; c++){
+                if(matrix[0][c]==0 || matrix[r][0]==0) matrix[r][c] = 0;
+            }
+        }
+
+        if(matrix[0][0]==0){
+            for(int c=0; c<n; c++) matrix[0][c] = 0;
+        }
+        
+        if(col0==0){
+            for(int r=0; r<m; r++) matrix[r][0] = 0;
+        }
+    }
+};
+/*
+TC-> Marking Rows and Cols: O(M*N) + Converting elements to zero: O(M*N)
+
+SC-> O(1)
 */
