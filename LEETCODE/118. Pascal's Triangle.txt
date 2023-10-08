@@ -1,0 +1,27 @@
+// https://leetcode.com/problems/pascals-triangle/description/
+
+// Approach 1: Nested For Loop
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+
+        vector<vector<int>> triangle; 
+        for(int i=0; i<numRows; i++){
+            vector<int> row(i+1, 1);
+            triangle.push_back(row);
+        }
+
+        for(int i=2; i<numRows; i++){
+            for(int j=1; j<i; j++){
+                triangle[i][j] = triangle[i-1][j-1] + triangle[i-1][j];
+            }
+        }
+
+        return triangle;
+    }
+};
+/*
+If N = Number of rows, then:
+TC-> O(N^2)
+SC-> Triangle: O(N^2)ASC
+*/
