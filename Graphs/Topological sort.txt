@@ -40,3 +40,42 @@ If V is vertices, and E is edges, then:
 TC -> O(V + E) + Pop from stack: O(V)
 SC -> Stack: O(V) + Series: O(V)ASC
 */
+
+
+// Approach 2: Kahn's Algorithm (BFS + Queue)
+class Solution
+{
+	public:
+	vector<int> topoSort(int V, vector<int> adj[]) 
+	{
+	    int inDegree[V] = {0};
+	    for(int node=0; node<V; node++){
+	        for(auto neighbor : adj[node]){
+	            inDegree[neighbor]++;
+	        }
+	    }
+	    
+	    queue<int> Q; 
+	    for(int node=0; node<V; node++){
+	        if(inDegree[node]==0) Q.push(node);
+	    }
+	    
+	    vector<int> topo;
+	    while(!Q.empty()){
+	        int node = Q.front();
+	        Q.pop();
+	        topo.push_back(node);
+	        
+	        for(auto neighbor : adj[node]){
+	            inDegree[neighbor]--;
+	            if(inDegree[neighbor]==0) Q.push(neighbor);
+	        }
+	    }
+	    
+	    return topo;
+	}
+};
+/*
+TC-> Make InDegree: O(V + E) + Start Queue: O(V) + Process Queue: O(V + E)
+SC-> InDegree: O(V) + Queue: O(V) + Topo: O(V)ASC
+*/

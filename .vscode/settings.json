@@ -73,6 +73,7 @@
 		"Sahil",
 		"Subarrays",
 		"substr",
+		"topo",
 		"tribonacci"
 	],
 	"editor.tokenColorCustomizations": {
