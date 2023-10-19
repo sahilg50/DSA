@@ -1,0 +1,43 @@
+// https://practice.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1?utm_source=geeksforgeeks&utm_medium=ml_article_practice_tab&utm_campaign=article_practice_tab
+
+
+// Approach 1: DFS + Vis Array + Path Array
+class Solution {
+private:
+    bool dfs(int node, vector<bool> &path, vector<bool> &vis, vector<int> adj[]){
+        
+        vis[node] = true; 
+        path[node] = true;
+        
+        for(auto neighbor: adj[node]){
+            
+            if(!vis[neighbor]){
+                if (dfs(neighbor, path, vis, adj)) return true;
+            }
+            
+            else if(path[neighbor]) return true;
+        }
+        
+        path[node] =  false;
+        return false;
+    }
+    
+public:
+    // Function to detect cycle in a directed graph.
+    bool isCyclic(int V, vector<int> adj[]) {
+        
+        vector<bool> vis(V, false);
+        vector<bool> path(V, false);
+        
+        for(int node=0; node<V; node++){
+            if(dfs(node, path, vis, adj)) return true;
+        }
+        
+        return false;
+    }
+};
+/*
+If V is number of nodes, and E is number of edges, then:
+TC-> O(V + E)
+SC-> Vis Array: O(V) + Path Array: O(V) + Recursion Stack: O(V)ASC
+*/
