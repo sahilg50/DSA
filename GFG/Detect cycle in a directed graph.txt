@@ -42,4 +42,42 @@ TC-> O(V + E)
 SC-> Vis Array: O(V) + Path Array: O(V) + Recursion Stack: O(V)ASC
 */
 
-// Approach 2: 207 Course Schedule (Topological Sort)
+
+// Approach 2: Kahn's Algorithm (BFS + Queue)
+class Solution {
+public:
+    // Function to detect cycle in a directed graph.
+    bool isCyclic(int V, vector<int> adj[]) {
+        int inDegree[V] = {0};
+	    for(int node=0; node<V; node++){
+	        for(auto neighbor : adj[node]){
+	            inDegree[neighbor]++;
+	        }
+	    }
+	    
+	    queue<int> Q; 
+	    for(int node=0; node<V; node++){
+	        if(inDegree[node]==0) Q.push(node);
+	    }
+	    
+	    vector<int> topo;
+	    while(!Q.empty()){
+	        int node = Q.front();
+	        Q.pop();
+	        topo.push_back(node);
+	        
+	        for(auto neighbor : adj[node]){
+	            inDegree[neighbor]--;
+	            if(inDegree[neighbor]==0) Q.push(neighbor);
+	        }
+	    }
+	    
+	    if(topo.size() == V) return false;
+	    
+	    return true;
+    }
+};
+/*
+TC-> Make InDegree: O(V + E) + Start Queue: O(V) + Process Queue: O(V + E)
+SC-> InDegree: O(V) + Queue: O(V) + Topo: O(V)ASC
+*/
