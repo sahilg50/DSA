@@ -1,6 +1,8 @@
 // https://practice.geeksforgeeks.org/problems/topological-sort/1?utm_source=geeksforgeeks&utm_medium=article_practice_tab&utm_campaign=article_practice_tab
 
 
+Note: Below we've discussed 2 approaches for topological sort, (Kahn's Algo) & (DFS + Stack). Kahn's Algo has a benefit over DFS approach; it can detect if a cycle is present in the graph or not. Because it checks for the inDegree of the nodes. On the other hand, DFS cannot detect the cycle.
+
 //Approach 1: DFS + Stack
 class Solution
 {
