@@ -35,6 +35,7 @@ public:
             }
         }
 
+        // If the size is same then it means that no cycle was there in the graph.
         if(topoSort.size() == numCourses) return true;
         
         return false;
@@ -44,3 +45,5 @@ public:
 TC-> Make adj list: O(E) + Make InDegree: O(V + E) + Start Queue: O(V) + Process Queue: O(V + E)
 SC-> InDegree: O(V) + Queue: O(V) + Topo: O(V)ASC
 */
+
+NOTE: If we've to use DFS approach to solve this question, then first we've to find if the graph is cyclic or not. If the graph is acyclic, only then we can use DFS approach.

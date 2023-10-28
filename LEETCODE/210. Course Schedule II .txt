@@ -1,0 +1,47 @@
+// https://leetcode.com/problems/course-schedule-ii/description/
+
+
+// Approach 1: Kahn's Algo (Topological Sort) (BFS + Queue + Adj)
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        
+        vector<int> adj[numCourses];
+        for(auto it : prerequisites){
+            adj[it[0]].push_back(it[1]);
+        }
+        
+        vector<int> inDegree(numCourses, 0);
+        for(int node=0; node<numCourses; node++){
+            for(auto neighbor : adj[node]){
+                inDegree[neighbor]++;
+            }
+        }
+
+        queue<int> Q;
+        for(int node=0; node<numCourses; node++){
+            if(inDegree[node]==0) Q.push(node);
+        }
+
+        vector<int> topoSort;
+        while(!Q.empty()){
+            int node = Q.front();
+            Q.pop();
+
+            topoSort.push_back(node);
+            for(auto neighbor : adj[node]){
+                inDegree[neighbor]--; 
+                if(inDegree[neighbor]==0) Q.push(neighbor); 
+            }
+        }
+        
+
+        if(topoSort.size()==numCourses)reverse(topoSort.begin(), topoSort.end());
+        else topoSort.clear();
+        return topoSort;
+    }
+};
+/*
+TC-> Make adj list: O(E) + Make InDegree: O(V + E) + Start Queue: O(V) + Process Queue: O(V + E)
+SC-> InDegree: O(V) + Queue: O(V) + TopoSort: O(V)ASC
+*/
