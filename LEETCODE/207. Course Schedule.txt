@@ -1,7 +1,7 @@
 // https://leetcode.com/problems/course-schedule/
 
 
-// Approach 1: Kahn's Algorithm (Topological Sort) (BFS + Queue + Adjacency List) 
+// Approach 1: Topological Sort (Kahn's Algo) (BFS + Queue + Adjacency List) 
 class Solution {
 public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {

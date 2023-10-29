@@ -1,7 +1,7 @@
 // https://leetcode.com/problems/course-schedule-ii/description/
 
 
-// Approach 1: Kahn's Algo (Topological Sort) (BFS + Queue + Adj)
+// Approach 1: Topological Sort (Kahn's Algo) (BFS + Queue + Adj)
 class Solution {
 public:
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {

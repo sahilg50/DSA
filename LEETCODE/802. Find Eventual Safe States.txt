@@ -1,0 +1,44 @@
+// https://leetcode.com/problems/find-eventual-safe-states/description/
+
+
+// Approach 1: Topological Sort (Kahn's Algo) + Reversing the graph
+class Solution {
+public:
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+
+        int V = graph.size();
+
+        vector<int> adj[V];
+        vector<int> inDegree(V);
+        for(int node=0; node<V; node++){
+            for(auto neighbor : graph[node]){
+                adj[neighbor].push_back(node);
+                inDegree[node]++;
+            }
+        }
+
+        queue<int> Q;
+        for(int node=0; node<V; node++){
+            if(inDegree[node]==0) Q.push(node);
+        }
+
+        vector<int> safeNodes;
+        while(!Q.empty()){
+            int node = Q.front();
+            Q.pop();
+            safeNodes.push_back(node);
+
+            for(auto neighbor : adj[node]){
+                inDegree[neighbor]--;
+                if(inDegree[neighbor]==0) Q.push(neighbor);
+            }
+        }
+
+        sort(safeNodes.begin(), safeNodes.end());
+        return safeNodes;
+    }
+};
+/*
+TC-> Reversing the graph: O(V + E) + Start Queue: O(V) + Process Queue: O(V + E)
+SC-> Reverse graph: O(V^2) + inDegree: O(V) + Queue: O(V) + safeNodes: O(V)ASC
+*/
