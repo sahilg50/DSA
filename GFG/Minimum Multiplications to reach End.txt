@@ -1,0 +1,39 @@
+//https://practice.geeksforgeeks.org/problems/minimum-multiplications-to-reach-end/1
+
+
+//Approach 1: BFS + Queue
+class Solution {
+  public:
+    int minimumMultiplications(vector<int>& arr, int start, int end) {
+        
+        int mod = 100000;
+        vector<int> dist(mod, 1e9);
+        
+        queue<pair<int, int>> Q;
+        Q.push({start, 0});
+        dist[start] = 0;
+        
+        while(!Q.empty()){
+            int node = Q.front().first;
+            int steps = Q.front().second;
+            Q.pop();
+            
+            if(node == end) return steps;
+            
+            for(auto it : arr){
+                int num = (it * node) % mod;
+                if(steps + 1 < dist[num]){
+                    dist[num] = steps + 1;
+                    Q.push({num, steps+1});
+                }
+            }
+        }
+        
+        return -1;
+    }
+};
+/*
+If mod=100000, and N=size of array, then:
+TC-> BFS(Process Queue): O(mod * N)
+SC-> Dist Array: O(mod) + Queue: O(mod)
+*/
