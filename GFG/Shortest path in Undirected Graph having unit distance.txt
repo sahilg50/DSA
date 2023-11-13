@@ -1,0 +1,38 @@
+// https://practice.geeksforgeeks.org/problems/shortest-path-in-undirected-graph-having-unit-distance/1
+
+
+// Approach 1: BFS + Queue
+class Solution {
+  public:
+    vector<int> shortestPath(vector<vector<int>>& edges, int N,int M, int src){
+        vector<int> adj[N];
+        for(auto edge : edges){
+            adj[edge[0]].push_back(edge[1]);
+            adj[edge[1]].push_back(edge[0]);
+        }
+        
+        vector<int> dis(N, -1);
+        queue<int> Q;
+        Q.push(src);
+        dis[src]=0;
+        
+        while(!Q.empty()){
+            int node = Q.front();
+            Q.pop();
+            
+            int distance = dis[node];
+            for(auto neighbor : adj[node]){
+                if(dis[neighbor]==-1 || distance+1<dis[neighbor]){
+                    Q.push(neighbor);
+                    dis[neighbor] = distance + 1;
+                } 
+            }
+        }
+        
+        return dis;
+    }
+};
+/*
+TC-> Create Adj List: O(E) + BFS(Process Queue): O(V + 2*E)
+SC-> Adj List: O(V*V) + Dis: O(V)ASC + Queue: O(V)
+*/
