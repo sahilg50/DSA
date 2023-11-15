@@ -1,0 +1,37 @@
+// https://leetcode.com/problems/unique-length-3-palindromic-subsequences/description/?envType=daily-question&envId=2023-11-14
+
+
+//Approach 1: Hashmap
+class Solution {
+public:
+    int countPalindromicSubsequence(string s) {
+
+        unordered_set<string> S;
+
+        unordered_map<char, int> LMap, RMap;
+        for(char ch='a'; ch<='z'; ch++) LMap[ch]=0, RMap[ch]=0;
+        for(auto ch : s) RMap[ch]++;
+
+        int len = s.size();
+        for(int i=0; i<len; i++){
+            RMap[s[i]] -= 1;
+
+            for(char ch='a'; ch<='z'; ch++){
+                if(LMap[ch]>0 && RMap[ch]>0){
+                    string palindrome = "";
+                    palindrome.push_back(s[i]), palindrome.push_back(ch);
+                    S.insert(palindrome);
+                }
+            }
+
+            LMap[s[i]] += 1;
+        }
+        
+        return S.size();
+    }
+};
+/*
+If N=size of string, then:
+TC-> Create LMap, RMap: O(26) + Update RMap: O(N) + Process String: O(N*26) + Set Insertion: O(1)
+SC-> LMap: O(26) + RMap: O(26) + S size: O(N)
+*/
