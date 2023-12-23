@@ -1,0 +1,44 @@
+// https://leetcode.com/problems/path-crossing/submissions/
+
+
+// Approach 1: Set + Switch Case
+class Solution {
+public:
+    bool isPathCrossing(string &path) {
+
+        unordered_set<string> S;
+        int x=0, y=0;
+        S.insert("0 0");
+
+        int len = path.size();
+        for(int i=0; i<len; i++){
+            char ch = path[i];
+            switch(ch){
+                case 'N': ++y;
+                break;
+                
+                case 'S': --y;
+                break;
+
+                case 'E': ++x;
+                break;
+
+                case 'W': --x;
+                break;
+            }
+            string pos = to_string(x) + " " + to_string(y);
+            for (auto it = S.begin(); it != S.end(); it++){
+                if(pos == *it) return true;
+            }
+
+            S.insert(pos);
+        }
+
+        return false;
+    }
+};
+/*
+If N = length of path, then:
+TC-> Search the set: O(N*(N+1)/2) ~= O(N^2)
+SC-> O(N)
+*/
