@@ -1,0 +1,29 @@
+// https://leetcode.com/problems/minimum-changes-to-make-alternating-binary-string/description/
+
+
+// Approach 1: For Loop
+class Solution {
+public:
+    int minOperations(const string &s) {
+       int x=0, y=0;
+       int len = s.size();
+
+       for(int i=0; i<len; i++){
+
+           // Check for number of transformation to make 0101 series
+           if(i%2==0 && s[i]=='1') x++;
+           if(i%2==1 && s[i]=='0') x++;
+
+           // Check for number of transformation to make 1010 series
+           if(i%2==0 && s[i]=='0') y++;
+           if(i%2==1 && s[i]=='1') y++;
+        }
+
+        return min(x, y);
+    }
+};
+/*
+If N is the size of S, then:
+TC-> O(N)
+SC-> O(1)
+*/
