@@ -5,9 +5,12 @@ using namespace std;
 
 int main()
 {
-    int c = 10;
-    string pos = to_string(c);
-    cout << pos;
+    int a = 10;
+    int b = 20;
+    int *ptr1 = &a;
+    int *ptr2 = &b;
+
+    // swap(ptr1, ptr2);
+    cout << *ptr1 << " " << *ptr2;
     return 0;
-    ;
 }
