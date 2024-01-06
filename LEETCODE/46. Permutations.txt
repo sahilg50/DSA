@@ -1,34 +1,41 @@
+// https://leetcode.com/problems/permutations/submissions/
+
+
 // Approach 1
 class Solution {
 private:
-    void recurPermute(int ind, vector<int>&nums, vector<int>&ds, vector<bool>&map, vector<vector<int>>&ans){
-        if(ds.size()==nums.size()){
+    void util(vector<int> &nums, vector<int> &ds, unordered_map<int, bool> &map, vector<vector<int>> &ans){
+        // Base case
+        if(ds.size() == nums.size()){
             ans.push_back(ds);
             return;
         }
-        
-        for(int i=0; i<nums.size(); i++){
-            if(!map[i]){
-                ds.push_back(nums[i]);
-                map[i] = true;
-                recurPermute(i, nums, ds, map, ans);
+
+        // Perform all operations
+        for(int ind=0; ind<nums.size(); ind++){
+            if(!map[ind]){
+                ds.push_back(nums[ind]);
+                map[ind] = true;
+                util(nums, ds, map, ans);
                 ds.pop_back();
-                map[i] = false;
+                map[ind] = false;
             }
         }
     }
 public:
     vector<vector<int>> permute(vector<int>& nums) {
-        
-        vector<vector<int>> ans; // stores all permutations
-        vector<int> ds;          // ds for recursion
-        vector<bool> map(nums.size(), false);   // map elements of nums
-    
-        recurPermute(0, nums, ds, map, ans);
+
+        vector<int> ds;
+
+        unordered_map<int, bool> map;
+        for(auto num : nums) map[num] = false;
+
+        vector<vector<int>> ans;
+
+        util(nums, ds, map, ans);
         return ans;
     }
 };
-
 /*
 TC-> O(N! * N), N! permutations and for each permutation there are N for loops
 SC-> Ans: O(N!)ASC + Recursion Stack: O(N)ASC + DS: O(N) + Map: O(N)
