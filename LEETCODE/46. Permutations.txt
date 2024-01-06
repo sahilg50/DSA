@@ -38,7 +38,7 @@ public:
 };
 /*
 TC-> O(N! * N), N! permutations and for each permutation there are N for loops
-SC-> Ans: O(N!)ASC + Recursion Stack: O(N)ASC + DS: O(N) + Map: O(N)
+SC-> Ans: O(N! * N)ASC + Recursion Stack: O(N)ASC + DS: O(N) + Map: O(N)
 */
 
 
@@ -65,5 +65,5 @@ public:
 };
 /*
     TC-> O(N! * N)
-    SC-> Recursion Stack: O(N)ASC, Ans: O(N!)ASC
+    SC-> Recursion Stack: O(N)ASC, Ans: O(N! * N)ASC
 */
