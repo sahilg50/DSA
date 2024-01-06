@@ -1,16 +1,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 int main()
 {
-    int a = 10;
-    int b = 20;
-    int *ptr1 = &a;
-    int *ptr2 = &b;
-
-    // swap(ptr1, ptr2);
-    cout << *ptr1 << " " << *ptr2;
+    vector<int> arr = {1, 2, 3, 4};
+    reverse(arr.begin() + 1, arr.end());
+    for (auto num : arr)
+        cout << num << " ";
     return 0;
 }
