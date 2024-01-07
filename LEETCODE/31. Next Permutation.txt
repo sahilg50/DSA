@@ -44,5 +44,7 @@ public:
     }
 };
 /*
-
+If N = size of array then:
+TC-> Finding Index: O(N) + Reverse: O(N) + Swap: O(N) + Sort: O(NLogN)
+SC-> O(1)
 */
