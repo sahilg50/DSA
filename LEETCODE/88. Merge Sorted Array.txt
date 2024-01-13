@@ -1,0 +1,55 @@
+// https://leetcode.com/problems/merge-sorted-array/description/
+
+
+// Approach 1
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        for(int i=0; i<n; i++) nums1[m+i] = nums2[i];
+
+        sort(nums1.begin(), nums1.end());
+    }
+};
+/*
+If M = size of nums1, N = size of nums2, then:
+TC-> For Loop: O(N) + Sort: O((M+N)*log(M+N))
+SC-> O(1)
+*/
+
+
+// Approach 2: Using Extra Array
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        vector<int> nums3;
+
+        int i=0, j=0; 
+        while(i<m && j<n){
+            if(nums1[i] <= nums2[j]){
+                nums3.push_back(nums1[i]);
+                i++;
+            }
+            else{
+                nums3.push_back(nums2[j]);
+                j++;
+            }
+        }
+
+        while(i<m){
+            nums3.push_back(nums1[i]);
+            i++;
+        }
+
+        while(j<n){
+            nums3.push_back(nums2[j]);
+            j++;
+        }
+
+        for(int i=0; i<m+n; i++) nums1[i] = nums3[i];
+    }
+};
+/*
+If M = size of nums1, N = size of nums2, then:
+TC-> O(M+N)
+SC-> Nums3: O(M+N)
+*/
