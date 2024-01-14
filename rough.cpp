@@ -6,9 +6,12 @@ using namespace std;
 
 int main()
 {
-    vector<int> arr = {1, 2, 3, 4};
-    reverse(arr.begin() + 1, arr.end());
-    for (auto num : arr)
-        cout << num << " ";
+    int a = 10;
+    int b = 20;
+    cout << float((a + b * 1.0) / 4);
+
+    while (gap > 0)
+    {
+    }
     return 0;
 }

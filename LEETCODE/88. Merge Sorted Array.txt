@@ -1,7 +1,7 @@
 // https://leetcode.com/problems/merge-sorted-array/description/
 
 
-// Approach 1
+// Approach 1: Brute Force (Combining and Sorting)
 class Solution {
 public:
     void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
@@ -17,7 +17,7 @@ SC-> O(1)
 */
 
 
-// Approach 2: Using Extra Array
+// Approach 2: Better (Using Extra Array)
 class Solution {
 public:
     void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
@@ -52,4 +52,43 @@ public:
 If M = size of nums1, N = size of nums2, then:
 TC-> O(M+N)
 SC-> Nums3: O(M+N)
+*/
+
+
+// Approach 3: Optimal (Shell Sort)
+class Solution {
+private:
+    void swapGreater(vector<int> &arr1, vector<int> &arr2, int ind1, int ind2){
+        if(arr1[ind1] > arr2[ind2]) swap(arr1[ind1], arr2[ind2]);
+    }
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        int len = m+n;
+        int gap = (len/2) + (len%2);
+
+        while(gap > 0){
+            int L = 0;
+            int R = L + gap;
+
+            while(R < len){
+                // nums1 and nums2
+                if(L<m  && R>=m) swapGreater(nums1, nums2, L, R-m);
+
+                else if(L>=m) swapGreater(nums2, nums2, L-m, R-m);
+    
+                else swapGreater(nums1, nums1, L, R);
+
+                L++, R++;
+            }
+            if(gap == 1) break;
+            else gap = (gap/2) + (gap%2);
+        }
+
+        for(int i=0; i<n; i++) nums1[m+i] = nums2[i];
+    }
+};
+/*
+If M = size of nums1, N = size of nums2, then:
+TC-> Gap: log(M+N) * Iterate Array: O(M+N)
+SC-> O(1)
 */
