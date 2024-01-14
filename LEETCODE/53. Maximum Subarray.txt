@@ -1,0 +1,80 @@
+// https://leetcode.com/problems/maximum-subarray/description/
+
+
+// Approach 1: Brute Force
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int len = nums.size();
+        
+        int maxSum = nums[0];
+
+        for(int i=0; i<len; i++){
+            for(int j=i; j<len; j++){
+                int currSum = 0;
+                for(int k=i; k<=j; k++){
+                    currSum += nums[k];
+                }
+                maxSum = max(maxSum, currSum);
+            }
+        }
+
+        return maxSum;
+    }
+};
+/*
+If N = size of nums, then:
+TC-> O(N^3)
+SC-> O(1)
+*/
+
+
+// Approach 2: Better (Optimized For Loop)
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int len = nums.size();
+        
+        int maxSum = nums[0];
+
+        for(int i=0; i<len; i++){
+            int currSum = 0;
+            for(int j=i; j<len; j++){
+                currSum += nums[j];
+                maxSum = max(maxSum, currSum);
+            }
+        }
+
+        return maxSum;
+    }
+};
+/*
+If N = size of nums, then:
+TC-> O(N^2)
+SC-> O(1)
+*/
+
+
+// Approach 3: Kadane's Algorithm
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+
+        int maxSum = nums[0];
+        int currSum = 0;
+
+        for(int i=0; i<nums.size(); i++){
+            currSum += nums[i];
+            maxSum = max(maxSum, currSum);
+
+            if(currSum < 0) currSum = 0;
+        }
+
+        return maxSum;
+    }
+};
+/*
+If N = size of nums, then:
+TC-> O(N)
+SC-> O(1)
+*/
