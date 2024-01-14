@@ -1,39 +1,42 @@
 // https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/
 
 
-// Approach 1: Recursion 
+// Approach 1: Brute Force (Nested For Loop)
 class Solution {
-private:    
-    int util(int ind, vector<int> &prices, int minPrice, int maxProfit){
-        if(ind>=prices.size()) return maxProfit;
-
-        int profit = prices[ind] - minPrice;
-        maxProfit = max(maxProfit, profit);
-        minPrice = min(minPrice, prices[ind]);
-
-        return util(ind+1, prices, minPrice, maxProfit);
-    }
 public:
     int maxProfit(vector<int>& prices) {
-        return util(1, prices, prices[0], 0);
-    }
+        
+        int n = prices.size();
+        int maxi = 0;
+
+        for(int i=0; i<n; i++){
+            for(int j=i; j<n; j++){
+                maxi = max(maxi, (prices[j] - prices[i]));
+            }
+        }
+        return maxi;
+    }   
 };
 /*
-If N = size(array), then:
-TC-> O(N)
-SC-> Recursion Stack: O(N)ASC
+If N = size of prices, then:
+TC-> o(N^2)
+SC-> O(1)
 */
 
 
-// Approach 2: For Loop
+// Approach 2: Optimal 
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
+
         int minPrice = prices[0];
         int maxProfit = 0;
+
         for(int ind=1; ind<prices.size(); ind++){
+
             int profit = prices[ind] - minPrice;
             maxProfit = max(maxProfit, profit);
+
             minPrice = min(minPrice, prices[ind]);
         }
         return maxProfit;
