@@ -40,3 +40,38 @@ If N = size of array, then:
 TC-> Sort: O(N * LogN) + For Loop: O(N)
 SC-> O(1)
 */
+
+
+// Approach 3: Floyd's Cycle Detection
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        int n = nums.size();
+
+        int slow = nums[0];
+        int fast = nums[0];
+
+        do{
+            // Slow will move 1 step
+            slow = nums[slow];
+
+            // Fast will move 2 steps
+            fast = nums[fast];
+            fast = nums[fast];
+        } while(slow != fast);
+
+        fast = nums[0];
+
+        while(fast != slow){
+            slow = nums[slow]; // Slow will move 1 step
+            fast = nums[fast]; // Fast will move 1 step
+        }
+
+        return fast;
+    }
+};
+/*
+If N = size of array, then:
+TC-> Find the meeting point: O(N) + Find the duplicate Number: O(N)
+SC-> O(1)
+*/
