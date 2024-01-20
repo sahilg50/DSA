@@ -1,0 +1,54 @@
+// https://leetcode.com/problems/rotate-image/description/
+
+
+// Approach 1: Brute Force (Using Extra matrix)
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        
+        int n = matrix.size();
+        vector<vector<int>> reversedMatrix(n, vector<int>(n, 0));
+
+        for(int r=0; r<n; r++){
+            for(int c=0; c<n; c++){
+                reversedMatrix[c][n-r-1] = matrix[r][c];
+            }
+        }
+
+        for(int r=0; r<n; r++){
+            for(int c=0; c<n; c++){
+                matrix[r][c] = reversedMatrix[r][c];
+            }
+        }
+    }
+};
+/*
+If N = number of rows and cols of a square matrix, then:
+TC-> For Loop: O(N^2)
+SC-> reversedMatrix: O(N^2)
+*/
+
+
+// Approach 2: Optimal (Transposing and Reversing)
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        
+        int n = matrix.size();
+
+        // Transposing the Matrix
+        for(int r=0; r<n; r++){
+            for(int c=0; c<r; c++){
+                swap(matrix[r][c], matrix[c][r]);
+            }
+        }
+
+        // Reverse all the rows
+        for(int r=0; r<n; r++) reverse(matrix[r].begin(), matrix[r].end());
+    }
+};
+/*
+If N = number of rows and cols of a square matrix, then:
+TC-> Transpose: O((N * N)/2) + Reverse: O(N * N)
+SC-> O(1)
+*/

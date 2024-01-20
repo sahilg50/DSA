@@ -1,0 +1,42 @@
+// https://leetcode.com/problems/find-the-duplicate-number/description/
+
+
+// Approach 1: Brute Force (Using Unordered Map)
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        unordered_map<int, int> map;
+        for(const int &num : nums) map[num] += 1;
+
+        for(auto &itr : map){
+            if(itr.second > 1) return itr.first;
+        }
+
+        return 0;
+    }
+};
+/*
+If N = size of array, then:
+TC-> Make Map: O(N) + Process Map: O(N)
+SC-> Map: O(N)
+*/
+
+
+// Approach 2: Sorting
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        
+        for(int i=1; i<nums.size(); i++){
+            if(nums[i]==nums[i-1]) return nums[i];
+        }
+
+        return 0;
+    }
+};
+/*
+If N = size of array, then:
+TC-> Sort: O(N * LogN) + For Loop: O(N)
+SC-> O(1)
+*/
