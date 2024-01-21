@@ -1,0 +1,125 @@
+// https://leetcode.com/problems/missing-number/description/
+
+
+// Approach 1: Brute Force(Finding each number from 0 to n using for loop)
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+
+        int n = nums.size();
+
+        for(int val=0; val<=n; val++){
+
+            if(find(nums.begin(), nums.end(), val) == nums.end()) return val;
+        }
+
+        return 0;
+    }
+};
+/*
+If N = size of nums, then:
+TC-> O(N^2)
+SC-> O(1)
+*/
+
+
+// Approach 2: Better Approach (Map)
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+
+        int n = nums.size();
+        vector<int> map(n+1, 0);
+        
+        for(auto num : nums) map[num] = 1;
+        
+        for(int ind=0; ind<=n; ind++){
+            if(map[ind] == 0) return ind;
+        }
+
+        return 0;
+    }
+};
+/*
+If N = size of nums, then:
+TC-> Make Map: O(N) + Check Map: O(N)
+SC-> Map: O(N)
+*/
+
+
+// Approach 3: Better Approach 2 (Sorting)
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+
+        int n = nums.size();
+
+        sort(nums.begin(), nums.end());
+
+        for(int ind=0; ind<n; ind++){
+            if(nums[ind] != ind) return ind;
+        }
+
+        return n;
+    }
+};
+/*
+If N = size of nums, then:
+TC-> Sort: O(N * LogN) + For Loop: O(N)
+SC-> O(1)
+*/
+
+
+// Approach 4: Optimal 1 (Using array as the map)
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+
+        int n = nums.size();
+
+        bool zeroModi = false; // Check if zero is modified.
+
+        // Mark indices
+        for(int i=0; i<n; i++){
+            int ind = abs(nums[i]);
+
+            if(ind < n){
+                if(nums[ind] == 0) zeroModi = true;
+                nums[ind] *= -1;
+            }
+        }
+
+        // Find missing number
+        for(int ind=0; ind<n; ind++){
+            if(nums[ind]>0 || (nums[ind]==0 && zeroModi==false)) return ind;
+        }
+
+        return n;
+    }
+};
+/*
+If N = size of nums, then:
+TC-> Mark indices: O(N) + Find missing number: O(N)
+SC-> O(1)
+*/
+
+
+// Approach 5: Optimal 2 (Sum of n numbers)
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+
+        int n = nums.size();
+
+        int expectedSum = n*(n+1)/2;
+
+        int actualSum = accumulate(nums.begin(), nums.end(), 0);
+
+        return expectedSum - actualSum;
+    }
+};
+/*
+If N = size of nums, then:
+TC-> Find actual sum: O(N)
+SC-> O(1)
+*/

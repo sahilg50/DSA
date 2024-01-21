@@ -46,7 +46,6 @@ SC-> O(1)
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        int n = nums.size();
 
         int slow = nums[0];
         int fast = nums[0];

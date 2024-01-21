@@ -6,12 +6,7 @@ using namespace std;
 
 int main()
 {
-    int a = 10;
-    int b = 20;
-    cout << float((a + b * 1.0) / 4);
-
-    while (gap > 0)
-    {
-    }
+    vector<int> v = {1, 2, 3, 4};
+    cout << "\nFind in vector v is: " << *find(v.begin(), v.end(), 2);
     return 0;
 }
