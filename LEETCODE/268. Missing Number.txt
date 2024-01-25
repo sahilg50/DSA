@@ -23,7 +23,7 @@ SC-> O(1)
 */
 
 
-// Approach 2: Better Approach (Map)
+// Approach 2: Better Approach 1 (Map)
 class Solution {
 public:
     int missingNumber(vector<int>& nums) {
