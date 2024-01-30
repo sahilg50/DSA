@@ -1,0 +1,77 @@
+// https://leetcode.com/problems/majority-element/description/
+
+
+// Approach 1: Brute Force (Nested For Loop)
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int n = nums.size();
+
+        for(int i=0; i<n; i++){
+            int count = 1; 
+            for(int j=i+1; j<n; j++){
+                if(nums[j] == nums[i]) count += 1;
+            }
+
+            if(count > n/2) return nums[i];
+        }
+
+        return 0;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N^2)
+SC-> O(1)
+*/
+
+
+// Approach 2: Better Approach (Map)
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+
+        int n = nums.size();
+        unordered_map<int, int> Map;
+
+        for(const int &num : nums) Map[num] += 1;
+
+        for(auto it: Map){
+            if(it.second > n/2) return it.first;
+        }
+
+        return 0;
+
+    }
+};
+/*
+If N = size of array, then:
+TC-> Create Map: O(N) + Process Map: O(N)
+SC-> Map: O(N)
+*/
+
+
+// Approach 3: Optimal (Moore's Voting Algorithm)
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+
+        int counter = 0, majority;
+
+        for(const int  &num: nums){
+
+            if(counter == 0){
+                majority = num;
+            }
+
+            counter += num == majority ? 1 : -1;
+        }
+
+        return majority;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N)
+SC-> O(1)
+*/
