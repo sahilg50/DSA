@@ -53,14 +53,38 @@ SC-> Dp Array: O(M*N)
 
 /*
 Approach 3: nCr
-Total steps counts = 3 [ (m-1)+(n-1) ]
-Total Right movement count in each path = 2 [m-1]
-Total Down movement count in each path = 1 [n-1]
 
-Now, we can think of having 3 places  to fill with 2 items[2 R] and one place with one item[1 D]: 3C2 * 1C1 
-                    OR
-Now, we can think of having 3 places  to fill with 1 item[1 D] and the rest two places with two items [2 R]: 3C1 * 2C2
+Explanation: 
+https://takeuforward.org/data-structure/grid-unique-paths-count-paths-from-left-top-to-the-right-bottom-of-a-matrix/
+
+Matrix = 3 * 7
+
+Down steps(D) = m-1 = 2
+Right steps(R) = n-1 = 6
+
+Total steps(S): D + R = 8
+
+From total steps(S), we'll pick unique combination of steps at which we'll move down(D), hence the remaining will be move right(R). This results in a unique path every time. So the idea is to have unique combinations by picking D out of S; or conversely have unique combinations by picking R out of 
+
+S S S S S S S S
+
+D D R R R R R R
+
+R R D R R R D R
+
+R D R D R R R R
+
+8C2 or 8C6
+
+1 * 2 * 3 * 4 * 5 * 6 * 7 * 8 / (1 * 2) * (1 * 2 * 3 * 4 * 5 * 6)
+
+7 * 8 / 1 * 2
+
+(8 / 1) * (7 / 2)
+
+(N/i) * (N-1/i+1)
 */
+
 class Solution {
 public:
     int uniquePaths(int m, int n) {
@@ -77,3 +101,45 @@ public:
 TC-> O(min(n, m))
 SC-> O(1), constant
 */
+
+
+Matrix = 3 * 7
+
+D = m-1 = 2
+R = n-1 = 6
+
+Total steps: D + R = 8
+
+S S S S S S S S
+
+D D R R R R R R
+
+R R D R R R D R
+
+R D R D R R R R
+
+8C2 or 8C6
+
+1 1 1 1 1 1 1
+
+1 0 1 1 0 1 0
+
+0 1 0 0 1 1 1
+
+1 1 1 1 0 0 0 
+
+1 1 0 1 0 1 0
+
+7C3 or 7C4
+
+NCr or NCn-r
+
+8! / (2! * 6!)
+
+1 * 2 * 3 * 4 * 5 * 6 * 7 * 8 / (1 * 2) * (1 * 2 * 3 * 4 * 5 * 6)
+
+7 * 8 / 1 * 2
+
+(8 / 1) * (7 / 2)
+
+(N/i) * (N-1/i+1)
