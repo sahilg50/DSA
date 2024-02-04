@@ -1,0 +1,140 @@
+https://leetcode.com/problems/longest-consecutive-sequence/
+
+
+// Approach 1: Brute Force(For Loop + Linear Search)
+class Solution {
+private:
+    bool linearSearch(vector<int> &nums, int target){
+        for(auto num : nums){
+            if(num == target) return true;
+        }
+        return false;
+    }
+public:
+    int longestConsecutive(vector<int>& nums) {
+
+        int maxLen = 0;
+
+        for(auto num : nums){
+
+            int currLen = 1;
+
+            while(linearSearch(nums, num+1) == true){
+                currLen += 1;
+                num += 1;
+            }
+
+            maxLen = max(maxLen, currLen);
+        }
+
+        return maxLen;
+    }
+};
+/*
+If N = size of array, then:
+TC-> For Loop: O(N) * Linear Search: O(N) => O(N^2)
+SC-> O(1)
+*/
+
+
+// Approach 2: Brute Force Approach (Sorting)
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        
+        sort(nums.begin(), nums.end());
+        int n = nums.size();
+
+        int maxLen = 0;
+
+        for(int i=0; i<n; i++){
+            
+            int num = nums[i];
+            int currLen = 1;
+            int j = i+1;
+
+            while(j<n){
+                if(nums[j] == num+1){
+                    currLen += 1;
+                    num += 1;
+                }
+                j += 1;
+            }
+
+            maxLen = max(maxLen, currLen);
+        }
+
+        return maxLen;
+    }
+};
+/*
+If N = size of array, then:
+TC-> Sorting: O(N*logN) + (For Loop: O(N) * While Loop: O(N)) => O(N^2)
+SC-> O(1)
+*/
+
+
+// Approach 3: Optimal 1 (Sorting)
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        
+        sort(nums.begin(), nums.end());
+
+        int n = nums.size();
+
+        int maxLen = 0, currLen = 0;
+
+        for(int i=0; i<n; i++){
+
+            if(i==0 || nums[i] == nums[i-1]+1){
+                currLen += 1;
+                maxLen = max(maxLen, currLen);
+            }
+            else if(nums[i] > nums[i-1]) currLen = 1;
+
+        }
+
+        return maxLen;
+    }
+};
+/*
+If N = size of array, then:
+TC-> Sorting: O(N*logN) + For Loop: O(N) 
+SC-> O(1)
+*/
+
+
+// Approach 4: Optimal 2(Set)
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        
+        unordered_set<int> S;
+        for(auto num : nums) S.insert(num);
+
+        int maxLen = 0, currLen = 0;
+
+        for(auto it : S){
+            if(S.find(it - 1) == S.end()){
+
+                currLen = 1;
+                int X = it;
+
+                while(S.find(X+1) != S.end()){
+                    currLen += 1;
+                    X += 1;
+                }
+
+                maxLen = max(maxLen, currLen);
+            }
+        }
+
+        return maxLen;
+    }
+};
+/*
+If N = size of array, then:
+TC-> Create Set: O(N) + Process Set: O(2*N)
+SC-> Unordered Set: O(N)
+*/
