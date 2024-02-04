@@ -1,0 +1,108 @@
+// https://www.geeksforgeeks.org/problems/find-missing-and-repeating2512/1?utm_source=geeksforgeeks&utm_medium=article_practice_tab&utm_campaign=article_practice_tab
+
+
+// Approach 1: Brute Force (Nested For Loop)
+class Solution{
+public:
+    vector<int> findTwoElement(vector<int> arr, int n) {
+        
+        int repeating = -1, missing = -1;
+        
+        for(int num=1; num<=n; num++){
+            
+            int count = 0;
+            
+            for(int i=0; i<n; i++){
+                if(arr[i] == num) count ++;
+            }
+            
+            if(count == 2) repeating = num;
+            else if(count == 0) missing = num;
+            
+            if(repeating != -1 && missing != -1) break;
+        }
+        
+        vector<int> ans = {repeating, missing};
+        return ans;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N^2)
+SC-> O(1)
+*/
+
+
+// Approach 2: Better Approach (Using Hashmap)
+class Solution{
+public:
+    vector<int> findTwoElement(vector<int> arr, int n) {
+        
+        int repeating = -1, missing = -1;
+        
+        unordered_map<int,int> Map;
+        
+        for(int num=1; num<=n; num++) Map[num] = 0;
+        
+        for(auto num : arr) Map[num] += 1;
+        
+        for(auto it : Map){
+            if(it.second == 2) repeating = it.first;
+            else if(it.second == 0) missing = it.first;
+        }
+        
+        vector<int> ans = {repeating, missing};
+        return ans;
+    }
+};
+/*
+If N = size of array, then:
+TC-> Create Map: O(N) + Process Map: O(N)
+SC-> Map: O(N)
+*/
+
+
+// Approach 3: Optimal 1 (Using Maths)
+class Solution{
+public:
+    vector<int> findTwoElement(vector<int> arr, int n) {
+        
+        long long N = n;
+        
+        long long X = -1, Y = -1; // let X = repeating number, and Y = missing number
+        
+        long long SN = N*(N+1)/2;
+        
+        long long S2N = (N*(N+1)*((2*N)+1))/6;
+        
+        long long S = 0, S2 = 0;
+        
+        for(auto i : arr){
+            int num = i;
+            S += num;
+            S2 += (long long)num * (long long)num;
+        }
+        
+        /*
+        We calculated that:
+        S - Sn = X - Y;
+        S2 - S2n = X^2 - Y^2
+        */
+        
+        long long val1 = S - SN; // X - Y
+        long long val2 = S2 - S2N; // X^2 - Y^2 = (X - Y)(X + Y)
+        long long val3 = val2 / val1; // X + Y
+        
+        X = (val1 + val3)/2;
+        Y = (val3 - val1)/2;
+        
+        
+        vector<int> ans = {(int)X, (int)Y};
+        return ans;
+    }
+};
+/*
+If N = size of array, then:
+TC-> For Loop: O(N)
+SC-> O(1)
+*/
