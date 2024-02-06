@@ -37,7 +37,7 @@ SC-> O(1)
 */
 
 
-// Approach 2: Brute Force Approach (Sorting)
+// Approach 2: Brute Force Approach 2 (Sorting)
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {

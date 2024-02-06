@@ -1,0 +1,61 @@
+// https://www.geeksforgeeks.org/problems/longest-sub-array-with-sum-k0809/1?utm_source=geeksforgeeks&utm_medium=article_practice_tab&utm_campaign=article_practice_tab
+
+
+// Approach 1: Brute Force (Triple Nested For Loop)
+class Solution{
+    public:
+    int lenOfLongSubarr(int A[], int N, int K) 
+    { 
+        int maxLen = 0;
+        
+        for(int i=0; i<N; i++){
+            
+            for(int j=i; j<N; j++){
+                
+                int currSum = 0;
+                
+                for(int k=i; k<=j; k++) currSum += A[k];
+                
+                if(currSum == K) maxLen = max(maxLen, (j-i+1));
+            }
+        }
+        
+        return maxLen;
+    } 
+};
+/*
+If N = size of array, then:
+TC-> O(N^3) TLE
+SC-> O(1)
+*/
+
+
+// Approach 2: Brute Force (Double Nested For Loop)
+class Solution{
+    public:
+    int lenOfLongSubarr(int A[], int N, int K) 
+    { 
+        int maxLen = 0;
+        
+        for(int i=0; i<N; i++){
+            
+            int currSum = 0;
+            
+            for(int j=i; j<N; j++){
+                
+                currSum += A[j];
+                
+                if(currSum == K) maxLen = max(maxLen, (j-i+1));
+            }
+        }
+        
+        return maxLen;
+    } 
+};
+/*
+If N = size of array, then:
+TC-> O(N^2) TLE
+SC-> O(1)
+*/
+
+ 
