@@ -8,12 +8,61 @@ using namespace std;
 
 int main()
 {
-    // Note: The difference between maps and unordered_map is the in maps, the elements are inserted on the basis of the comparison of the key whereas in unordered maps, the elements are inserted on the basis of the hash value of the key that is calculated using hashtables. Therefore your key values can be vectors, sets etc in case of maps whereas not in the case of the unordered maps.
 
-    // Unordered Maps are implemented using hashTables.
-    unordered_map<int, string> m;
-    m[1] = "abc"; // TC-> Time complexity to insert or access the elements in unordered_map is O(1), because of the collisions, the time complexity will increase but we still go with O(1)
+    /*
+    TOPIC: Difference between maps and unordered_map
+    In unordered_map, the elements are inserted on the basis of the hash value of the key, calculated using hash function.
+    In map, the elements are inserted on the basis of the comparison of the key.
+    Therefore, key values that are not hashable, like "vector", "sets" can be a part of map but not unordered_map.
+    */
+
+    unordered_map<int, string> M;
+
+    // TOPIC: Insertion
+    M[1] = "A";
+    M.insert({2, "B"}); // Kwy value pair will be inserted at the end
+    /*
+    TC-> Best Case: O(1), Avg Case: O(1), Worst Case: O(N)
+    */
+
+    // TOPIC: Insertion at specific position
+    auto itr = M.begin();
+    M.insert(itr, {3, "C"}); // key value pair will be inserted at the specified position
+    /*
+    TC-> Best Case: O(1), Avg Case: O(1), Worst Case: O(N)
+    */
+
+    // TOPIC: Inserting elements within a specific range
+    vector<pair<int, string>> V = {{4, "D"}, {5, "E"}, {6, "F"}, {7, "G"}};
+    M.insert(V.begin() + 1, V.begin() + 2); // Note: In M.insert(pos1, pos2), pos2 is not inclusive
+    /*
+    TC-> Best Case: O(N), Avg Case: O(N), Worst Case: O(N*N)
+    */
+
+    // TOPIC: Accessing
+    cout << M.at(6) << endl; // Throws error is the key is not present
+    cout << M[6] << endl;    // Create a key value with key = "2" and default value = "0"
+    /*
+    TC-> Best Case: O(1), Avg Case: O(1), Worst Case: O(N)
+    */
+
+    // TOPIC: Updation
+    M[1] = "Z";
+    /*
+    TC-> Best Case: O(1), Avg Case: O(1), Worst Case: O(N)
+    */
+
+    // TOPIC: Erase
+    M.erase(1); // Erase by key
+
+    auto itr = M.begin();
+    M.erase(itr); // Erase by iterator; itr = M.begin()
+    /*
+    TC-> Best Case: O(1), Avg Case: O(1), Worst Case: O(N)
+    */
+
     m[5] = "cdc";
+
     m[3] = "bf";
     m[2] = "gf";
     for (auto &itr : m)

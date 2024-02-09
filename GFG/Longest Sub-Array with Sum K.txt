@@ -1,7 +1,7 @@
 // https://www.geeksforgeeks.org/problems/longest-sub-array-with-sum-k0809/1?utm_source=geeksforgeeks&utm_medium=article_practice_tab&utm_campaign=article_practice_tab
 
 
-// Approach 1: Brute Force (Triple Nested For Loop)
+// Approach 1: Brute Force 1 (Triple Nested For Loop)
 class Solution{
     public:
     int lenOfLongSubarr(int A[], int N, int K) 
@@ -30,7 +30,7 @@ SC-> O(1)
 */
 
 
-// Approach 2: Brute Force (Double Nested For Loop)
+// Approach 2: Brute Force 2 (Double Nested For Loop)
 class Solution{
     public:
     int lenOfLongSubarr(int A[], int N, int K) 
@@ -59,3 +59,72 @@ SC-> O(1)
 */
 
  
+// Approach 3: Optimal Approach (Unordered_Map)
+class Solution{
+    public:
+    int lenOfLongSubarr(int A[], int N, int K) 
+    { 
+        unordered_map<int, int> M;
+        long long sum = 0;
+        int maxLen = 0;
+        
+        for(int i=0; i<N; i++){
+            sum += A[i];
+            if(sum == K) maxLen = max(maxLen, i+1);
+            
+            int rem = sum - K;
+            if(M.find(rem) != M.end()) maxLen = max(maxLen, i - M[rem]);
+            
+            if(M.find(sum) == M.end()) M[sum] = i;
+        }
+        
+        return maxLen;
+    } 
+};
+/*
+If N = size of array, then:
+TC-> For Loop: O(N) * Find in Map: O(N)(When the Map has a lot of collisions)
+SC-> Unordered_Map: O(N)
+*/
+
+
+// Approach 4: Optimal (2 Pointer Approach) (Only works when array has zeros and positives)
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+    vector<int> Arr = {1, 2, 3, 0, 7, 1, 9};
+    int K = 10;
+
+    int maxLen = 0;
+    int SUM = 0;
+
+    int l = 0;
+
+    for (int r = 0; r < Arr.size(); r++)
+    {
+
+        SUM += Arr[r];
+
+        if (SUM == K)
+            maxLen = max(maxLen, r - l + 1);
+
+        else if (SUM > K)
+        {
+            while (SUM > K)
+            {
+                SUM -= Arr[l];
+                l += 1;
+                if (SUM == K)
+                    maxLen = max(maxLen, r - l + 1);
+            }
+        }
+    }
+
+    cout << "maxLen: " << maxLen;
+
+    return 0;
+}
