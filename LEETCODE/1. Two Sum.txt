@@ -1,0 +1,125 @@
+// https://leetcode.com/problems/two-sum/description/
+
+
+// Approach 1: Brute Force(Double Nested For Loop)
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        
+        vector<int> ans;
+        int n = nums.size();
+
+        for(int i=0; i<n; i++){
+            for(int j=i+1; j<n; j++){
+                if(nums[i] + nums[j] == target){
+                    ans = {i, j};
+                    return ans;
+                }
+            }
+        }
+
+        return ans;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N^2)
+SC-> O(1)
+*/
+
+
+// Approach 2: Better Approach (Unordered_map)
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        
+        vector<int> ans;
+        int n = nums.size();
+        unordered_map<int, int> M;  // <value, index>
+
+        for(int ind=0; ind<n; ind++){
+
+            int rem = target - nums[ind];
+            if(M.find(rem) != M.end()){
+                ans = {ind, M[rem]};
+                return ans;
+            }
+
+            M[nums[ind]] = ind;
+        }
+
+        return ans;
+    }
+};
+/*
+If N = size of array, then:
+TC-> For Loop: O(N) * Find in Map: O(N) (If the map is very large and hash function is not good)
+SC-> Unordered_Map: O(N)
+*/
+
+
+// This Approach will only work, in case we, have to return the values instead of indices.
+// Approach 3: Optimal 1 (Sorting + Binary Search)
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        
+        vector<int> ans;
+        int n = nums.size();
+        
+        sort(nums.begin(), nums.end());
+
+        for(int ind=0; ind<n; ind++){
+            int rem = target - nums[ind];
+
+            auto itr = lower_bound(nums.begin() + ind + 1, nums.end(), rem);
+            if(*itr == rem){
+                ans = {nums[ind], rem};
+                return ans;
+            }
+        }
+
+        return ans;
+    }
+};
+/*
+If N = size of array, then:
+TC-> Sort: O(N * LogN) + (For Loop: O(N) * Binary Search: O(LogN))
+SC-> O(1)
+*/
+
+
+// This Approach will only work, in case we, have to return the values instead of indices.
+// Approach 4: Optimal 2 (Sorting + 2 Pointer)
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        
+        vector<int> ans;
+        int n = nums.size();
+        
+        sort(nums.begin(), nums.end());
+
+        int l=0, r=n-1;
+        while(l<r){
+            
+            int sum = nums[l] + nums[r];
+
+            if(sum > target) r -= 1;
+
+            else if(sum < target) l += 1;
+
+            else{
+                ans = {nums[l], nums[r]};
+                return ans;
+            }
+        }
+
+        return ans;
+    }
+};
+/*
+If N = size of array, then:
+TC-> Sort: O(N * LogN) + While Loop: O(N)
+SC-> O(1)
+*/

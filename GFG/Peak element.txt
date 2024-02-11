@@ -1,0 +1,25 @@
+// https://www.geeksforgeeks.org/problems/peak-element/1?utm_source=geeksforgeeks&utm_medium=article_practice_tab&utm_campaign=article_practice_tab
+
+
+// Approach 1: Optimal (Single For Loop)
+class Solution
+{
+    public:
+    int peakElement(int arr[], int n)
+    {
+        for(int i=0; i<n; i++){
+            if(i==0 && arr[i] >= arr[i+1]) return i;
+            
+            else if(i==n-1 && arr[i] >= arr[i-1]) return i;
+           
+            else if(arr[i] >= arr[i-1] && arr[i] >= arr[i+1]) return i;
+       }
+       
+       return 0;
+    }
+};
+/*
+If N = size of array, then:
+TC-> For Loop: O(N)
+Sc-> O(1)
+*/

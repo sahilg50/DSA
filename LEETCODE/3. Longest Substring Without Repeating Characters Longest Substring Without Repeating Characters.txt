@@ -1,0 +1,62 @@
+// https://leetcode.com/problems/longest-substring-without-repeating-characters/
+
+
+// Approach 1: Brute Force (Double For Loop)
+class Solution {
+public:
+    int lengthOfLongestSubstring(string &s) {
+
+        int n = s.size();
+
+        int maxLen = 0;
+        for(int i=0; i<n; i++){
+            unordered_set<char> Set;
+            for(int j=i; j<=n; j++){
+                if(j == n || Set.find(s[j]) != Set.end()){
+                    maxLen = max(maxLen, j-i);
+                    break;
+                }
+                Set.insert(s[j]);
+            }
+        }
+        return maxLen;
+    }
+};
+/*
+If N = size of array, then:
+TC-> For Loop: O(N^2) * Find: O(N) (if hash function is not good or unordered_map is large)
+SC-> Unordered_Set: O(N)
+*/
+
+
+// Approach 2: Optimized (2 Pointer Approach)
+class Solution {
+public:
+    int lengthOfLongestSubstring(string &s) {
+
+        int n = s.size();
+
+        int maxLen = 0;
+        unordered_set<char> Set;
+
+        int l = 0;
+        for(int r=0; r<n; r++){
+
+            if(Set.find(s[r]) != Set.end()){
+                while(l<r && Set.find(s[r]) != Set.end()){
+                    Set.erase(s[l]);
+                    l += 1;
+                }
+            }
+
+            Set.insert(s[r]);
+            maxLen = max(maxLen, r-l+1);
+        }
+
+        return maxLen;
+    }
+};
+/*
+TC-> O(2*N) * Find: O(N) (if hash function is not good or unordered_set is large)
+SC-> Unordered_Set: O(N)
+*/
