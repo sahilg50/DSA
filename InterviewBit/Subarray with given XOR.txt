@@ -1,0 +1,82 @@
+// https://www.interviewbit.com/problems/subarray-with-given-xor/
+
+
+// Approach 1: Brute Force (Triple nested for loop)
+int Solution::solve(vector<int> &A, int B) {
+
+    int count = 0;
+    
+    int n = A.size();
+    
+    for(int i=0; i<n; i++){
+        for(int j=i; j<n; j++){
+            
+            int xorr = 0;
+            for(int k=i; k<=j; k++) xorr ^= A[k];
+            
+            if(xorr == B) count += 1;
+        }
+    }
+    
+    return count;
+}
+/*
+If N = size of array, then:
+TC-> O(N^3)
+SC-> O(1)
+*/
+
+
+// Approach 2: Better Approach (Double nested for loop)
+int Solution::solve(vector<int> &A, int B) {
+
+    int count = 0;
+    
+    int n = A.size();
+    
+    for(int i=0; i<n; i++){
+        int xorr = 0;
+        for(int j=i; j<n; j++){
+            xorr ^= A[j];
+            if(xorr == B) count += 1;
+        }
+    }
+    
+    return count;
+}
+/*
+If N = size of array, then:
+TC-> O(N^2)
+SC-> O(1)
+*/
+
+
+// Approach 3: Optimal (unordered_map)
+int Solution::solve(vector<int> &A, int B) {
+    
+    int n = A.size();
+    
+    int count = 0;
+    
+    int xorr = 0 ;
+    unordered_map<int, int> M;
+    M[xorr] = 1;
+    
+    for(int i=0; i<n; i++){
+        
+        xorr ^= A[i];
+        
+        int x = xorr ^ B;
+        
+        count += M[x];
+        
+        M[xorr] += 1;
+    }
+    
+    return count;
+}
+/*
+If N = size of array, then:
+TC-> O(N)
+SC-> O(N)
+*/
