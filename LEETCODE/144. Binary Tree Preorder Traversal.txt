@@ -1,3 +1,31 @@
+// https://leetcode.com/problems/binary-tree-preorder-traversal/submissions/874809134/
+
+
+// Approach 1: Recursion
+class Solution {
+private:
+    vector<int> ans;
+    void util(TreeNode *node){
+        if(node == nullptr) return;
+
+        ans.push_back(node->val);
+        util(node->left);
+        util(node->right);
+    }
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        util(root);
+        return ans;
+    }
+};
+/*
+If N = number of nodes, then:
+TC-> O(N)
+SC-> Recursion Stack: O(N) ASC + Ans: O(N) ASC
+*/
+
+
+// Approach 2: Iterative (Using Stack)
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
@@ -19,5 +47,5 @@ public:
 };
 /*
 TC-> O(N)
-SC-> Stack:O(N) + Answer:O(N)ASC
+SC-> Stack: O(N) + Ans: O(N) ASC
 */
