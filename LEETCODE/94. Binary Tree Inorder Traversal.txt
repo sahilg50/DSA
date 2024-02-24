@@ -1,23 +1,47 @@
 // https://leetcode.com/problems/binary-tree-inorder-traversal/description/
 
+
 // Approach 1: Recursion
+class Solution {
+private:
+    vector<int> ans;
+    void util(TreeNode *node){
+        if(node == nullptr) return;
+
+        util(node->left);
+        ans.push_back(node->val);
+        util(node->right);
+    }
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        util(root);
+        return ans;
+    }
+};
+/*
+If N = number of nodes, then:
+TC-> O(N)
+SC-> Recursion Stack: O(N) ASC + Ans: O(N) ASC
+*/
+
+
+// Approach 2: Iterative (Using Stack)
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
-        vector<int> ans;
-        if(root==nullptr) return ans;
         
-        stack<TreeNode*> S;
+        vector<int> ans;
         TreeNode *node = root;
+        
+        stack<TreeNode *> S;
         while(true){
-            if(node!=nullptr){
+            if(node != nullptr){
                 S.push(node);
                 node = node->left;
             }
             else{
                 if(S.empty()) break;
-                node = S.top();
-                S.pop();
+                node = S.top(); S.pop();
                 ans.push_back(node->val);
                 node = node->right;
             }
@@ -26,6 +50,7 @@ public:
     }
 };
 /*
+If N = number of nodes, then:
 TC-> O(N)
-SC-> Stack:O(N)ASC
+SC-> Stack: O(N) ASC + Ans: O(N) ASC
 */
