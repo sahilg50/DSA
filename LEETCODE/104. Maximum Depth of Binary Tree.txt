@@ -13,7 +13,7 @@ public:
     }
 };
 /*
-If N is the number of nodes in the BT then:
+If N = number of nodes in BT then:
 TC-> O(N)
 SC-> Recursion Stack: O(N)ASC
 */
@@ -23,11 +23,12 @@ SC-> Recursion Stack: O(N)ASC
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        if(root == NULL) return 0;
 
         int height = 0;
+
         queue<TreeNode *> q;
-        q.push(root);
+        if(root != nullptr) q.push(root);
+        
         while(!q.empty()){
             height++;
             int size = q.size();
@@ -43,7 +44,7 @@ public:
     }
 };
 /*
-If N is the number of nodes in the BT then:
+If N = number of nodes in BT then:
 TC-> O(N)
 SC-> Queue: O(N)
 */

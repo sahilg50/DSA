@@ -92,3 +92,8 @@ int main()
 
     return 0;
 }
+/*
+If N is number of nodes in the binary tree then:
+TC-> O(3*N)
+SC-> O(4*N)
+*/
