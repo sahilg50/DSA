@@ -13,7 +13,7 @@ private:
         util(node->right);
     }
 public:
-    vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> preorderTraversal(TreeNode *root) {
         util(root);
         return ans;
     }
@@ -28,7 +28,7 @@ SC-> Recursion Stack: O(N) ASC + Ans: O(N) ASC
 // Approach 2: Iterative (Using Stack)
 class Solution {
 public:
-    vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> preorderTraversal(TreeNode *root) {
         
         vector<int> ans;
         if(root==nullptr) return ans;

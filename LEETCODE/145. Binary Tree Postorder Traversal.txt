@@ -1,4 +1,4 @@
-// https://leetcode.com/problems/binary-tree-inorder-traversal/description/
+// https://leetcode.com/problems/binary-tree-postorder-traversal/description/
 
 
 // Approach 1: Recursion
@@ -9,11 +9,11 @@ private:
         if(node == nullptr) return;
 
         util(node->left);
-        ans.push_back(node->val);
         util(node->right);
+        ans.push_back(node->val);
     }
 public:
-    vector<int> inorderTraversal(TreeNode *root) {
+    vector<int> postorderTraversal(TreeNode *root) {
         util(root);
         return ans;
     }
@@ -28,22 +28,27 @@ SC-> Recursion Stack: O(N) ASC + Ans: O(N) ASC
 // Approach 2: Iterative (Using Stack)
 class Solution {
 public:
-    vector<int> inorderTraversal(TreeNode *root) {
-        
+    vector<int> postorderTraversal(TreeNode *root) {
         vector<int> ans;
         TreeNode *node = root;
-        
+
         stack<TreeNode *> S;
-        while(true){
+        while(node != nullptr || !S.empty()){
             if(node != nullptr){
                 S.push(node);
                 node = node->left;
             }
             else{
-                if(S.empty()) break;
-                node = S.top(); S.pop();
-                ans.push_back(node->val);
-                node = node->right;
+                TreeNode *temp = S.top()->right;
+                if(temp == nullptr){
+                    temp = S.top(); S.pop();
+                    ans.push_back(temp->val);
+                    while(!S.empty() && temp == S.top()->right){
+                        temp = S.top(); S.pop();
+                        ans.push_back(temp->val);
+                    }
+                }
+                else node = temp;
             }
         }
         return ans;
