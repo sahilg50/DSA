@@ -9,8 +9,9 @@ struct TreeNode
     int val;
     TreeNode *left;
     TreeNode *right;
-    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
@@ -26,7 +27,7 @@ void allTraversal(TreeNode *root, vector<int> &pre, vector<int> &in, vector<int>
         auto node = st.top();
         st.pop();
 
-        // this is part of pre
+        // this is part of PreOrder
         // increment 1 to 2
         // push the left side of the tree
         if (node.second == 1)
@@ -42,7 +43,7 @@ void allTraversal(TreeNode *root, vector<int> &pre, vector<int> &in, vector<int>
             }
         }
 
-        // this is a part of in
+        // this is a part of InOrder
         // increment 2 to 3
         // push right
         else if (node.second == 2)
@@ -65,45 +66,29 @@ void allTraversal(TreeNode *root, vector<int> &pre, vector<int> &in, vector<int>
     }
 }
 
-struct TreeNode *newNode(int val)
-{
-    TreeNode *node = &TreeNode(val);
-
-    return (node);
-}
-
 int main()
 {
 
-    TreeNode *root = newNode(1);
-    root->left = newNode(2);
-    root->left->left = newNode(4);
-    root->left->right = newNode(5);
-    root->right = newNode(3);
-    root->right->left = newNode(6);
-    root->right->right = newNode(7);
+    TreeNode *root = new TreeNode(1);
+    root->left = new TreeNode(2, new TreeNode(4), new TreeNode(5));
+    root->right = new TreeNode(3, new TreeNode(6), new TreeNode(7));
 
     vector<int> pre, in, post;
     allTraversal(root, pre, in, post);
 
-    cout << "The preorder Traversal is : ";
+    cout << "Preorder Traversal: ";
     for (auto nodeVal : pre)
-    {
         cout << nodeVal << " ";
-    }
+
     cout << endl;
-    cout << "The inorder Traversal is : ";
+    cout << "Inorder Traversal: ";
     for (auto nodeVal : in)
-    {
         cout << nodeVal << " ";
-    }
+
     cout << endl;
-    cout << "The postorder Traversal is : ";
+    cout << "Postorder Traversal: ";
     for (auto nodeVal : post)
-    {
         cout << nodeVal << " ";
-    }
-    cout << endl;
 
     return 0;
 }

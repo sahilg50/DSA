@@ -5,7 +5,7 @@
 
 using namespace std;
 
-// Strcuture to create a new node.
+// Structure to create a new node.
 struct Node
 {
     int data;
