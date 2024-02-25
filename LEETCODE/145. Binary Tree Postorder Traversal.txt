@@ -25,7 +25,38 @@ SC-> Recursion Stack: O(N) ASC + Ans: O(N) ASC
 */
 
 
-// Approach 2: Iterative (Using Stack)
+// Approach 2: Iterative (Using 2 Stacks)
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode *root) {
+
+        vector<int> ans;
+
+        stack<TreeNode *> S1, S2;
+        if(root!=nullptr) S1.push(root);
+
+        while(!S1.empty()){
+            TreeNode *node = S1.top(); S1.pop();
+            S2.push(node);
+            if(node->left != nullptr) S1.push(node->left);
+            if(node->right != nullptr) S1.push(node->right);
+        }
+
+        while(!S2.empty()){
+            ans.push_back(S2.top()->val); S2.pop();
+        }
+
+        return ans;
+    }
+};
+/*
+If N = number of nodes, then:
+TC-> O(N)
+SC-> Stack: O(2*N) + Ans: O(N) ASC
+*/
+
+
+// Approach 3: Iterative (Using 1 Stack)
 class Solution {
 public:
     vector<int> postorderTraversal(TreeNode *root) {
