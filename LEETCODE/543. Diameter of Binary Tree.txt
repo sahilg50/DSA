@@ -1,0 +1,29 @@
+// https://leetcode.com/problems/diameter-of-binary-tree/description/
+
+
+// Approach 1: Recursion (Using maxDepth as base)
+class Solution {
+private:
+    int maxDiameter = 0;
+
+    int maxDepth(TreeNode *node){
+        if(node == nullptr) return 0;
+
+        int lh = maxDepth(node->left);
+        int rh = maxDepth(node->right);
+    
+        maxDiameter = max(maxDiameter, (lh + rh));
+
+        return max(lh, rh) + 1;
+    }
+public:
+    int diameterOfBinaryTree(TreeNode *root) {
+        maxDepth(root);
+        return maxDiameter;
+    }
+};
+/*
+If N = number of nodes in binary tree, then:
+TC-> O(N)
+SC-> Recursion Stack: O(N)
+*/
