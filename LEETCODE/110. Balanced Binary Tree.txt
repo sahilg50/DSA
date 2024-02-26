@@ -1,0 +1,74 @@
+// https://leetcode.com/problems/balanced-binary-tree/description/
+
+
+// Approach 1: Brute Force (Iterate + Recursion)
+class Solution {
+private:
+    // Find max depth of the tree from a particular node
+    int maxDepth(TreeNode *node){
+        if(node == nullptr) return 0;
+
+        int lh = maxDepth(node->left);
+        int rh = maxDepth(node->right);
+
+        return max(lh, rh) + 1;
+    }
+
+    // Iterate all the nodes of the tree 1 by 1
+    bool iterate(TreeNode *node){
+        if(node == nullptr) return true;
+
+        // Check if tree from current node is balanced or not.
+        int lh = maxDepth(node->left);
+        int rh = maxDepth(node->right);
+        if(abs(lh-rh) > 1) return false;
+
+        // Move to the left node
+        bool leftSubTree = iterate(node->left);
+
+        // Move to the right node
+        bool rightSubTree = iterate(node->right);
+
+        // If any of the subTrees is not balanced, return false
+        if(!leftSubTree || !rightSubTree) return false;
+
+        return true;
+    }
+
+public:
+    bool isBalanced(TreeNode *root) {
+        return iterate(root);
+    }
+};
+/*
+If N = number of nodes in the binary tree, then:
+TC-> O(N^2)
+SC-> Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: Optimal (Recursion) (Using maxDepth as the base)
+class Solution {
+private: 
+    bool flag = true;
+    int maxDepth(TreeNode *node){
+        if(node == nullptr) return 0;
+
+        int lh = maxDepth(node->left);
+        int rh = maxDepth(node->right);
+
+        if(abs(lh-rh) > 1) flag = false; 
+
+        return max(lh, rh) + 1;
+    }
+public:
+    bool isBalanced(TreeNode *root) {
+        maxDepth(root);
+        return flag;
+    }
+};
+/*
+If N = number of nodes in the binary tree, then:
+TC-> O(N)
+SC-> Recursion Stack: O(N)ASC
+*/
