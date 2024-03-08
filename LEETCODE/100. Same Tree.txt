@@ -1,13 +1,20 @@
+// https://leetcode.com/problems/same-tree/
+
+
+// Approach 1: Optimal 
 class Solution {
 public:
-    bool isSameTree(TreeNode* p, TreeNode* q) {
-        if(!p) return !q;
-        if(!q) return !p;
-        return (p->val == q->val) && isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+    bool isSameTree(TreeNode *p, TreeNode *q) {
+        if(p==nullptr || q==nullptr) return p==q;
+
+        return (p->val == q->val) 
+        && isSameTree(p->left, q->left)
+        && isSameTree(p->right, q->right);
+
     }
 };
 /*
-TC-> O(min(n,m))
-SC-> Recursion Stack: O(min(n,m))ASC
-where n and m are the nodes in the tree p and q respectively.
+If M = number of nodes in p, and N = number of nodes in q, then:
+TC-> O(min(M, N))
+SC-> Recursion Stack: O(M+N)ASC
 */
