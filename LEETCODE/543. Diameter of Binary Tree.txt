@@ -46,7 +46,7 @@ SC-> Recursion Stack: O(N)ASC
 */
 
 
-// Approach 2: Recursion (Using maxDepth as base)
+// Approach 2: Optimal (Recursion) (Using maxDepth as the base)
 class Solution {
 private:
     int maxDiameter = 0;

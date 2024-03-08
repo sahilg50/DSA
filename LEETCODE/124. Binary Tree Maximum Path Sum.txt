@@ -1,0 +1,28 @@
+// https://leetcode.com/problems/binary-tree-maximum-path-sum/
+
+
+// Approach 1: Optimal (Recursion) (Using maxDepth as the base)
+class Solution {
+private:
+    int maxSum = INT_MIN;
+    int util(TreeNode *node){
+        if(node == nullptr) return 0;
+
+        int leftSum = max(0, util(node->right));
+        int rightSum = max(0, util(node->left));
+
+        maxSum = max(maxSum, node->val + leftSum + rightSum);
+
+        return node->val + max(leftSum, rightSum);
+    }
+public:
+    int maxPathSum(TreeNode* root) {
+        util(root);
+        return maxSum;
+    }
+};
+/*
+If N = number of nodes in the binary tree, then:
+TC-> O(N^2)
+SC-> Recursion Stack: O(N)ASC
+*/
