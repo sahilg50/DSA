@@ -89,10 +89,19 @@ int main()
     // Returns a bidirectional iterator pointing right next to the last element of the vector container. TC-> O(1)
 
     v.rbegin();
-    // Returns a reverse bidirectional iterator pointing to the last element of the vector container. TC-> O(1)
+    /* Returns a reverse bidirectional iterator pointing to the last element of the vector container. TC-> O(1)
+
+    auto it = V.rbegin();
+    it++, will move it towards V.rend();
+    */
 
     v.rend();
-    // Returns a reverse bidirectional iterator pointing right before the first element of the vector container. TC-> O(1)
+    /*
+    Returns a reverse bidirectional iterator pointing right before the first element of the vector container. TC-> O(1)
+
+    auto it = V.rend();
+    it--, will move it towards V.rbegin();
+    */
 
     v.insert(v.end(), 10);
     /*

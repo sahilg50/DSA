@@ -1,0 +1,74 @@
+// https://www.geeksforgeeks.org/problems/boundary-traversal-of-binary-tree/1
+
+/* 
+struct Node
+{
+    int data;
+    Node* left, * right;
+}; 
+*/
+
+// Approach 1: Optimal
+class Solution {
+private:
+
+    bool isLeaf(Node *root){
+        if(!root->left && !root->right) return true;
+        return false;
+    }
+    
+    void addLeftBoundary(Node *root, vector<int> &ans){
+        
+        Node *curr = root->left;
+        
+        while(curr){
+            if(!isLeaf(curr)) ans.push_back(curr->data);
+            
+            if(curr->left) curr = curr->left;
+            else curr = curr->right;
+        }
+    }
+    
+    void addLeaves(Node *root, vector<int> &ans){
+        if(isLeaf(root)) ans.push_back(root->data);
+        if(root->left) addLeaves(root->left, ans);
+        if(root->right) addLeaves(root->right, ans);
+    }
+    
+    void addRightBoundary(Node *root, vector<int> &ans){
+        Node *curr = root->right;
+        
+        vector<int> temp;
+        while(curr){
+            if(!isLeaf(curr)) temp.push_back(curr->data);
+            
+            if(curr->right) curr = curr->right;
+            else curr = curr->left;
+        }
+        
+        for(auto it = temp.rbegin(); it!=temp.rend(); it++){
+            ans.push_back(*it);
+        }
+    }
+
+public:
+    vector <int> boundary(Node *root)
+    {
+        vector<int> ans;
+        
+        if(!root) return ans;
+        
+        if(!isLeaf(root)) ans.push_back(root->data);
+        
+        addLeftBoundary(root, ans);
+        addLeaves(root, ans);
+        addRightBoundary(root, ans);
+        
+        return ans;
+    }
+};
+/*
+If N = number of nodes in the binary tree, then:
+TC-> O(2*N)
+SC-> Temp Array: O(N) + Ans Array: O(N)ASC
+*/
