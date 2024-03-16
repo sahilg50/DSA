@@ -1,38 +1,43 @@
 // https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/description/
 
 
-// Approach 1: Level-Order-Traversal (Using Queue)
+// Approach 1: Optimal (Level Order Traversal + QUEUE)
 class Solution {
 public:
-    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
-        vector<vector<int>> result; 
-        if(root==NULL) return result;
-        
-        queue<TreeNode *>Q; //Node queue
-        TreeNode *node = root;
-        Q.push(node);
+    vector<vector<int>> zigzagLevelOrder(TreeNode *root) {
+        vector<vector<int>> ans;
+
+        queue<TreeNode* > Q;
+        if(root != nullptr) Q.push(root);
+
         bool LToR = true;
-        
+
         while(!Q.empty()){
             int size = Q.size();
-            vector<int> temp;
-            for(int i=0; i<size; i++){
-                node = Q.front();
+            
+            vector<int> level;
+
+            while(size--){
+                TreeNode *node = Q.front(); 
                 Q.pop();
-                temp.push_back(node->val);
+
+                level.push_back(node->val);
+
                 if(node->left) Q.push(node->left);
                 if(node->right) Q.push(node->right);
             }
 
-            if(!LToR) reverse(temp.begin(), temp.end());
-            result.push_back(temp);
+            if(!LToR) reverse(level.begin(), level.end());
             LToR = !LToR;
+
+            ans.push_back(level);
         }
-        return result;
+        
+        return ans;
     }
 };
 /*
-If N is the number of nodes in the BT then:
-TC-> Traverse Tree: O(N) + Reverse Temp Array: O(N)
-SC-> Queue: O(N) + Temp Array: O(N)
+If N = number of nodes in the tree, then:
+TC-> O(N)
+SC-> Queue: O(N) + Ans Array: O(N)ASC + Level Array: O(N)
 */
