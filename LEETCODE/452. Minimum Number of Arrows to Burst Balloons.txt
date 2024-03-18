@@ -1,0 +1,31 @@
+// https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/description/?envType=daily-question&envId=2024-03-18
+
+
+// Approach 1: Optimal (Sorting + For Loop)
+class Solution {
+public:
+    int findMinArrowShots(vector<vector<int>>& points) {
+        sort(points.begin(), points.end());
+
+        pair<int, int> coordinates = {points[0][0], points[0][1]};
+        int count = 1;
+
+        int n = points.size();
+        for(int i=1; i<n; i++){
+            if(points[i][0] <= coordinates.second){
+                coordinates.second = min(coordinates.second, points[i][1]);
+            }
+            else{
+                coordinates = {points[i][0], points[i][1]};
+                count += 1;
+            }
+        }
+
+        return count;
+    }
+};
+/*
+If N = size of array, then:
+TC-> Sort: O(N*LogN) + For Loop: O(N)
+SC-> O(1)
+*/
