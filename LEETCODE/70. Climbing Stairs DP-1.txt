@@ -1,10 +1,37 @@
-// Approach 2 -> Tabulation
+// https://leetcode.com/problems/climbing-stairs/
+
+
+// Approach 1: Recursion
+class Solution {
+private:
+    int util(int n){
+
+        if(n<=1) return 1;
+        
+        int step1 = util(n-1);
+        int step2 = util(n-2);
+        
+        return step1 + step2;
+    }
+public:
+    int climbStairs(int n) {
+        return util(n);
+    }
+};
+/*
+If N is the number of stairs then:
+TC-> O(2^N) TLE
+SC-> Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: Recursion + Memoization
 class Solution {
 private:
     int util(int n, vector<int> &dp){
 
         if(n<=1) return 1;
-        if(dp[n]!=-1) return dp[n];
+        if(dp[n] != - 1) return dp[n];
         
         int step1 = util(n-1, dp);
         int step2 = util(n-2, dp);
@@ -19,12 +46,12 @@ public:
 };
 /*
 If N is the number of stairs then:
-TC-> O(2^N)
+TC-> O(N)
 SC-> DP Array: O(N) + Recursion Stack: O(N)ASC
 */
 
 
-// Approach 2 -> Tabulation
+// Approach 3: Tabulation
 class Solution {
 public:
     int climbStairs(int n) {
@@ -41,7 +68,7 @@ SC-> DP Array: O(N)
 */
 
 
-// Approach 3 -> Space Optimization (Fibonacci Series)
+// Approach 4: Space Optimization (Fibonacci Series)
 class Solution {
 public:
     int climbStairs(int n) {
