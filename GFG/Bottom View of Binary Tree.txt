@@ -1,39 +1,35 @@
-// https://www.geeksforgeeks.org/problems/top-view-of-binary-tree/1
+// https://www.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1
+
 
 // Approach 1: Optimal (Level Order Traversal) (Queue + Map)
-class Solution
-{
-    public:
-    //Function to return a list of nodes visible from the top view 
-    //from left to right in Binary Tree.
-    vector<int> topView(Node *root)
-    {
+class Solution {
+  public:
+    vector<int> bottomView(Node *root) {
+        
         map<int, int> M;
         
-        queue<pair<Node*, int>> Q;
+        queue<pair<Node *, int>> Q;
         if(root) Q.push({root, 0});
         
         while(!Q.empty()){
-            auto temp = Q.front(); 
-            Q.pop();
+            auto temp = Q.front(); Q.pop();
             
             Node *node = temp.first;
             int line = temp.second;
-            if(M.find(line) == M.end()) M[line] = node->data;
+            M[line] = node->data;
             
             if(node->left) Q.push({node->left, line-1});
             if(node->right) Q.push({node->right, line+1});
         }
         
         vector<int> ans;
-        for(auto it : M) ans.push_back(it.second);
+        for(auto it: M) ans.push_back(it.second);
         
         return ans;
     }
-
 };
 /*
-If N = number of nodes in BT, then:
+If N = number of nodes in the binary tree, then:
 TC-> Level Order Traversal: O(N) + Insert into map: O(logN!)
 SC-> Queue: O(N) + Map: O(N) + Vector: O(N)ASC
 */
