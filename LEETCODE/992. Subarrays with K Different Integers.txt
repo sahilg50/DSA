@@ -1,0 +1,39 @@
+// https://leetcode.com/problems/subarrays-with-k-different-integers/?envType=daily-question&envId=2024-03-30
+
+
+// Approach 1: Optimal (subArray with atmost K - subArray with atmost K-1)
+class Solution {
+private:
+    int subarray_with_atmost_k(vector<int>& nums,int k){
+
+        unordered_map<int,int> map;
+
+        int L = 0, R = 0, count = 0;
+        while(R<nums.size()){
+            map[nums[R]]++;
+
+            while(map.size()>k){
+                map[nums[L]]--;
+                if(map[nums[L]]==0)map.erase(nums[L]);
+                L++;
+            }
+
+            count += R-L+1;
+            R++;
+        }
+
+        return count;
+    }
+
+public:
+    int subarraysWithKDistinct(vector<int>& nums, int k) {
+        int sub_with_max_element_k = subarray_with_atmost_k(nums,k);
+        int reduced_sub_with_max_k = subarray_with_atmost_k(nums,k-1);
+        return (sub_with_max_element_k - reduced_sub_with_max_k);
+    }
+};
+/*
+If N = size of array, then:
+TC-> Atmost K: O(2*N) + Atmost K-1: O(2*N)
+SC-> Map: O(N)
+*/
