@@ -1,14 +1,15 @@
 #include <iostream>
 #include <vector>
+#include <string>
+#include <algorithm>
+#include <cctype>
 
 using namespace std;
 
 int main()
 {
-    vector<int> v = {1, 2, 3, 4};
-    for (auto it = v.rbegin(); it != v.rend(); it++)
-    {
-        cout << *it;
-    }
+    string s = "sahil";
+    s[0] = toupper(s[0]);
+    cout << s.back();
     return 0;
 }

@@ -1,7 +1,7 @@
 // https://leetcode.com/problems/binary-tree-right-side-view/description/
 
 
-/ Approach 1: Optimal (Level Order Traversal) (Queue + Map)
+// Approach 1: Optimal (Level Order Traversal) (Queue + Map)
 class Solution {
 public:
     vector<int> rightSideView(TreeNode *root) {

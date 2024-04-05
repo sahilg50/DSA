@@ -1,0 +1,32 @@
+// https://leetcode.com/problems/make-the-string-great/?envType=daily-question&envId=2024-04-05
+
+
+// Approach 1: Optimal (Stack)
+class Solution {
+public:
+    string makeGood(string &s) {
+
+        stack<char> STACK;
+        int n = s.size();
+        
+        for(char ch : s){
+            if(!STACK.empty() && (abs(ch - STACK.top()) == 32)) STACK.pop();
+            else STACK.push(ch);
+        }
+
+        string result = "";
+        while(!STACK.empty()){
+            result.push_back(STACK.top());
+            STACK.pop();
+        }
+
+        reverse(result.begin(), result.end());
+
+        return result;
+    }
+};
+/*
+If N = size of string, then:
+TC -> Iterate string: O(N) + Create result: O(N) + Reverse result: O(N)
+SC -> Stack: O(N) + Result: O(N)ASC
+*/
