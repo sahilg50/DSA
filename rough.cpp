@@ -8,8 +8,9 @@ using namespace std;
 
 int main()
 {
-    string s = "sahil";
-    s[0] = toupper(s[0]);
-    cout << s.back();
+    string str = "sahil->";
+    str.pop_back();
+    str.pop_back();
+    cout << str;
     return 0;
 }

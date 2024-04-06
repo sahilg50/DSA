@@ -1,0 +1,41 @@
+// https://leetcode.com/problems/binary-tree-paths/description/
+
+
+// Approach 1: Optimal (Recursion)
+class Solution {
+private:
+    void dfs(TreeNode *node, vector<int> &curr, vector<string> &result){
+        if(node == nullptr) return;
+
+        curr.push_back(node->val);
+
+        if(node->left==nullptr && node->right==nullptr){
+            string str = "";
+            for(auto num : curr){
+                str += to_string(num) + "->";
+            }
+            str.pop_back(); str.pop_back();
+
+            result.push_back(str);
+        }
+
+        if(node->left) dfs(node->left, curr, result);
+        if(node->right) dfs(node->right, curr, result);
+        
+        curr.pop_back();
+    }
+public:
+    vector<string> binaryTreePaths(TreeNode *root) {
+        vector<int> arr;
+        vector<string> result;
+
+        dfs(root, arr, result);
+
+        return result;
+    }
+};
+/*
+If N = number of nodes in the binary tree, then:
+TC-> Recursion: O(N) 
+SC-> Curr Array: O(N) + Result Array: O(N) + Recursion Stack: O(N)ASC
+*/
