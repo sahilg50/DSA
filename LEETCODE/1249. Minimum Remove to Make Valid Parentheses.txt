@@ -1,0 +1,44 @@
+// https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/?envType=daily-question&envId=2024-04-06
+
+
+// Approach 1: Better (Stack + Unordered_Map) 
+class Solution {
+public:
+    string minRemoveToMakeValid(string &s) {
+
+        int n = s.size();
+
+        unordered_map<int, bool> M;
+        for(int ind=0; ind<n; ind++) M[ind] = true;
+
+        stack<pair<char, int>> STACK;
+
+        for(int ind=0; ind<n; ind++){
+            char ch = s[ind];
+
+            if(ch=='(') STACK.push({ch, ind});
+
+            else if(STACK.size()==0 && ch==')') M[ind] = false;
+
+            else if(ch==')') STACK.pop();
+        }
+
+        while(!STACK.empty()){
+            int ind = STACK.top().second;
+            M[ind] = false;
+            STACK.pop();
+        }
+
+        string result = "";
+        for(int ind=0; ind<n; ind++){
+            if(M[ind]) result.push_back(s[ind]);
+        }
+
+        return result;
+    }
+};
+/*
+If N = size of string, then:
+TC-> Create unordered_map: O(N) + Iterate string: O(N) + Process Stack: O(N) + Create result array: O(N)
+SC-> Unordered_map: O(N) + Stack: O(N) + Result array: O(N)ASC
+*/
