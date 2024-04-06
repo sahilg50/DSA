@@ -1,0 +1,25 @@
+// https://leetcode.com/problems/symmetric-tree/description/
+
+
+// Approach 1: Optimal (Recursion)
+class Solution {
+private:
+    bool isSame(TreeNode *A, TreeNode *B){
+
+        if(A==nullptr) return B==nullptr;
+        if(B==nullptr) return A==nullptr;
+
+        if(A->val != B->val) return false;
+
+        return isSame(A->left, B->right) && isSame(A->right, B->left);  
+    }
+public:
+    bool isSymmetric(TreeNode *root) {
+        return root==nullptr || isSame(root->left, root->right);
+    }
+};
+/*
+If N = number of nodes in the binary tree, then:
+TC-> Recursion: O(N)
+SC-> Recursion stack: O(N)ASC
+*/
