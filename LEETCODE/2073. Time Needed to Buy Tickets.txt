@@ -1,0 +1,24 @@
+// https://leetcode.com/problems/time-needed-to-buy-tickets/?envType=daily-question&envId=2024-04-09
+
+
+// Solution: https://www.youtube.com/watch?v=cVmS9N6kf2Y
+// Approach 1: Optimal
+class Solution {
+public:
+    int timeRequiredToBuy(vector<int>& tickets, int k) {
+        int totalTime = 0;
+        int n = tickets.size();
+
+        for(int i=0; i<n; i++){
+            if(i<=k) totalTime += min(tickets[i], tickets[k]);
+            else totalTime += min(tickets[i], tickets[k]-1);
+        }
+
+        return totalTime;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N)
+SC-> O(1)
+*/
