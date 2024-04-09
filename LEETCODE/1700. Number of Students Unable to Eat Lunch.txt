@@ -1,0 +1,30 @@
+// https://leetcode.com/problems/number-of-students-unable-to-eat-lunch/description/?envType=daily-question&envId=2024-04-08
+
+
+// Solution: https://leetcode.com/problems/number-of-students-unable-to-eat-lunch/solutions/4990164/beats-98-93-extra-easy-solution-with-explanation/?envType=daily-question&envId=2024-04-08
+
+// Approach 1: Optimal
+class Solution {
+public:
+    int countStudents(vector<int>& students, vector<int>& sandwiches) {
+
+        vector<int> counts(2, 0);
+        for(auto student : students) counts[student] += 1;
+
+        int remaining = sandwiches.size();
+
+        for(auto sandwich : sandwiches){
+            if(counts[sandwich] == 0 || remaining == 0) break;
+
+            counts[sandwich] -= 1;
+            remaining -= 1;
+        }
+
+        return remaining;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N)
+SC-> O(1)
+*/
