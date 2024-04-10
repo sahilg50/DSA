@@ -1,0 +1,39 @@
+// https://leetcode.com/problems/reveal-cards-in-increasing-order/description/?envType=daily-question&envId=2024-04-10
+
+
+// Approach 1: Optimal (2 Pointer)
+class Solution {
+public:
+    vector<int> deckRevealedIncreasing(vector<int> &deck) {
+
+        int N = deck.size();
+        vector<int> result(N, 0);
+
+        bool skip = false;
+
+        int deckInd = 0;
+        int resultInd = 0;
+
+        sort(deck.begin(), deck.end());
+
+        while(deckInd < N){
+
+            if(result[resultInd] == 0){
+                
+                if(!skip){
+                    result[resultInd] = deck[deckInd];
+                    deckInd += 1;
+                }
+                skip = !skip;
+            }
+
+            resultInd = (resultInd + 1) % N;
+        }
+        return result;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N + N/2 + N/4 ....) ~= O(2*N)
+SC-> Result Array: O(N)ASC
+*/
