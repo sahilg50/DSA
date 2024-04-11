@@ -1,0 +1,48 @@
+// https://leetcode.com/problems/remove-k-digits/?envType=daily-question&envId=2024-04-11
+
+
+// Solution: https://leetcode.com/problems/remove-k-digits/solutions/5005706/faster-lesser-detailed-explaination-stack-greedy-step-by-step-explaination-python-java-c/?envType=daily-question&envId=2024-04-11
+
+
+// Approach 1: Optimal (Stack)
+class Solution {
+public:
+    string removeKdigits(string &num, int k) {
+        
+        stack<char> S;
+
+        for(auto digit : num){
+
+            while(!S.empty() && k > 0 && S.top() > digit){
+                S.pop();
+                k--;
+            }
+            S.push(digit);
+        }
+
+        while(k > 0 && !S.empty()){
+            S.pop();
+            k--;
+        }
+
+        string result = "";
+        while(!S.empty()){
+            result.push_back(S.top());
+            S.pop();
+        }
+
+        reverse(result.begin(), result.end());
+
+        // Removing leading zeros
+        int i = 0; 
+        while(result[i] == '0') i++;
+        result.erase(0, i);
+        
+        return result.size()==0 ? "0" : result;
+    }
+};
+/*
+If N = size of the num, then:
+TC-> O(2*N) + Reverse result string: O(N) + Remove leading zeros: O(N)
+SC-> Stack: O(N) + Result Array: O(N)ASC
+*/
