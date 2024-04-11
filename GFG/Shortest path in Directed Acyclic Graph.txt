@@ -1,0 +1,69 @@
+// https://www.geeksforgeeks.org/problems/shortest-path-in-undirected-graph/1
+
+
+// Approach 1: Optimal (Using Topological Sort)
+class Solution {
+private:
+    void topoSort(int node, int vis[], stack<int> &S, vector<pair<int, int>> adj[]){
+        vis[node] = 1;
+        for(auto it : adj[node]){
+            int v = it.first;
+            if(!vis[v]){
+                topoSort(v, vis, S, adj);
+            }
+        }
+        
+        S.push(node);
+    }
+    
+public:
+    vector<int> shortestPath(int N,int M, vector<vector<int>>& edges){
+        
+        // Create adjacency list
+        // TC-> O(N), SC-> O(N + 2*M)
+        vector<pair<int, int>> adj[N];
+        for(int i=0; i<M; i++){
+            int u = edges[i][0];
+            int v = edges[i][1];
+            int wt = edges[i][2];
+            adj[u].push_back({v, wt});
+        }
+        
+        // Find topological sort
+        // TC-> O(N + M), SC-> O(N)
+        int vis[N] = {0};
+        stack<int> S;
+        for(int node=0; node<N; node++){
+            if(!vis[node]){
+                topoSort(node, vis, S, adj);
+            }
+        }
+        
+        // Find the distances
+        // TC-> O(N + M), SC-> O(N)ASC
+        vector<int> dist(N, 1e9);
+        dist[0] = 0;
+        
+        while(!S.empty()){
+            int node = S.top();
+            S.pop();
+            
+            for(auto it : adj[node]){
+                int v = it.first;
+                int wt = it.second;
+                
+                dist[v] = min(dist[v], (dist[node] + wt));
+            }
+        }
+        
+        for(auto &it : dist) if(it==1e9) it = -1;
+        
+        return dist;
+        
+    }
+};
+/*
+If N = number of vertices, and M = number of edges, then:
+TC-> Create adjacency list: TC-> O(N) + Topo Sort: O(N + M) + Find Distances: O(N + M)
+SC-> Adjacency List: O(N + 2*M) + Topo Stack: O(N) + Dist Array: O(N)ASC
+*/
