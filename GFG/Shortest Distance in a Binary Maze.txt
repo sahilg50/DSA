@@ -1,0 +1,46 @@
+// https://www.geeksforgeeks.org/problems/shortest-path-in-a-binary-maze-1655453161/1
+
+
+// Approach 1: Optimal
+class Solution {
+  public:
+    int shortestPath(vector<vector<int>> &grid, pair<int, int> source, pair<int, int> destination) {
+        
+        int m = grid.size(), n = grid[0].size();
+        vector<vector<int>> dist(m, vector<int>(n, 1e9));
+        queue<pair<int, pair<int, int>>> Q;
+        
+        dist[source.first][source.second] = 0;
+        Q.push({0, {source.first, source.second}});
+        
+        int deltaR[] = {-1, 0, +1, 0};
+        int deltaC[] = {0, -1, 0, +1};
+        
+        while(!Q.empty()){
+            auto it = Q.front();
+            Q.pop();
+            int distance = it.first;
+            int r = it.second.first;
+            int c = it.second.second;
+            
+            if(r == destination.first && c == destination.second) return distance;
+            
+            for(int i=0; i<4; i++){
+                int row = r + deltaR[i];
+                int col = c + deltaC[i];
+                if(row>=0 && row<m && col>=0 && col<n && grid[row][col]==1 && distance+1<dist[row][col]){
+                    dist[row][col] = distance+1;
+                    Q.push({distance+1, {row, col}});
+                }
+            }
+        }
+        
+        
+        return -1;
+    }
+};
+/*
+If M = rows, and N = cols, then:
+TC-> O(4*M*N)
+SC-> Queue: O(M+N) + Dist: O(M*N)
+*/
