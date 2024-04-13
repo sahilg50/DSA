@@ -1,0 +1,110 @@
+// https://leetcode.com/problems/trapping-rain-water/?envType=daily-question&envId=2024-04-12
+
+
+// Approach 1: Brute Force 
+class Solution {
+private:
+    int leftMaxBoundary(int ind, vector<int> &height){
+
+        int leftMax = 0;
+        for(int i=0; i<ind; i++) leftMax = max(leftMax, height[i]);
+        return leftMax;
+    }
+
+    int rightMaxBoundary(int ind, vector<int> &height){
+
+        int rightMax = 0;
+        int n = height.size(); 
+        for(int i=ind+1; i<n; i++) rightMax = max(rightMax, height[i]);
+        return rightMax;
+    }
+
+public:
+    int trap(vector<int> &height) {
+
+        int totalWater = 0;
+
+        int n = height.size();
+        for(int i=0; i<n; i++){
+            int lMax = leftMaxBoundary(i, height);
+            int rMax = rightMaxBoundary(i, height);
+            int currentWater = min(lMax, rMax) - height[i];
+            totalWater += currentWater > 0 ? currentWater : 0;
+        }
+
+        return totalWater;
+    }
+};
+/*
+TC-> O(N^2)
+SC-> O(1)
+*/
+
+
+// Approach 2: Better
+class Solution {
+public:
+    int trap(vector<int> &height) {
+
+        int n = height.size();
+
+        vector<int> prefix(n);
+        int lMax = 0;
+        for(int i=0; i<n; i++){
+            prefix[i] = max(lMax, height[i]);
+            lMax = max(lMax, height[i]);
+        }
+
+        vector<int> suffix(n);
+        int rMax = 0;
+        for(int i=n-1; i>=0; i--){
+            suffix[i] = max(rMax, height[i]);
+            rMax = max(rMax, height[i]);
+        }
+
+        int totalWater = 0;
+        for(int i=0; i<n; i++){
+            int currentWater = min(prefix[i], suffix[i]) - height[i];
+            totalWater += currentWater > 0 ? currentWater : 0;
+        }
+
+        return totalWater;
+    }
+};
+/*
+TC-> O(N)
+SC-> Prefix Array: O(N) + Suffix Array: O(N)
+*/
+
+
+// Approach 3: Optimal (2 Pointer approach)
+class Solution {
+public:
+    int trap(vector<int> &height) {
+
+        int n = height.size();  
+        int totalWater = 0, currWater = 0;
+
+        int lMax = 0, rMax = 0;
+        int l = 0, r = n-1;
+        while(l<r){
+            lMax = max(lMax, height[l]);
+            rMax = max(rMax, height[r]);
+
+            if(lMax <= rMax){
+                currWater = lMax - height[l++];
+                totalWater += currWater > 0 ? currWater : 0;
+            }
+            else{
+                currWater = rMax - height[r--];
+                totalWater += currWater > 0 ? currWater : 0;
+            }
+        }
+
+        return totalWater;
+    }
+};
+/*
+TC-> O(N)
+SC-> O(1)
+*/
