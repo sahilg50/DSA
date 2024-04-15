@@ -1,0 +1,45 @@
+// https://leetcode.com/problems/sum-root-to-leaf-numbers/?envType=daily-question&envId=2024-04-15
+
+
+// Approach 1: Optimal
+class Solution {
+private:
+    bool isLeaf(TreeNode *node){
+        if(node->left == nullptr && node->right == nullptr) return true;
+        return false;
+    }
+
+    void dfs(TreeNode *node, int &currNum, int &totalSum){
+        
+        currNum *= 10;
+        currNum += node->val;
+
+        if(isLeaf(node)){
+            totalSum += currNum;
+            return;
+        }
+
+        if(node->left){
+            dfs(node->left, currNum, totalSum);
+            currNum /= 10;
+        }
+        
+
+        if(node->right){
+            dfs(node->right, currNum, totalSum);
+            currNum /= 10;
+        }
+    }
+public:
+    int sumNumbers(TreeNode *root) {
+        int currNum = 0, totalSum = 0;
+        dfs(root, currNum, totalSum);
+
+        return totalSum;
+    }
+};
+/*
+If N = number of nodes in the binary tree, then:
+TC-> DFS: O(N)
+SC-> Recursion Stack: O(N)ASC
+*/
