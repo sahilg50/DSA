@@ -3,6 +3,7 @@
 
 // Approach 1: Brute Force (Recursion) (Finding paths for each nodes)
 class Solution {
+private:
     void dfs(TreeNode* node, TreeNode* p, TreeNode* q, vector<TreeNode*>& currPath, vector<vector<TreeNode*>>& paths) {
         if (node == NULL) return;
 
@@ -14,7 +15,7 @@ class Solution {
 
         currPath.pop_back();
     }
-
+    
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
         vector<TreeNode*> currPath;
@@ -40,20 +41,17 @@ SC-> currPath Vector: O(N) + paths Vector: O(2*N) + Recursion Stack: O(N)ASC
 
 // Approach 2: Optimal
 class Solution {
-    TreeNode *dfs(TreeNode *node, TreeNode *p, TreeNode *q){
-        if(node == NULL || node == p || node == q) return node;
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root == NULL || root == p || root == q) return root;
 
-        TreeNode *left = dfs(node->left, p, q);
-        TreeNode *right = dfs(node->right, p, q);
+        TreeNode *left = lowestCommonAncestor(root->left, p, q);
+        TreeNode *right = lowestCommonAncestor(root->right, p, q);
 
         if(left == NULL) return right;
         if(right == NULL) return left;
 
-        return node;
-    }
-public:
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        return dfs(root, p, q);
+        return root;
     }
 };
 /*
