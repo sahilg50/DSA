@@ -1,0 +1,63 @@
+// https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
+
+
+// Approach 1: Brute Force (Recursion) (Finding paths for each nodes)
+class Solution {
+    void dfs(TreeNode* node, TreeNode* p, TreeNode* q, vector<TreeNode*>& currPath, vector<vector<TreeNode*>>& paths) {
+        if (node == NULL) return;
+
+        currPath.push_back(node);
+        if (node == p || node == q) paths.push_back(currPath);
+
+        dfs(node->left, p, q, currPath, paths);
+        dfs(node->right, p, q, currPath, paths);
+
+        currPath.pop_back();
+    }
+
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        vector<TreeNode*> currPath;
+        vector<vector<TreeNode*>> paths;
+
+        dfs(root, p, q, currPath, paths);
+        
+        // Print the last common node from both the paths
+        int size = min(paths[0].size(), paths[1].size());
+        for(int i=0; i<size; i++){
+            if(paths[0][i] != paths[1][i]) return paths[0][i-1];
+        }
+
+        return paths[0][size-1];
+    }
+};
+/*
+If N = number of nodes in BT, then:
+TC-> DFS: O(N)
+SC-> currPath Vector: O(N) + paths Vector: O(2*N) + Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: Optimal
+class Solution {
+    TreeNode *dfs(TreeNode *node, TreeNode *p, TreeNode *q){
+        if(node == NULL || node == p || node == q) return node;
+
+        TreeNode *left = dfs(node->left, p, q);
+        TreeNode *right = dfs(node->right, p, q);
+
+        if(left == NULL) return right;
+        if(right == NULL) return left;
+
+        return node;
+    }
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        return dfs(root, p, q);
+    }
+};
+/*
+If N = number of nodes in BT, then:
+TC-> DFS: O(N)
+SC-> Recursion Stack: O(N)ASC
+*/
