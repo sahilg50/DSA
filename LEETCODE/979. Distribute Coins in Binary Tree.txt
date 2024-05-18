@@ -1,0 +1,27 @@
+// https://leetcode.com/problems/distribute-coins-in-binary-tree/?envType=daily-question&envId=2024-05-18
+
+
+// Approach 1: Optimal (DFS)
+class Solution {
+private:
+    int countSteps(TreeNode *node, int &steps){
+        if(node == nullptr) return 0;
+
+        int leftCoins = countSteps(node->left, steps);
+        int rightCoins = countSteps(node->right, steps);
+        steps += abs(leftCoins) + abs(rightCoins);
+
+        return (node->val - 1) + leftCoins + rightCoins;
+    }
+public:
+    int distributeCoins(TreeNode* root) {
+        int steps = 0;
+        countSteps(root, steps);
+        return steps;
+    }
+};
+/*
+If N = number of nodes in binary tree, then:
+TC-> DFS: O(N)
+SC-> Recursion Stack: O(N)ASC
+*/
