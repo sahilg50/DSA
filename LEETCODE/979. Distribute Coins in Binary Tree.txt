@@ -1,6 +1,8 @@
 // https://leetcode.com/problems/distribute-coins-in-binary-tree/?envType=daily-question&envId=2024-05-18
 
 
+// Solution: https://leetcode.com/problems/distribute-coins-in-binary-tree/solutions/5172546/explanation-as-easy-as-you-think/?envType=daily-question&envId=2024-05-18
+
 // Approach 1: Optimal (DFS)
 class Solution {
 private:
