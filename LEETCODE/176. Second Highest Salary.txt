@@ -1,0 +1,16 @@
+// https://leetcode.com/problems/second-highest-salary/description/
+
+
+-- APPROACH 1
+SELECT MAX(salary) AS SecondHighestSalary
+FROM Employee
+WHERE salary NOT IN (SELECT MAX(salary) from Employee);
+
+
+-- APPROACH 2
+SELECT (
+    SELECT DISTINCT salary
+    FROM Employee 
+    ORDER BY salary DESC
+    LIMIT 1 OFFSET 1
+) AS SecondHighestSalary;
