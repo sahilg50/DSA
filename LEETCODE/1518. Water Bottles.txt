@@ -1,25 +1,75 @@
 // https://leetcode.com/problems/water-bottles/description/?envType=daily-question&envId=2024-07-07
 
 
-// Approach 1: Brute Force (Recursively dividing)
+// Approach 1: Brute Force (Simulation)
 class Solution {
-private:
-    int totalExchanges(int full, int empty, int exchange){
-        
-        int totalBottles = full + empty;
-        if(totalBottles < exchange) return 0;
-        
-        full = totalBottles / exchange; 
-        empty = totalBottles % exchange;
-
-        return  full + totalExchanges(full, empty, exchange);
-    }
 public:
     int numWaterBottles(int numBottles, int numExchange) {
-        return numBottles + totalExchanges(numBottles, 0, numExchange);
+        int consumedBottles = 0;
+
+        while (numBottles >= numExchange) {
+            // Consume numExchange full bottles.
+            consumedBottles += numExchange;
+            numBottles -= numExchange;
+
+            // Exchange them for one full bottle.
+            numBottles++;
+        }
+
+        // Consume the remaining numBottles (<numExchange).
+        return consumedBottles + numBottles;
     }
 };
 /*
-TC-> O(Log(numBottles, numExchange))
-SC-> Recursion Stack: O(Log(numBottles, numExchange))
+If, N is the number of initial full bottles, then:
+
+TC: O(N)
+The maximum number of operations in the while loop will be when the value of numExchange is minimum, i.e., 2. In this case, we will keep consuming the 2 bottles and add 1 as an exchange. Hence, the numBottles will be decreased by one after each iteration. Hence, the TC is equal to O(N).
+
+SC: O(1)
+*/
+
+
+// Approach 2: Better (Optimized Simulation)
+class Solution {
+public:
+    int numWaterBottles(int numBottles, int numExchange) {
+        int consumedBottles = 0;
+
+        while (numBottles >= numExchange) {
+            // Maximum number of times we can consume numExchange
+            // number of bottles using numBottles.
+            int K = numBottles / numExchange;
+
+            consumedBottles += numExchange * K;
+            numBottles -= numExchange * K;
+
+            numBottles += K;
+        }
+
+        return consumedBottles + numBottles;
+    }
+};
+/*
+If N is the number of initial full bottles, and M is equal to numExchange, then:
+TC: O(Log(M, N))
+We divide the number of full bottles numBottles by numExchange at each iteration
+
+SC: O(1)
+*/
+
+
+/*
+Approach 3: Optimal
+The "price" of buying a refill is handing over numExchanges - 1 empty bottles.However you must have your own empty bottle to receive the refill. Therefore after drinking the initial numBottle, you "keep aside" one empty for receiving the refills. Hence you trade in (numBottles - 1) bottles to get 1 refill for every (numExchange - 1) bottles.
+*/
+class Solution {
+public:
+    int numWaterBottles(int numBottles, int numExchange) {
+        return numBottles + (numBottles - 1)/(numExchange - 1);
+    }
+};
+/*
+TC-> O(1)
+SC-> O(1)
 */
