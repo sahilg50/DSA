@@ -1,0 +1,25 @@
+// https://leetcode.com/problems/water-bottles/description/?envType=daily-question&envId=2024-07-07
+
+
+// Approach 1: Brute Force (Recursively dividing)
+class Solution {
+private:
+    int totalExchanges(int full, int empty, int exchange){
+        
+        int totalBottles = full + empty;
+        if(totalBottles < exchange) return 0;
+        
+        full = totalBottles / exchange; 
+        empty = totalBottles % exchange;
+
+        return  full + totalExchanges(full, empty, exchange);
+    }
+public:
+    int numWaterBottles(int numBottles, int numExchange) {
+        return numBottles + totalExchanges(numBottles, 0, numExchange);
+    }
+};
+/*
+TC-> O(Log(numBottles, numExchange))
+SC-> Recursion Stack: O(Log(numBottles, numExchange))
+*/
