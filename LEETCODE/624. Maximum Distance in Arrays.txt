@@ -1,0 +1,52 @@
+// https://leetcode.com/problems/maximum-distance-in-arrays/submissions/1357630604/?envType=daily-question&envId=2024-08-16
+
+
+// Approach 1: Brute Force (TLE)
+class Solution {
+public:
+    int maxDistance(vector<vector<int>>& arrays) {
+        int maxDist = INT_MIN;
+        
+        int m = arrays.size();
+        for(int i=0; i<m; i++){
+            for(int j=0; j<m; j++){
+                if(i!=j){
+                    maxDist = max(maxDist, abs(arrays[i].front() - arrays[j].back()));
+                }
+            }
+        }
+
+        return maxDist;
+    }
+};
+/*
+If M = number of arrays, then:
+TC-> O(M^2)
+SC-> O(1)
+*/
+
+
+// Approach 2: Greedy
+class Solution {
+public:
+    int maxDistance(vector<vector<int>>& arrays) {
+        int maxDist = INT_MIN;
+
+        int m = arrays.size();
+        int low = arrays[0].front(), high = arrays[0].back();
+        for(int i=1; i<m; i++){
+            maxDist = max(maxDist, abs(low - arrays[i].back()));
+            maxDist = max(maxDist, abs(high - arrays[i].front()));
+
+            // Update low and high
+            low = min(low, arrays[i].front());
+            high = max(high, arrays[i].back());
+        }
+        return maxDist;
+    }
+};
+/*
+If M = number of arrays, then:
+TC-> O(M)
+SC-> O(1)
+*/

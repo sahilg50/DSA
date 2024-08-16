@@ -1,0 +1,70 @@
+// https://leetcode.com/problems/find-the-winner-of-the-circular-game/description/?envType=daily-question&envId=2024-07-08
+
+// Solution: LeetCode Editorial
+
+// Approach 1: Brute Force (Simulation with List)
+class Solution {
+public:
+    int findTheWinner(int n, int k) {
+        // Initialize a vector of N friends, labelled from 1-N
+        vector<int> circle;
+        for(int i=1; i<=n; i++) circle.push_back(i);
+
+        // Maintain the index of the friend to start the count on
+        int startIndex = 0;
+
+        // Perform elimination while there is more than 1 friend left
+        while(circle.size() > 1){
+
+            // Calculate the index of the friend to be removed
+            int removalIndex = (startIndex + k - 1) % circle.size();
+
+            // Erase the friend at removalIndex
+            circle.erase(circle.begin() + removalIndex);
+
+            // Update startIndex for the next round
+            startIndex = removalIndex;
+        }
+        return circle.front();
+    }
+};
+/*
+Let N be the initial size of the friend circle.
+
+TC-> O(N^2)
+Considering the pop operation inside the loop, the time complexity for each iteration can be O(n) in the worst case (when pop shifts all subsequent elements). Since we might potentially perform n−1 pop operations (removing n-1 friends), the overall worst-case time complexity is O(n^2).
+
+SC-> Circle Vector: O(N)
+*/
+
+
+// Approach 2: Better (Simulation with Queue)
+class Solution {
+public:
+    int findTheWinner(int n, int k) {
+        
+        // Initialize the queue with n friends
+        queue<int> circle;
+        for(int i=1; i<=n; i++) circle.push(i);
+
+        // Perform elimination while more than 1 player remains
+        while(circle.size() > 1){
+            // Process the first k-1 friends without eliminating them
+            for(int i=1; i<k; i++){
+                circle.push(circle.front());
+                circle.pop();
+            }
+            // Eliminate the kth friend
+            circle.pop();
+        }
+        return circle.front();
+    }
+};
+/*
+If N = Number of friends, and K is the eliminating factor, then:
+
+TC-> O(N * K)
+The time complexity is O(N * k) because each elimination cycle involves rotating the queue k−1 times, and this happens n−1 times.
+
+SC-> Queue: O(N)
+*/

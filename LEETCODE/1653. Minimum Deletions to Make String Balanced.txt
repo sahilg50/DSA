@@ -1,0 +1,66 @@
+// https://leetcode.com/problems/minimum-deletions-to-make-string-balanced/?envType=daily-question&envId=2024-07-30
+
+
+// Approach 1: Three-Pass Count Method
+class Solution {
+public:
+    int minimumDeletions(string &s) {
+        int n = s.size();
+
+        vector<int> count_a(n), count_b(n);
+
+        int b_count = 0;
+        for(int ind=0; ind<n; ind++){
+            count_b[ind] = b_count;
+            if(s[ind]=='b') b_count++;
+        }
+
+        int a_count = 0;
+        for(int ind=n-1; ind>=0; ind--){
+            count_a[ind] = a_count;
+            if(s[ind]=='a') a_count++;
+        }
+
+        int min_deletions = n;
+        for(int ind=0; ind<n; ind++){
+            min_deletions = min(min_deletions,(count_a[ind] + count_b[ind]));
+        }
+
+        return min_deletions;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(3*N)
+SC-> count_a vector: O(N) + count_b vector: O(N)
+*/
+
+
+// Approach 2: Combined Pass Method
+class Solution {
+public:
+    int minimumDeletions(string &s) {
+        int n = s.size();
+
+        vector<int> count_a(n);
+
+        int a_count = 0;
+        for(int ind=n-1; ind>=0; ind--){
+            count_a[ind] = a_count;
+            if(s[ind]=='a') a_count++;
+        }
+
+        int min_deletions=n, b_count = 0;
+        for(int ind=0; ind<n; ind++){
+            min_deletions = min(min_deletions, count_a[ind] + b_count);
+            if(s[ind]=='b') b_count++;
+        }
+
+        return min_deletions;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(2*N)
+SC-> count_a vector: O(N)
+*/
