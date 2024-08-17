@@ -1,0 +1,38 @@
+// https://www.geeksforgeeks.org/problems/product-array-puzzle4525/1
+
+
+// Approach 1: Optimal
+class Solution {
+  public:
+    // nums: given vector
+    // return the Product vector P that hold product except self at each index
+    vector<long long int> productExceptSelf(vector<long long int>& nums){
+    
+        int count_0 = 0;
+        long long int product = 1;
+        for(auto num : nums){
+            if(num == 0) count_0 ++;
+            else product *= num;
+        }
+        
+        // If there are 2 zeros then, all the elements will be zero.
+        if(count_0 > 1){
+            for(auto &num : nums){
+                num = 0;
+            }
+            return nums;
+        }
+        
+        for(auto &num : nums){
+            if(num == 0) num = product;
+            else num = count_0 > 0 ? 0 : product/num;
+        }
+        
+        return nums;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(2*N)
+SC-> O(1)
+*/

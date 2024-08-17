@@ -8,8 +8,12 @@ using namespace std;
 
 int main()
 {
-    vector<pair<char, int>> temp = {{'A', 10}, {'B', 20}, {'C', 30}};
-    for (auto it = temp.rbegin(); it != temp.rend(); it++)
-        cout << (*it).first * 2;
+    vector<int> dp = {1, 2, 2, 3, 4};
+    dp = {0};
+    for (auto num : dp)
+    {
+        num = 0;
+        cout << num;
+    }
     return 0;
 }
