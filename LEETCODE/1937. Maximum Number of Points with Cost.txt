@@ -1,0 +1,112 @@
+// https://leetcode.com/problems/maximum-number-of-points-with-cost/?envType=daily-question&envId=2024-08-17
+
+
+// Approach 1: Recursion (TLE)
+class Solution {
+private:
+    long long util(int row, int prevCol, int m, int n, vector<vector<int>> &points){
+        // Base case
+        if(row >= m) return 0;
+
+        // Perform all operations
+        long long scores = 0;
+
+        for(int col=0; col<n; col++){
+
+            long long currScores = points[row][col] + util(row+1, col, m, n, points);
+            if(prevCol != -1) currScores -= abs(col - prevCol);
+
+            scores = max(scores, currScores);
+        }
+
+        // Return 
+        return scores;
+    }
+public:
+    long long maxPoints(vector<vector<int>> &points) {
+        
+        int m = points.size(), n = points[0].size();
+
+        return util(0, -1, m, n, points);
+    }
+};
+/*
+If M = rows, and N = columns, then:
+TC-> O(N ^ M)
+SC-> Recursion Stack: O(M)ASC
+*/
+
+
+// Approach 2: Recursion + Memoization (TLE)
+class Solution {
+private:
+    long long util(int row, int prevCol, int m, int n, vector<vector<int>> &points, vector<vector<long long>> &dp){
+        // Base case
+        if(row >= m) return 0;
+
+        if(dp[row][prevCol+1] != -1) return dp[row][prevCol+1];
+
+        // Perform all operations
+        long long scores = 0;
+
+        for(int col=0; col<n; col++){
+
+            long long currScores = points[row][col] + util(row+1, col, m, n, points, dp);
+            if(prevCol != -1) currScores -= abs(col - prevCol);
+
+            scores = max(scores, currScores);
+        }
+
+        // Return 
+        return dp[row][prevCol+1] = scores;
+    }
+public:
+    long long maxPoints(vector<vector<int>> &points) {
+        
+        int m = points.size(), n = points[0].size();
+        vector<vector<long long>> dp(m+1, vector<long long>(n+2, -1));
+
+        return util(0, -1, m, n, points, dp);
+    }
+};
+/*
+If M = rows, and N = columns, then:
+TC-> O((M * N) * N)
+SC-> DP Array: O(M*N) + Recursion Stack: O(M)ASC
+*/
+
+
+// Approach 3: Tabulation (TLE)
+class Solution {
+public:
+    long long maxPoints(vector<vector<int>>& points) {
+
+        int m = points.size(), n = points[0].size();
+
+        vector<vector<long long>> dp(m, vector<long long>(n, 0));
+        for(int r=0; r<m; r++){
+            for(int c=0; c<n; c++){
+                dp[r][c] = points[r][c];
+            }
+        }
+        
+        for(int r=1; r<m; r++){
+            for(int c=0; c<n; c++){
+
+                long long maxPoints = INT_MIN, currPoints;
+                for(int col=0; col<n; col++){
+                    currPoints = dp[r-1][col] - abs(c - col);
+                    maxPoints = max(maxPoints, currPoints);
+                }
+                dp[r][c] += maxPoints;
+            }
+        }
+
+        return *max_element(dp.back().begin(), dp.back().end());
+    }
+};
+/*
+If M = rows, and N = columns, then:
+TC-> O((M * N) * N)
+SC-> DP Array: O(M*N)
+*/
