@@ -1,0 +1,54 @@
+// https://www.geeksforgeeks.org/problems/remove-loop-in-linked-list/1?page=1&company=Amazon&sortBy=submissions
+
+
+// Approach 1: Floyd's Cycle Detection algorithm
+class Solution {
+  public:
+    // Function to remove a loop in the linked list.
+    void removeLoop(Node* head) {
+        // code here
+        // just remove the loop without losing any nodes
+        if(head == NULL || head->next == NULL) return;
+        
+        Node *slow = head;
+        Node *fast = head;
+        
+        // Detect loop using Floyd's Cycle detection algorithm
+        while(fast != NULL && fast->next != NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+            if(slow == fast) break;
+        }
+        
+        // No loop found
+        if(slow != fast) return;
+        
+        // If the loop starts at the head
+        if(slow == head){
+            while(fast->next != slow) fast = fast->next;
+            fast->next = NULL;
+            return;
+        }
+        
+        // Move slow to head, and advance both the pointers until they meet at loop start
+        slow = head;
+        while(slow->next != fast->next){
+            slow = slow->next;
+            fast = fast->next;
+        }
+        
+        // Break the loop
+        fast->next = NULL;
+        
+        return;
+    }
+};
+/*
+If the list has N nodes, then in <= N steps, either the fast pointer will find the end of the list, or there is a loop and the slow pointer will be in the loop.
+
+Lets say the loop is of length M <= N: Once the slow pointer is in the loop, both the fast and slow pointers will be stuck in the loop forever. Each step, the distance between the fast and the slow pointers will increase by 1. When the distance is divisible by M, then the fast and slow pointers will be on the same node and the algorithm terminates. The distance will reach a number divisible by M in <= M steps.
+
+So, getting the slow pointer to the loop, and then getting the fast and slow pointers to meet takes <= N + M <= 2N steps, and that is in O(N)
+
+In fact, you can get a tighter bound on the step count if you note that when there's a loop, the slow pointer will get to it in N - M steps, so the total step count is <= N.
+*/
