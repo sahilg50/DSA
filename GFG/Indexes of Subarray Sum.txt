@@ -1,0 +1,46 @@
+// https://www.geeksforgeeks.org/problems/subarray-with-given-sum-1587115621/1?page=1&company=Amazon&sortBy=submissions
+
+
+// Approach 1: Optimal (2-Pointers)
+class Solution {
+public:
+    // Function to find a continuous sub-array which adds up to a given number.
+    vector<int> subarraySum(vector<int> arr, int n, long long s) {
+        
+        vector<int> result = {-1};
+        
+        bool zeroFlag = false;
+    
+        long long sum = 0;
+        for(int R=0, L=0; R<n; R++){
+            
+            // Note the first occurrence of zero
+            if(s == 0 && !zeroFlag && arr[R] == 0){
+                result = {R+1, R+1};
+                zeroFlag = true;
+                break;
+            }
+            
+            // Below code is used for finding sum > 0
+            sum += arr[R];
+            
+            while(sum > s){
+                sum -= arr[L];
+                L++;
+            }
+            
+            if(s != 0 && sum == s){
+                result = {L+1, R+1};
+                break;
+            }
+        }
+        
+        
+        return result;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N)
+SC-> O(1)
+*/
