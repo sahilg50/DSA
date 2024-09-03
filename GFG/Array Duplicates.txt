@@ -1,0 +1,31 @@
+// https://www.geeksforgeeks.org/problems/find-duplicates-in-an-array/1?page=1&company=Amazon&sortBy=submissions
+
+
+// Approach 1: Optimal (Unordered Map)
+class Solution {
+  public:
+    vector<int> duplicates(vector<int> arr) {
+        
+        // freq = {number, count}
+        unordered_map<int, int> freq;
+        
+        for(auto num : arr) freq[num] = 0;
+        for(auto num : arr) freq[num] += 1;
+        
+        vector<int> dup;
+        
+        for(auto it : freq){
+            if(it.second > 1) dup.push_back(it.first);
+        }
+        
+        if(dup.size() == 0) dup = {-1};
+        else sort(dup.begin(), dup.end());
+        
+        return dup;
+    }
+};
+/*
+If N = size of array, then:
+TC-> Create Freq Array: O(2 * N) + Find Duplicates: O(N) + Sort: O(N * logN)
+SC-> Freq (Unordered Map): O(N) + dup (vector): O(N)ASC
+*/
