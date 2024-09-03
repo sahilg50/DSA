@@ -1,0 +1,45 @@
+// https://www.geeksforgeeks.org/problems/check-for-bst/1?page=1&company=Amazon&sortBy=submissions
+
+
+// Approach 1: Optimal (Inorder Traversal)
+class Solution {
+private:
+    
+    // Find the inOrder traversal
+    void inOrder(Node *root, vector<int> &V){
+        // Base case
+        if(root == NULL) return;
+        
+        // Perform all operations
+        inOrder(root->left, V);
+        V.push_back(root->data);
+        inOrder(root->right, V);
+        
+        // Return
+        return;
+        
+    }
+    
+    // Check if the inOrder traversal is in sorted order
+    bool check_sort(vector<int> &V){
+        int len = V.size();
+        for(int i=1; i<len; i++){
+            if(V[i]<V[i-1]) return false;
+        }
+        return true;
+    }
+    
+ public:
+    // Function to check whether a Binary Tree is BST or not.
+    bool isBST(Node* root) {
+        vector<int> V;
+        inOrder(root, V);
+        
+        return check_sort(V);
+    }
+};
+/*
+If N = number of nodes, then:
+TC-> inOrder Traversal: O(N) + check_sort: O(N)
+SC-> V (Vector): O(N) + Recursion stack: O(N)
+*/
