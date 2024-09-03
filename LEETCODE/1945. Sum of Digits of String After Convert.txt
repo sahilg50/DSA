@@ -1,0 +1,44 @@
+// https://leetcode.com/problems/sum-of-digits-of-string-after-convert/description/?envType=daily-question&envId=2024-09-03
+
+
+// Approach 1: Optimal
+class Solution {
+private:
+    int sumOfDigits(int num){
+        int sum = 0;
+        while(num){
+            sum += num % 10;
+            num /= 10;
+        }
+        return sum;
+    }
+
+public:
+    int getLucky(string s, int k) {
+
+        // Instead of converting and appending the numbers as strings, directly find the sum of digits. Because K >= 1
+        k--;
+        int number = 0;
+        for(char ch : s){
+            int val = (ch - 'a' + 1);
+            while(val){
+                number += val % 10;
+                val /= 10;
+            }
+        }
+
+        int result = number;
+        while(k--){
+            if(result / 10 == 0) return result;
+            result = sumOfDigits(result);
+        }
+        
+
+        return result;
+    }
+};
+/*
+If N = length of string, and K is number of times we've to find the sum, then:
+TC-> O(N)
+SC-> O(1)
+*/
