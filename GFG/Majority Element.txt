@@ -1,0 +1,32 @@
+// https://www.geeksforgeeks.org/problems/majority-element-1587115620/1?page=1&company=Amazon&sortBy=submissions
+
+
+// Approach 1: Optimal (Moore's voting algorithm)
+class Solution {
+public:
+    int majorityElement(int arr[], int size) {
+        
+        // Moore's Algorithm 
+        int votes = 0, majority;
+        
+        for(int i=0; i<size; i++){
+            if(votes == 0) majority = arr[i];
+            votes += arr[i] == majority ? 1 : -1;
+        }
+        
+        /*
+        When it is not confirmed that the array is surely contain the majority element, in that case we'll have to confirm by checking the count of the majority element decided by the Moore's algo.
+        */
+        for(int i=0; i<size; i++){
+            if(arr[i] == majority) votes += 1;
+        }
+        
+       if(votes > size/2) return majority;
+       return -1;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(2 * N)
+SC-> O(1)
+*/
