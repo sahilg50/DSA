@@ -1,0 +1,29 @@
+// https://www.geeksforgeeks.org/problems/parenthesis-checker2744/1?page=1&company=Amazon&sortBy=submissions
+
+
+// Approach 1: Optimal (Stack)
+class Solution
+{
+    public:
+    //Function to check if brackets are balanced or not.
+    bool ispar(string x)
+    {
+        stack<char> S;
+        for(auto ch : x){
+            if(S.empty() || ch == '[' || ch == '{' || ch == '(') S.push(ch);
+            else if(ch == ')' && S.top() == '(') S.pop();
+            else if(ch == '}' && S.top() == '{') S.pop();
+            else if(ch == ']' && S.top() == '[') S.pop();
+            else{
+                return false;
+            }
+        }
+        if(!S.empty()) return false;
+        return true;
+    }
+};
+/*
+If N = length of string, then:
+TC-> O(N)
+SC-> S (Stack): O(N)
+*/
