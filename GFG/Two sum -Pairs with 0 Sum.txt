@@ -1,0 +1,33 @@
+// https://www.geeksforgeeks.org/problems/count-pairs-with-given-sum5022/1?page=1&company=Amazon&status=unsolved&sortBy=submissions
+
+
+// Approach 1: Optimal (2 Pointers)
+class Solution {
+  public:
+    vector<vector<int>> getPairs(vector<int>& arr) {
+        
+        sort(arr.begin(), arr.end());
+        vector<vector<int>> result;
+        
+        int l=0, r=arr.size()-1;
+        while(l < r){
+            int sum = arr[l] + arr[r];
+            
+            if(sum == 0){
+                result.push_back({arr[l], arr[r]});
+                while(l < r && arr[l] == arr[l+1]) l++;
+                while(l < r && arr[r] == arr[r-1]) r--;
+                l++;
+                r--;
+            }
+            else if(sum < 0) l++;
+            else r--;
+        }
+        return result;
+    }
+};
+/*
+If N = size of array, then:
+TC-> Sort vector: O(N * LogN) + Iterate vector: O(N)
+SC-> Result (vector): O(N)ASC
+*/
