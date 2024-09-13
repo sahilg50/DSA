@@ -1,0 +1,39 @@
+// https://www.geeksforgeeks.org/problems/minimum-platforms-1587115620/1?page=1&company=Amazon&status=unsolved&sortBy=submissions
+
+
+// Approach 1: Optimal (Minimum number of intersections)
+// Solution: https://www.youtube.com/watch?v=AsGzwR_FWok
+class Solution {
+  public:
+    // Function to find the minimum number of platforms required at the
+    // railway station such that no train waits.
+    int findPlatform(vector<int> &arr, vector<int> &dep) {
+        
+        sort(arr.begin(), arr.end());
+        sort(dep.begin(), dep.end());
+        
+        int n = arr.size();
+        int currPlat = 0, maxPlat = 0;
+        int i=0, j=0; 
+        
+        while(i<n){
+            if(arr[i] <= dep[j]){
+                currPlat += 1;
+                i += 1;
+            }
+            else{
+                currPlat -= 1;
+                j += 1;
+            }
+            
+            maxPlat = max(maxPlat, currPlat);
+        }
+        
+        return maxPlat;
+    }
+};
+/*
+If N = number of trains, then:
+TC-> Sort arr and dep: 2 * O(N * logN) + Find overlapping trains: O(N)
+SC-> O(1)
+*/
