@@ -1,0 +1,35 @@
+// https://www.geeksforgeeks.org/problems/trapping-rain-water-1587115621/1?page=1&company=Amazon&difficulty=Easy,Medium,Hard&status=unsolved&sortBy=submissions
+
+// All Approaches: 42. Trapping Rain Water.txt
+
+// Approach 1: Optimal (2 Pointer)
+class Solution {
+  public:
+    long long trappingWater(vector<int> &arr) {
+        int n = arr.size();
+        long long currWater = 0, totalWater = 0;
+        
+        int lMax = 0, rMax = 0;
+        int l = 0, r = n-1;
+        while(l < r){
+            lMax = max(lMax, arr[l]);
+            rMax = max(rMax, arr[r]);
+            
+            if(lMax < rMax){
+                currWater = lMax - arr[l++];
+                totalWater += currWater > 0 ? currWater : 0;
+            }
+            else{
+                currWater = rMax - arr[r--];
+                totalWater += currWater > 0 ? currWater : 0;
+            }
+        }
+        
+        return totalWater;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N)
+SC-> O(1)
+*/
