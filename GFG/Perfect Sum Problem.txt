@@ -1,0 +1,90 @@
+// https://www.geeksforgeeks.org/problems/perfect-sum-problem5633/1?page=1&company=Amazon&difficulty=Easy,Medium,Hard&status=unsolved&sortBy=submissions
+
+
+// Approach 1: Recursion (Pick + notPick) (TLE)
+class Solution{
+private:
+    int mod = 1e9 + 7;
+    
+    int util(int ind, int sum, int arr[], int n){
+        // Base case
+        if(ind >= n) return sum == 0;
+        if(sum < 0) return 0;
+        if(dp[ind][sum] != -1) return dp[ind][sum];
+        
+        int pick = 0, notPick = 0;
+        pick = util(ind+1, sum-arr[ind], arr, n);
+        notPick = util(ind+1, sum, arr, n);
+        
+        return (pick + notPick) % mod;
+    }
+public:
+	int perfectSum(int arr[], int n, int sum)
+	{
+        return util(0, sum, arr, n);
+	}
+};
+/*
+If N = size of array, then:
+TC-> O(2^N)
+SC-> Recursion stack: O(N) ASC
+*/
+
+
+// Approach 2: Recursion + Memoization (Pick + notPick)
+class Solution{
+private:
+    int mod = 1e9 + 7;
+    
+    int util(int ind, int sum, vector<vector<int>> &dp, int arr[], int n){
+        // Base case
+        if(ind >= n) return sum == 0;
+        if(sum < 0) return 0;
+        if(dp[ind][sum] != -1) return dp[ind][sum];
+        
+        int pick = 0, notPick = 0;
+        pick = util(ind+1, sum-arr[ind], dp, arr, n);
+        notPick = util(ind+1, sum, dp, arr, n);
+        
+        return dp[ind][sum] = (pick + notPick) % mod;
+    }
+public:
+	int perfectSum(int arr[], int n, int sum)
+	{
+	    vector<vector<int>> dp(n+1, vector<int>(sum+1, -1));
+        return util(0, sum, dp, arr, n);
+	}
+};
+/*
+If N = size of array, and a given 'sum', then:
+TC-> O(N * sum)
+SC-> DP (2D vector): O(N * sum) + Recursion stack: O(N) ASC
+*/
+
+
+// Approach 3: Tabulation (Pick + notPick)
+class Solution{
+public:
+	int perfectSum(int arr[], int n, int sum)
+	{   
+	    int mod = 1e9 + 7;
+	    
+	    vector<vector<int>> dp(n+1, vector<int>(sum+1, 0));
+	    dp[n][0] = 1;
+	    
+	    for(int ind=n-1; ind>=0; ind--){
+	        for(int s=0; s<=sum; s++){
+	            int pick = 0, notPick = 0;
+	            if(arr[ind] <= s) pick = dp[ind+1][s-arr[ind]];
+	            notPick = dp[ind+1][s];
+	            dp[ind][s] = (pick + notPick) % mod;
+	        }
+	    }
+        return dp[0][sum];
+	}
+};
+/*
+If N = size of array, and a given 'sum', then:
+TC-> O(N * sum)
+SC-> DP (2D vector): O(N * sum)
+*/

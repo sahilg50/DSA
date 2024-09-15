@@ -1,0 +1,33 @@
+// https://www.geeksforgeeks.org/problems/nth-node-from-end-of-linked-list/1?page=1&company=Amazon&difficulty=Easy,Medium,Hard&status=unsolved&sortBy=submissions
+
+
+// Approach 1: Optimal (By finding the size of the linked list)
+class Solution {
+  public:
+    int getKthFromLast(Node *head, int k) {
+        
+        // Find the size of the linked list
+        Node *temp = head;
+        int size = 0;
+        while(temp != NULL){
+            temp = temp->next;
+            size += 1;
+        }
+        
+        // If k is greater than size of linked list, return -1
+        if(k > size) return -1;
+        
+        // Put k = size - k, and start iterating from the beginning.
+        temp = head;
+        k = size - k;
+        while(k--) temp = temp->next;
+        
+        // Return the value;
+        return temp->data;
+    }
+};
+/*
+If N = size of linked list, then:
+TC-> Find the size: O(N) + Find the (size - k + 1)th node: O(N)
+SC-> O(1)
+*/

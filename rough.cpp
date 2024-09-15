@@ -8,12 +8,10 @@ using namespace std;
 
 int main()
 {
-    vector<int> dp = {1, 2, 2, 3, 4};
-    dp = {0};
-    for (auto num : dp)
+    int i = 1;
+    while (i--)
     {
-        num = 0;
-        cout << num;
+        cout << "Hello" << " " << i;
     }
     return 0;
 }
