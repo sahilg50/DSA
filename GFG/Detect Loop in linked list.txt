@@ -1,0 +1,56 @@
+// https://www.geeksforgeeks.org/problems/detect-loop-in-linked-list/1?page=1&company=Amazon&difficulty=Easy,Medium,Hard&status=unsolved&sortBy=submissions
+
+
+// Approach 1: Brute force (unordered_set)
+class Solution {
+  public:
+    // Function to check if the linked list has a loop.
+    bool detectLoop(Node* head) {
+        
+        unordered_set<Node *> S;
+        
+        while(head != NULL){
+            if(S.find(head) != S.end()) return true;
+            
+            S.insert(head);
+            head = head->next;
+        }
+        
+        return false;
+    }
+};
+/*
+If N = number of nodes in the linked list, then:
+TC-> Iterate: O(N) * Search in S (unordered_set): O(1) (avg case)
+SC-> O(N)
+*/
+
+
+// Approach 2: Optimal (Floyd's cycle detection algorithm)
+class Solution {
+  public:
+    // Function to check if the linked list has a loop.
+    bool detectLoop(Node* head) {
+        
+        Node *slow = head;
+        Node *fast = head;
+        
+        while(fast != NULL && fast->next != NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+            
+            if(slow == fast) return true;;
+        }
+        return false;
+    }
+};
+/*
+If N = number of nodes, then:
+TC-> O(N)
+SC-> O(1)
+
+If the list has N nodes, then in <= N steps, either the fast pointer will find the end of the list, or there is a loop and the slow pointer will be in the loop.
+
+Lets say the loop is of length M <= N: Once the slow pointer is in the loop, both the fast and slow pointers will be stuck in the loop forever. Each step, the distance between the fast and the slow pointers will increase by 1. When the distance is divisible by M, then the fast and slow pointers will be on the same node and the algorithm terminates. The distance will reach a number divisible by M in <= M steps.
+*/
+
