@@ -1,0 +1,29 @@
+// https://www.geeksforgeeks.org/problems/maximum-product-subarray3604/1?page=1&company=Amazon&difficulty=Easy,Medium,Hard&status=unsolved&sortBy=submissions
+
+
+// Approach 1: Optimal
+class Solution{
+public:
+	// Function to find maximum product sub-array
+	long long maxProduct(vector<int> arr, int n) {
+	    
+	    long long maxi = INT_MIN;
+	    
+	    long long L = 0, R = 0;
+	    for(int i=0; i<n; i++){
+	        if(L == 0) L = 1;
+	        if(R == 0) R = 1;
+	        
+	        L *= arr[i];
+	        R *= arr[n-i-1];
+	        maxi = max(maxi, max(L, R));
+	    }
+	    
+	    return maxi;
+	}
+};
+/*
+If N = size of array, then:
+TC-> O(2*N)
+SC-> O(1)
+*/
