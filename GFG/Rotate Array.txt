@@ -1,0 +1,22 @@
+// https://www.geeksforgeeks.org/problems/rotate-array-by-n-elements-1587115621/1?page=1&company=Amazon&difficulty=Easy,Medium,Hard&status=unsolved&sortBy=submissions
+
+
+// Approach 1: Brute Force (Using another array)
+class Solution{
+public:
+    //Function to rotate an array by d elements in counter-clockwise direction. 
+    void rotateArr(int arr[], int d, int n){
+        
+        int temp[n];
+        for(int i=0; i<n; i++){
+            temp[i] = arr[(i+d)%n];
+        }
+        
+        for(int i=0; i<n; i++) arr[i] = temp[i];
+    }
+};
+/*
+If N = size of array, then:
+TC-> Create temp (array): O(N) + Update arr (array): O(N) 
+SC-> temp (array): O(N)
+*/
