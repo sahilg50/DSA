@@ -1,0 +1,31 @@
+// https://www.geeksforgeeks.org/problems/finding-middle-element-in-a-linked-list/1?page=1&company=Amazon&difficulty=Easy,Medium,Hard&status=unsolved&sortBy=submissions
+
+
+// Approach 1: Optimal (slow-fast pointer)
+class Solution {
+  public:
+    /* Should return data of middle node. If linked list is empty, then -1 */
+    int getMiddle(Node* head) {
+        
+        // If linked list is empty, return -1
+        if(head == NULL) return -1;
+        
+        // If only 1 node, then return that node.
+        if(head->next == NULL) return head->data;
+        
+        
+        Node *slow = head;
+        Node *fast = head;
+        while(fast != NULL && fast->next != NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        
+        return slow->data;
+    }
+};
+/*
+If N = number of nodes in the linked list, then:
+TC-> O(N)
+SC-> O(1)
+*/
