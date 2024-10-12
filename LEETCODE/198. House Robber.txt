@@ -1,0 +1,122 @@
+// https://leetcode.com/problems/house-robber/description/
+
+
+// Approach 1: Recursion
+class Solution {
+private:
+    int util(int ind, vector<int> &nums, int n){
+        // Base case
+        if(ind >= n) return 0;
+
+        // Perform all operations
+        int rob = 0, notRob = 0;
+        rob = nums[ind] + util(ind+2, nums, n);
+        notRob = util(ind+1, nums, n);
+
+        // Return
+        return max(rob, notRob);
+    }
+public:
+    int rob(vector<int> &nums) {
+        int n = nums.size();
+        return util(0, nums, n);
+    }
+};
+/*
+If N = size of array nums, then:
+TC-> O(2^N)
+SC-> Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: Recursion + Memoization
+class Solution {
+private:
+    int util(int ind, vector<int> &nums, int n, vector<int> &dp){
+        // Base case
+        if(ind >= n) return 0;
+        if(dp[ind] != -1) return dp[ind];
+
+        // Perform all operations
+        int rob = 0, notRob = 0;
+        rob = nums[ind] + util(ind+2, nums, n, dp);
+        notRob = util(ind+1, nums, n, dp);
+
+        // Return
+        return dp[ind] = max(rob, notRob);
+    }
+public:
+    int rob(vector<int> &nums) {
+
+        int n = nums.size();
+        vector<int> dp(n, -1);
+
+        return util(0, nums, n, dp);
+    }
+};
+/*
+If N = size of array nums, then:
+TC-> O(N * 2)
+SC-> Dp Array: O(N) + Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 3: Tabulation
+class Solution {
+public:
+    int rob(vector<int> &nums) {
+
+        int n = nums.size();
+        vector<int> dp(n+2, -1);
+        dp[n] = 0;
+        dp[n+1] = 0;
+
+        for(int ind=n-1; ind>=0; ind--){
+
+            int rob = 0, notRob = 0;
+
+            rob = nums[ind] + dp[ind+2];
+            notRob = dp[ind+1];
+
+            dp[ind] = max(rob, notRob);
+        }
+
+        return dp[0];
+    }
+};
+/*
+If N = size of array nums, then:
+TC-> O(N)
+SC-> Dp Array: O(N)
+*/
+
+
+// Approach 4: Space optimization
+class Solution {
+public:
+    int rob(vector<int> &nums) {
+
+        int n = nums.size();
+        int prev1 = 0;
+        int prev2 = 0;
+
+        for(int ind=n-1; ind>=0; ind--){
+
+            int rob = 0, notRob = 0;
+
+            rob = nums[ind] + prev2;
+            notRob = prev1;
+
+            int curr = max(rob, notRob);
+            prev2 = prev1;
+            prev1 = curr;
+        }
+
+        return prev1;
+    }
+};
+/*
+If N = size of array nums, then:
+TC-> O(N)
+SC-> O(1)
+*/

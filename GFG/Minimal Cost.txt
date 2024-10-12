@@ -30,7 +30,7 @@ public:
 /*
 If N = size of array, and K = maximum number of steps, then:
 TC-> O(K^N)
-SC-> Recursion Stack: O(N)
+SC-> Recursion Stack: O(N)ASC
 */
 
 
@@ -66,7 +66,7 @@ public:
 /*
 If N = size of array, and K = maximum number of steps, then:
 TC-> O(N * K)
-SC-> Dp Array: O(N) + Recursion Stack: O(N)
+SC-> Dp Array: O(N) + Recursion Stack: O(N)ASC
 */
 
 

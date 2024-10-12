@@ -24,7 +24,7 @@ public:
 /*
 If N = size of array, then:
 TC-> O(2^N) TLE
-SC-> Recursion stack: O(N)
+SC-> Recursion stack: O(N)ASC
 */
 
 
@@ -52,8 +52,8 @@ public:
 };
 /*
 If N = size of array, then:
-TC-> O(N)
-SC-> Dp Array: O(N) + Recursion stack: O(N)
+TC-> O(N * 2)
+SC-> Dp Array: O(N) + Recursion stack: O(N)ASC
 */
 
 
