@@ -1,0 +1,100 @@
+// https://www.geeksforgeeks.org/problems/minimal-cost/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=minimal-cost
+
+
+// Approach 1: Recursion
+class Solution {                  
+private:
+    int util(int ind, int k, vector<int> &arr, int n){
+        // Base case
+        if(ind == n-1) return 0;
+        
+        // Perform all operations
+        int jump = INT_MAX;
+        for(int i=1; i<=k; i++){
+            if(ind+i < n){
+                int currJump = abs(arr[ind] - arr[ind+i]) + util(ind+i, k, arr, n);
+                jump = min(jump, currJump);
+            }
+        }
+        
+        // Return
+        return jump;
+    } 
+public:
+    int minimizeCost(int k, vector<int>& arr) {
+        
+        int n = arr.size();
+        return util(0, k, arr, n);
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N)
+SC-> Recursion Stack: O(N)
+*/
+
+
+// Approach 2: Recursion + Memoization
+class Solution {                  
+private:
+    int util(int ind, int k, vector<int> &arr, int n, vector<int> &dp){
+        // Base case
+        if(ind == n-1) return 0;
+        if(dp[ind] != -1) return dp[ind];
+        
+        // Perform all operations
+        int jump = INT_MAX;
+        for(int i=1; i<=k; i++){
+            if(ind+i < n){
+                int currJump = abs(arr[ind] - arr[ind+i]) + util(ind+i, k, arr, n, dp);
+                jump = min(jump, currJump);
+            }
+        }
+        
+        // Return
+        return dp[ind] = jump;
+    } 
+public:
+    int minimizeCost(int k, vector<int>& arr) {
+    
+        int n = arr.size();
+        vector<int> dp(n, -1);
+        
+        return util(0, k, arr, n, dp);
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N)
+SC-> Dp Array: O(N) + Recursion Stack: O(N)
+*/
+
+
+// Approach 3: Tabulation
+class Solution {
+public:
+    int minimizeCost(int k, vector<int>& arr) {
+    
+        int n = arr.size();
+        vector<int> dp(n, -1);
+        dp[n-1] = 0;
+        
+        for(int ind=n-2; ind>=0; ind--){
+            int jump = INT_MAX;
+            for(int i=1; i<=k; i++){
+                if(ind+i < n){
+                    int currJump = abs(arr[ind] - arr[ind+i]) + dp[ind+i];
+                    jump = min(jump, currJump);
+                }
+            }
+            dp[ind] = jump;
+        }
+        
+        return dp[0];
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N)
+SC-> Dp Array: O(N)
+*/
