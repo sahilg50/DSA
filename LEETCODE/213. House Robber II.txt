@@ -1,0 +1,70 @@
+// https://leetcode.com/problems/house-robber-ii/description/
+
+
+// Approach 1: Recursion
+class Solution {
+private:
+    int util(int ind, vector<int> &nums, int n){
+        // Base case
+        if(ind >= n) return 0;
+
+        // Perform all operations
+        int rob = 0, notRob = 0;
+        rob = nums[ind] + util(ind+2, nums, n);
+        notRob = util(ind+1, nums, n);
+
+        // Return
+        return max(rob, notRob);
+    }
+public:
+    int rob(vector<int>& nums) {
+
+        int n = nums.size();
+        if(n==1) return nums[0];
+        
+        return max(util(0, nums, n-1), util(1, nums, n));
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(2^N) + O(2^N) (TLE)
+SC-> Recursion stack: O(N)ASC
+*/
+
+
+// Approach 2: Recursion + Memoization
+class Solution {
+private:
+    int util(int ind, vector<int> &nums, int n, vector<int> &dp){
+        // Base case
+        if(ind >= n) return 0;
+        if(dp[ind] != -1) return dp[ind];
+
+        // Perform all operations
+        int rob = 0, notRob = 0;
+        rob = nums[ind] + util(ind+2, nums, n, dp);
+        notRob = util(ind+1, nums, n, dp);
+
+        // Return
+        return dp[ind] = max(rob, notRob);
+    }
+public:
+    int rob(vector<int>& nums) {
+
+        int n = nums.size();
+        if(n==1) return nums[0];
+
+        vector<int> dp1(n, -1);
+        int robFirst = util(0, nums, n-1, dp1);
+        
+        vector<int> dp2(n, -1);
+        int robSecond = util(1, nums, n, dp2);
+
+        return max(robFirst, robSecond);
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N * 2) + O(N * 2)
+SC-> Dp1 Array: O(N) + Dp2 Array: O(N) + Recursion stack: O(N)ASC
+*/

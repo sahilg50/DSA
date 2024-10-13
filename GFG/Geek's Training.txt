@@ -1,0 +1,99 @@
+// https://www.geeksforgeeks.org/problems/geeks-training/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=geeks-training
+
+
+// Approach 1: Recursion (TLE)
+class Solution {
+private:
+    int util(int day, int prevSkill, vector<vector<int>> &arr, int n){
+        // Base case
+        if(day >= n) return 0;
+        
+        // Perform all operations
+        int points = 0;
+        for(int currSkill=0; currSkill<3; currSkill++){
+            int currPoints = 0;
+            if(currSkill != prevSkill) currPoints = arr[day][currSkill] + util(day+1, currSkill, arr, n);
+            points = max(points, currPoints);
+        }
+        
+        // Return
+        return points;
+    }
+public:
+    int maximumPoints(vector<vector<int>>& arr, int n) {
+        return util(0, -1, arr, n);
+    }
+};
+/*
+If N = number of days, and M = total number of skills (3 in this case), then:
+TC-> O(M^N) or (3^N) in this case (TLE)
+SC-> Recursion stack: O(N)ASC
+*/
+
+
+// Approach 2: Recursion + Memoization
+class Solution {
+private:
+    int util(int day, int prevSkill, vector<vector<int>> &arr, int n, vector<vector<int>> &dp){
+        // Base case
+        if(day >= n) return 0;
+        if(dp[day][prevSkill+1] != -1) return dp[day][prevSkill+1]; 
+        
+        // Perform all operations
+        int points = 0;
+        for(int currSkill=0; currSkill<3; currSkill++){
+            int currPoints = 0;
+            if(currSkill != prevSkill) currPoints = arr[day][currSkill] + util(day+1, currSkill, arr, n, dp);
+            points = max(points, currPoints);
+        }
+        
+        // Return
+        return dp[day][prevSkill+1] = points;
+    }
+public:
+    int maximumPoints(vector<vector<int>>& arr, int n) {
+        
+        vector<vector<int>> dp(n, vector<int>(4, -1));
+        return util(0, -1, arr, n, dp);
+    }
+};
+/*
+If N = number of days, and M = total number of skills (3 in this case), then:
+TC-> O(M * N) or (3 * N) in this case
+SC-> Dp Array: O(M * N) + Recursion stack: O(N)ASC
+*/
+
+
+// Approach 3: Tabulation
+class Solution {
+public:
+    int maximumPoints(vector<vector<int>>& arr, int n) {
+        
+        vector<vector<int>> dp(n, vector<int>(3, -1));
+        
+        for(int currSkill=0; currSkill<3; currSkill++) dp[0][currSkill] = arr[0][currSkill];
+        
+        for(int day=1; day<n; day++){
+            for(int currSkill=0; currSkill<3; currSkill++){
+                dp[day][currSkill] = 0;
+                int points = 0;
+                for(int prevSkill=0; prevSkill<3; prevSkill++){
+                    int currPoints = 0;
+                    if(currSkill != prevSkill) currPoints = arr[day][currSkill] + dp[day-1][prevSkill];
+                    points = max(points, currPoints);
+                }
+                dp[day][currSkill] = points;
+            }
+        }
+        
+        int maxPoints = 0;
+        for(int i=0; i<3; i++) maxPoints = max(maxPoints, dp[n-1][i]);
+        
+        return maxPoints;
+    }
+};
+/*
+If N = number of days, and M = total number of skills (3 in this case), then:
+TC-> O(M * N) or (3 * N) in this case
+SC-> Dp Array: O(M * N)
+*/
