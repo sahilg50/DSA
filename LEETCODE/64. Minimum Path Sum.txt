@@ -29,7 +29,7 @@ Recursion:
     SC-> Recursion Stack: O(M+N)
 
 With Memoization:
-    TC-> O(M*N)
+    TC-> O(2*M*N)
     SC-> DP Array: O(M*N) + Recursion Stack: O(M+N)ASC
 */
 

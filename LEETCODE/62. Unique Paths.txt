@@ -64,7 +64,7 @@ Right steps(R) = n-1 = 6
 
 Total steps(S): D + R = 8
 
-From total steps(S), we'll pick unique combination of steps at which we'll move down(D), hence the remaining will be move right(R). This results in a unique path every time. So the idea is to have unique combinations by picking D out of S; or conversely have unique combinations by picking R out of 
+From total steps(S), we'll pick unique combination of steps at which we'll move down(D), hence the remaining will be move right(R). This results in a unique path every time. So the idea is to have unique combinations by picking D out of S; or conversely have unique combinations by picking R out of S.
 
 S S S S S S S S
 
