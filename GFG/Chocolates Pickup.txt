@@ -3,28 +3,28 @@
 
 // Approach 1: Recursion + Memoization (Bottom-Up)
 class Solution {
-int util(int i, int j1, int j2, vector<vector<int>> &grid, int m, int n, vector<vector<vector<int>>> &dp){
+int util(int r, int c1, int c2, vector<vector<int>> &grid, int m, int n, vector<vector<vector<int>>> &dp){
     // Base case
-    if(j1<0 || j1>=n || j2<0 || j2>=n) return -1e9;
-    if(i==m-1){
-        if(j1==j2) return grid[i][j1];
-        else return grid[i][j1] + grid[i][j2];
+    if(c1<0 || c1>=n || c2<0 || c2>=n) return -1e9;
+    if(r==m-1){
+        if(c1==c2) return grid[r][c1];
+        else return grid[r][c1] + grid[r][c2];
     }
-    if(dp[i][j1][j2] != -1) return dp[i][j1][j2];
+    if(dp[r][c1][c2] != -1) return dp[r][c1][c2];
     
     // Perform all operations
     int maxChoco = INT_MIN;
     for(int d1=-1; d1<=1; d1++){
         for(int d2=-1; d2<=1; d2++){
             int currChoco = 0;
-            if(j1 == j2) currChoco = grid[i][j1] + util(i+1, j1+d1, j2+d2, grid, m, n, dp);
-            else currChoco = grid[i][j1] + grid[i][j2] + util(i+1, j1+d1, j2+d2, grid, m, n, dp);
+            if(c1 == c2) currChoco = grid[r][c1] + util(r+1, c1+d1, c2+d2, grid, m, n, dp);
+            else currChoco = grid[r][c1] + grid[r][c2] + util(r+1, c1+d1, c2+d2, grid, m, n, dp);
             maxChoco = max(maxChoco, currChoco);
         }
     }
     
     // Return
-    return  dp[i][j1][j2] =maxChoco;
+    return  dp[r][c1][c2] = maxChoco;
 }
 public:
     int solve(int m, int n, vector<vector<int>>& grid) {
