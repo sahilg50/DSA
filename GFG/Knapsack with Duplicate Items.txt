@@ -1,19 +1,22 @@
 // https://practice.geeksforgeeks.org/problems/knapsack-with-duplicate-items4201/1
 
 
-// Approach 1: Recursion(Bottom-Up)(TLE) + Memoization
+// Approach 1: Recursion (Bottom-Up) + Memoization
 class Solution{
 private:
     int util(int ind, int N, int W, int val[], int wt[], vector<vector<int>> &dp){
         
-        if(ind>=N) return 0;
+        // Base case
+        if(ind >= N) return 0;
         
-        if(dp[ind][W]!=-1) return dp[ind][W];
+        if(dp[ind][W] != -1) return dp[ind][W];
         
-        int pick = INT_MIN;
+        // Perform all operations
+        int pick = 0, notPick = 0;
         if(wt[ind]<=W) pick = val[ind] + util(ind, N, W-wt[ind], val, wt, dp);
-        int notPick = util(ind+1, N, W, val, wt, dp);
+        notPick = util(ind+1, N, W, val, wt, dp);
         
+        // Return
         return dp[ind][W] = max(pick, notPick);
     }
 public:
@@ -31,11 +34,11 @@ Recursion:
 
 With Memoization:
     TC-> O(N*W)
-    SC-> DP Array: O(N*W) + Recursion Stack: O(N)ASC
+    SC-> DP Array (2d-vector): O(N*W) + Recursion Stack: O(N)ASC
 */
 
 
-// Approach 2: Tabulation(Top-Down)
+// Approach 2: Tabulation (Top-Down)
 class Solution{
 public:
     int knapSack(int N, int W, int val[], int wt[])
@@ -45,17 +48,22 @@ public:
         for(int ind=N; ind>=0; ind--){
             for(int w=0; w<=W; w++){
                 
-                if(ind>=N) dp[ind][w] = 0;
-                
-                else{
-                    int pick = INT_MIN;
-                    if(wt[ind]<=w) pick = val[ind] + dp[ind][w-wt[ind]];
-                    int notPick = dp[ind+1][w];
-                    
-                    dp[ind][w] = max(pick, notPick);
+                // Base case
+                if(ind >= N){
+                    dp[ind][w] = 0;
+                    continue;
                 }
+                
+                // Perform all operations
+                int pick = 0, notPick = 0;
+                if(wt[ind]<=w) pick = val[ind] + dp[ind][w-wt[ind]];
+                notPick = dp[ind+1][w];
+                
+                // Return
+                dp[ind][w] = max(pick, notPick);
             }
         }
+        
         return dp[0][W];
     }
 };
