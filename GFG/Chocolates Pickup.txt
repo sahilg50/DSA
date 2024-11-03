@@ -3,29 +3,30 @@
 
 // Approach 1: Recursion + Memoization (Bottom-Up)
 class Solution {
-int util(int r, int c1, int c2, vector<vector<int>> &grid, int m, int n, vector<vector<vector<int>>> &dp){
-    // Base case
-    if(c1<0 || c1>=n || c2<0 || c2>=n) return -1e9;
-    if(r==m-1){
-        if(c1==c2) return grid[r][c1];
-        else return grid[r][c1] + grid[r][c2];
-    }
-    if(dp[r][c1][c2] != -1) return dp[r][c1][c2];
-    
-    // Perform all operations
-    int maxChoco = INT_MIN;
-    for(int d1=-1; d1<=1; d1++){
-        for(int d2=-1; d2<=1; d2++){
-            int currChoco = 0;
-            if(c1 == c2) currChoco = grid[r][c1] + util(r+1, c1+d1, c2+d2, grid, m, n, dp);
-            else currChoco = grid[r][c1] + grid[r][c2] + util(r+1, c1+d1, c2+d2, grid, m, n, dp);
-            maxChoco = max(maxChoco, currChoco);
+private:
+    int util(int r, int c1, int c2, vector<vector<int>> &grid, int m, int n, vector<vector<vector<int>>> &dp){
+        // Base case
+        if(c1<0 || c1>=n || c2<0 || c2>=n) return -1e9;
+        if(r==m-1){
+            if(c1==c2) return grid[r][c1];
+            else return grid[r][c1] + grid[r][c2];
         }
+        if(dp[r][c1][c2] != -1) return dp[r][c1][c2];
+        
+        // Perform all operations
+        int maxChoco = INT_MIN;
+        for(int d1=-1; d1<=1; d1++){
+            for(int d2=-1; d2<=1; d2++){
+                int currChoco = 0;
+                if(c1 == c2) currChoco = grid[r][c1] + util(r+1, c1+d1, c2+d2, grid, m, n, dp);
+                else currChoco = grid[r][c1] + grid[r][c2] + util(r+1, c1+d1, c2+d2, grid, m, n, dp);
+                maxChoco = max(maxChoco, currChoco);
+            }
+        }
+        
+        // Return
+        return  dp[r][c1][c2] = maxChoco;
     }
-    
-    // Return
-    return  dp[r][c1][c2] = maxChoco;
-}
 public:
     int solve(int m, int n, vector<vector<int>>& grid) {
         
@@ -37,4 +38,54 @@ public:
 If M = number of rows, n = number of columns, then:
 TC-> O(9 * M*N*N)
 SC-> DP Array (3d vector): O(M*N*N) + Recursion Stack: O(M+N+N)ASC
+*/
+
+
+// Approach 2: Tabulation (Top-Down)
+class Solution {
+public:
+    int solve(int m, int n, vector<vector<int>>& grid) {
+        
+        vector<vector<vector<int>>> dp(m, vector<vector<int>>(n, vector<int>(n, -1)));
+        
+        for(int r=m-1; r>=0; r--){
+            for(int c1=0; c1<n; c1++){
+                for(int c2=0; c2<n; c2++){
+                    // Base case
+                    if(r==m-1){
+                        if(c1==c2) dp[r][c1][c2] = grid[r][c1];
+                        else dp[r][c1][c2] = grid[r][c1] + grid[r][c2];
+                        continue;
+                    }
+                    
+                    // Perform all operations
+                    int maxChoco = INT_MIN;
+                    for(int d1=-1; d1<=1; d1++){
+                        for(int d2=-1; d2<=1; d2++){
+                            
+                            int col1 = c1 + d1;
+                            int col2 = c2 + d2;
+                            int currChoco = 0;
+                            
+                            if(col1 < n && col1 >= 0 && col2 < n && col2 >=0){
+                                if(c1 == c2) currChoco = grid[r][c1] + dp[r+1][col1][col2];
+                                else currChoco = grid[r][c1] + grid[r][c2] + dp[r+1][col1][col2];
+                                maxChoco = max(maxChoco, currChoco);
+                            }
+                        }
+                    }
+                    
+                    // Return
+                    dp[r][c1][c2] = maxChoco;
+                }
+            }
+        }
+        
+        return dp[0][0][n-1];
+    }
+};
+/*
+If M = number of rows, n = number of columns, then:
+TC-> O(9 * M*N*N)
+SC-> DP Array (3d vector): O(M*N*N)
 */
