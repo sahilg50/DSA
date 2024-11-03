@@ -1,0 +1,45 @@
+// https://leetcode.com/problems/partition-equal-subset-sum/description/
+
+
+// Approach 1: Recursion (TLE) (Bottom-Up) + Memoization
+class Solution {
+private:
+    bool util(int ind, int sum, vector<int> &nums, vector<vector<int>> &dp){
+        // Base case
+        if(sum == 0) return true;
+        if(sum < 0 || ind >= nums.size()) return false;
+
+        if(dp[ind][sum] != -1) return dp[ind][sum];
+
+        // Perform all operations
+        int pick = 0, notPick = 0;
+        pick = util(ind+1, sum - nums[ind], nums, dp);
+        notPick = util(ind+1, sum, nums, dp);
+
+        // Return
+        return dp[ind][sum] = (pick || notPick);
+
+    }
+public:
+    bool canPartition(vector<int>& nums) {
+
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        if(sum % 2 == 1) return false;
+
+        int n = nums.size();
+        vector<vector<int>> dp(n, vector<int>((sum/2) + 1, -1));
+
+        return util(0, sum/2, nums, dp);
+    }
+};
+/*
+If N = size(nums), S = sum(nums)/2, then:
+
+Recursion:
+    TC-> O(2^N)
+    SC-> Recursion Stack: O(N)ASC
+
+Memoization:
+    TC-> O(N*S)
+    SC-> DP Array (2d-vector): O(N*S) + Recursion Stack: O(N)ASC
+*/
