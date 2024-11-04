@@ -1,0 +1,34 @@
+// https://leetcode.com/problems/partition-array-into-two-arrays-to-minimize-sum-difference/description/
+
+
+// Approach 1: Recursion (TLE) (Bottom-Up)
+class Solution {
+private:
+    int minAbsoluteDiff = INT_MAX;
+    void util(int ind, int currLen, int currSum, int totalSum, vector<int> &nums){
+        // Base case
+        if(currLen == (nums.size()/2)){
+            int remainSum = totalSum - currSum;
+            minAbsoluteDiff = min(minAbsoluteDiff, abs(currSum - remainSum));
+            return;
+        }
+        if(ind >= nums.size() || currLen > nums.size()/2) return;
+
+
+        // Perform all operations
+        util(ind+1, currLen+1, currSum + nums[ind], totalSum, nums); // Pick
+        util(ind+1, currLen, currSum, totalSum, nums); // Not pick
+    }
+public:
+    int minimumDifference(vector<int>& nums) {
+        int totalSum = accumulate(nums.begin(), nums.end(), 0);
+        util(0, 0, 0, totalSum, nums);
+
+        return minAbsoluteDiff;
+    }
+};
+/*
+If N = size(array), then:
+TC-> O(2^N)
+SC-> Recursion Stack: O(N)ASC
+*/
