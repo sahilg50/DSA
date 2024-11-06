@@ -1,90 +1,76 @@
 // https://www.geeksforgeeks.org/problems/perfect-sum-problem5633/1?page=1&company=Amazon&difficulty=Easy,Medium,Hard&status=unsolved&sortBy=submissions
 
 
-// Approach 1: Recursion (Pick + notPick) (TLE)
+// Approach 1: Recursion (Bottom-Up) (TLE) + Memoization
 class Solution{
 private:
     int mod = 1e9 + 7;
-    
-    int util(int ind, int sum, int arr[], int n){
+    int util(int ind, int sum, int arr[], int n, vector<vector<int>> &dp){
         // Base case
         if(ind >= n) return sum == 0;
-        if(sum < 0) return 0;
+        
         if(dp[ind][sum] != -1) return dp[ind][sum];
         
-        int pick = 0, notPick = 0;
-        pick = util(ind+1, sum-arr[ind], arr, n);
-        notPick = util(ind+1, sum, arr, n);
+        // Perform all operations
+        int take = 0, notTake = 0;
+        if(arr[ind] <= sum) take = util(ind+1, sum-arr[ind], arr, n, dp);
+        notTake = util(ind+1, sum, arr, n, dp);
         
-        return (pick + notPick) % mod;
+        // Return
+        return dp[ind][sum] = ((take + notTake) % mod);
     }
 public:
 	int perfectSum(int arr[], int n, int sum)
 	{
-        return util(0, sum, arr, n);
+	    vector<vector<int>> dp(n, vector<int>(sum+1, -1));
+	    return util(0, sum, arr, n, dp);
 	}
+	  
 };
 /*
-If N = size of array, then:
-TC-> O(2^N)
-SC-> Recursion stack: O(N) ASC
+If N = size(array), and S = sum, then:
+
+Recursion:
+    TC-> o(2^N)
+    SC-> Recursion Stack: O(N)ASC
+    
+With Memoization:
+    TC-> O(N * S)
+    Sc-> Dp Array (2d-vector): O(N * S) + Recursion Stack: O(N)ASC
 */
 
 
-// Approach 2: Recursion + Memoization (Pick + notPick)
+// Approach 2: Tabulation (Top-Down)
 class Solution{
-private:
-    int mod = 1e9 + 7;
-    
-    int util(int ind, int sum, vector<vector<int>> &dp, int arr[], int n){
-        // Base case
-        if(ind >= n) return sum == 0;
-        if(sum < 0) return 0;
-        if(dp[ind][sum] != -1) return dp[ind][sum];
-        
-        int pick = 0, notPick = 0;
-        pick = util(ind+1, sum-arr[ind], dp, arr, n);
-        notPick = util(ind+1, sum, dp, arr, n);
-        
-        return dp[ind][sum] = (pick + notPick) % mod;
-    }
 public:
 	int perfectSum(int arr[], int n, int sum)
 	{
 	    vector<vector<int>> dp(n+1, vector<int>(sum+1, -1));
-        return util(0, sum, dp, arr, n);
-	}
-};
-/*
-If N = size of array, and a given 'sum', then:
-TC-> O(N * sum)
-SC-> DP (2D vector): O(N * sum) + Recursion stack: O(N) ASC
-*/
-
-
-// Approach 3: Tabulation (Pick + notPick)
-class Solution{
-public:
-	int perfectSum(int arr[], int n, int sum)
-	{   
 	    int mod = 1e9 + 7;
 	    
-	    vector<vector<int>> dp(n+1, vector<int>(sum+1, 0));
-	    dp[n][0] = 1;
-	    
-	    for(int ind=n-1; ind>=0; ind--){
+	    for(int ind=n; ind>=0; ind--){
 	        for(int s=0; s<=sum; s++){
-	            int pick = 0, notPick = 0;
-	            if(arr[ind] <= s) pick = dp[ind+1][s-arr[ind]];
-	            notPick = dp[ind+1][s];
-	            dp[ind][s] = (pick + notPick) % mod;
+	            // Base case
+                if(ind >= n){
+                    dp[ind][s] = (s == 0);
+                    continue;
+                } 
+                
+                // Perform all operations
+                int take = 0, notTake = 0;
+                if(arr[ind] <= s) take = dp[ind+1][s-arr[ind]];
+                notTake = dp[ind+1][s];
+                
+                // Return
+                dp[ind][s] = ((take + notTake) % mod);
 	        }
 	    }
-        return dp[0][sum];
+	    
+	    return dp[0][sum];
 	}
 };
 /*
-If N = size of array, and a given 'sum', then:
-TC-> O(N * sum)
-SC-> DP (2D vector): O(N * sum)
+If N = size(array), and S = sum, then:
+TC-> O(N * S)
+SC-> Dp Array (2d-vector): O(N * S)
 */
