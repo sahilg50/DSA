@@ -1,0 +1,86 @@
+// https://www.geeksforgeeks.org/problems/partitions-with-given-difference/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=partitions-with-given-difference
+
+
+// Approach 1: Recursion (Bottom-Up) (TLE) + Memoization 
+class Solution {
+private:
+    int mod = 1e9 + 7;
+    int util(int ind, int diff, int d, vector<int> &arr, int n, int sum, vector<vector<int>> &dp){
+        // Base case
+        if(ind >= n) return (diff == d); 
+        if(dp[ind][sum + diff] != -1) return dp[ind][sum + diff];
+        
+        // Perform all operations
+        int add = 0, minus = 0;
+        add = util(ind+1, diff + arr[ind], d, arr, n, sum, dp);
+        minus = util(ind+1, diff - arr[ind], d, arr, n, sum, dp);
+        
+        // Return
+        return dp[ind][sum + diff] = (add + minus) % mod;
+    }
+    
+public:
+    int countPartitions(int n, int d, vector<int> &arr) {
+        
+        int sum = accumulate(arr.begin(), arr.end(), 0);
+        vector<vector<int>> dp(n+1, vector<int>((sum*2) + 1, -1));
+        
+        return util(0, 0, d, arr, n, sum, dp);
+    }
+};
+/*
+If N = size(array), and S = sum(aray), then:
+
+Recursion: 
+    TC-> O(2^N)
+    SC-> Recursion stack: O(N)ASC
+
+With Memoization:
+    TC-> O(N * S)
+    SC-> Dp Array (2d-vector): O(N * S) + Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: Tabulation (Top-Down)
+class Solution {
+public:
+    int countPartitions(int n, int d, vector<int> &arr) {
+        
+        int mod = 1e9 + 7;
+        
+        int sum = accumulate(arr.begin(), arr.end(), 0);
+        vector<vector<int>> dp(n+1, vector<int>(sum+1, -1));
+        
+        for(int ind=n; ind>=0; ind--){
+            for(int s=0; s<=sum; s++){
+                // Base case
+                if(ind >= n){
+                    dp[ind][s] = (s==0);
+                    continue;
+                }
+                
+                // Perform all operations
+                int take = 0, notTake = 0;
+                if(arr[ind] <= s) take = dp[ind+1][s-arr[ind]];
+                notTake = dp[ind+1][s];
+                
+                // Return
+                dp[ind][s] = (take + notTake) % mod;
+            }
+        }
+        
+        int ans = 0;
+        
+        for(int s1=0; s1<=sum; s1++){
+            int s2 = sum - s1;
+            if((s1-s2) == d) ans += dp[0][s1];
+        }
+        
+        return ans;
+    }
+};
+/*
+If N = size(array), and S = sum(aray), then:
+TC-> O(N * sum)
+SC-> Dp Array (2d-vector): O(N * sum) + Recursion stack: O(N)ASC
+*/
