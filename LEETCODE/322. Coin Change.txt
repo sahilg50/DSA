@@ -11,8 +11,7 @@ private:
         if(dp[ind][amount] != -1) return dp[ind][amount];
 
         int pick = 1e9, notPick = 0;
-        if(coins[ind]<=amount)
-            pick = 1 + util(ind, amount-coins[ind], coins, dp);
+        if(coins[ind]<=amount) pick = 1 + util(ind, amount-coins[ind], coins, dp);
         notPick = util(ind+1, amount, coins,dp);
 
         return dp[ind][amount] = min(pick, notPick);
@@ -30,7 +29,7 @@ public:
 /*
 If N = number of coins, and A = amount, then:
 Recursion:
-    TC-> O(N^A)
+    TC-> O(exponential), because any number of coins can be taken
     SC-> Recursion Stack: O(N)ASC
 
 With Memoization:

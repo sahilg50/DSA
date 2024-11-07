@@ -36,8 +36,8 @@ Recursion:
     SC-> Recursion stack: O(N)ASC
 
 With Memoization:
-    TC-> O(N * S)
-    SC-> Dp Array (2d-vector): O(N * S) + Recursion Stack: O(N)ASC
+    TC-> O(N * S * 2)
+    SC-> Dp Array (2d-vector): O(N * S * 2) + Recursion Stack: O(N)ASC
 */
 
 

@@ -1,25 +1,28 @@
 // https://leetcode.com/problems/target-sum/description/
 
 
-// Approach 1: Recursion(Bottom-Up)(TLE) + Memoization
+// Approach 1: Recursion (Bottom-Up) (TLE) + Memoization
 class Solution {
 private:
     int util(int ind, int currSum, int target, int sum, vector<int> &nums, vector<vector<int>> &dp){
 
+        // Base case
         if(ind==nums.size()) return currSum==target;
 
         if(dp[ind][currSum+sum]!=-1) return dp[ind][currSum+sum];
 
-        int add = util(ind+1, currSum+nums[ind], target, sum, nums, dp);
-        int sub = util(ind+1, currSum-nums[ind], target, sum, nums, dp);
+        // Perform all operations
+        int add = 0, sub = 0;
+        add = util(ind+1, currSum+nums[ind], target, sum, nums, dp);
+        sub = util(ind+1, currSum-nums[ind], target, sum, nums, dp);
 
+        // Return
         return dp[ind][currSum+sum] = add+sub;
     }
 public:
     int findTargetSumWays(vector<int>& nums, int target) {
         int n = nums.size();
-        int sum = 0;
-        for(auto val : nums) sum += abs(val);
+        int sum = accumulate(nums.begin(), nums.end(), 0);
 
         vector<vector<int>> dp(n+1, vector<int>((sum*2)+1, -1));
         return util(0, 0, target, sum, nums, dp);
@@ -32,6 +35,6 @@ Recursion:
     SC-> Recursion Stack: O(N)ASC
 
 With Memoization:
-    TC-> O(N*2*S)
-    SC-> DP Array: O(N*2*S) + Recursion Stack: O(N)ASC
+    TC-> O(N * S * 2)
+    SC-> DP Array: O(N * S * 2) + Recursion Stack: O(N)ASC
 */
