@@ -166,13 +166,13 @@ int main()
     sort(v.begin(), v.end(), greater<int>());
     /*
     Sorts the specified range in descending format. Does not return anything.
-    TC-> O(NlogN)  SC->O(N)
+    TC-> O(N * logN)  SC->O(logN)
     */
 
     sort(v.begin(), v.end());
     /*
     Sorts the specified range in ascending format. Does not return anything.
-    TC-> O(NlogN)  SC->O(N)
+    TC-> O(N * logN)  SC->O(logN)
     */
 
     cout << "\nBinary search on vector: " << binary_search(v.begin(), v.end(), 100);

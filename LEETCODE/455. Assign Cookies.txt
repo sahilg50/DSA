@@ -1,0 +1,28 @@
+// https://leetcode.com/problems/assign-cookies/description/
+
+
+// Approach 1: 2-pointer approach + sorting
+class Solution {
+public:
+    int findContentChildren(vector<int>& g, vector<int>& s) {
+        sort(g.begin(), g.end());
+        sort(s.begin(), s.end());
+
+        int n = g.size(), m = s.size();
+        int i = 0, j = 0, count = 0;
+        while(i<n && j<m){
+            if(g[i] <= s[j]){
+                i++, j++;
+                count++;
+            }
+            else j++;
+        }
+
+        return count;
+    }
+};
+/*
+If N = size(array g), M = size(array s), then:
+TC-> Sort array g: O(N * logN) + Sort array s: O(M * logM)
+SC-> O(logN) + O(logM)
+*/
