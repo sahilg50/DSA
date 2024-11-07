@@ -1,16 +1,18 @@
 // https://leetcode.com/problems/longest-common-subsequence/description/
 
 
-// Approach 1: Recursion(Bottom-Up)(TLE) + Memoization
+// Approach 1: Recursion (Bottom-Up) (TLE) + Memoization
 class Solution {
 private:
     int lcs(int i, int j, const string &text1, const string &text2, vector<vector<int>> &dp){
         
+        // Base case
         if(i>=text1.size() || j>=text2.size()) return 0;
         
         if(dp[i][j]!=-1) return dp[i][j];
 
-        if(text1[i]==text2[j]) return 1 + lcs(i+1, j+1, text1, text2, dp);
+        // Perform all operations
+        if(text1[i]==text2[j]) return dp[i][j] = 1 + lcs(i+1, j+1, text1, text2, dp);
 
         return dp[i][j] = max(lcs(i, j+1, text1, text2, dp), lcs(i+1, j, text1, text2, dp));
     }
@@ -28,24 +30,30 @@ Recursion:
     SC-> Recursion Stack: O(N + M)ASC
 
 With Memoization:
-    TC-> O(N*M)
-    SC-> DP Array: O(N*M) + Recursion Stack: O(N + M)ASC
+    TC-> O(N * M)
+    SC-> DP Array: O(N * M) + Recursion Stack: O(N + M)ASC
 */
 
 
-// Approach 2: Tabulation(Top-Down)
+// Approach 2: Tabulation (Top-Down)
 class Solution {
 public:
     int longestCommonSubsequence(const string &text1, const string &text2) {
+        
         int n = text1.size(), m = text2.size();
         vector<vector<int>> dp(n+1, vector<int>(m+1, -1));
 
         for(int i=n; i>=0; i--){
             for(int j=m; j>=0; j--){
+                
+                // Base case
+                if(i>=n || j>=m){
+                    dp[i][j] = 0;
+                    continue;
+                }
 
-                if(i>=n || j>=m) dp[i][j] = 0;
-        
-                else if(text1[i]==text2[j]) dp[i][j] = 1 + dp[i+1][j+1];
+                // Perform all operations
+                if(text1[i]==text2[j]) dp[i][j] = 1 + dp[i+1][j+1];
 
                 else dp[i][j] = max(dp[i][j+1], dp[i+1][j]);
             }
@@ -55,8 +63,8 @@ public:
 };
 /*
 If N = size of text1, and M = size of text2, then:
-TC-> O(N*M)
-SC-> DP Array: O(N*M)
+TC-> O(N * M)
+SC-> DP Array: O(N * M)
 */
 
 
@@ -64,15 +72,21 @@ SC-> DP Array: O(N*M)
 class Solution {
 public:
     int longestCommonSubsequence(const string &text1, const string &text2) {
+        
         int n = text1.size(), m = text2.size();
-        vector<int> curr(m+1, -1), prev(m+1, -1);
+        vector<int> curr(m+1), prev(m+1);
 
         for(int i=n; i>=0; i--){
             for(int j=m; j>=0; j--){
+                
+                // Base case
+                if(i>=n || j>=m){
+                    curr[j] = 0;
+                    continue;
+                }
 
-                if(i>=n || j>=m) curr[j] = 0;
-        
-                else if(text1[i]==text2[j]) curr[j] = 1 + prev[j+1];
+                // Perform all operations
+                if(text1[i]==text2[j]) curr[j] = 1 + prev[j+1];
 
                 else curr[j] = max(curr[j+1], prev[j]);
             }
@@ -83,7 +97,7 @@ public:
 };
 /*
 If N = size of text1, and M = size of text2, then:
-TC-> O(N*M)
+TC-> O(N * M)
 SC-> Prev Array: O(M) + Curr Array: O(M)
 */
 
