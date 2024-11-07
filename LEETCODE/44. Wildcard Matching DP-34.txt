@@ -1,7 +1,6 @@
 // https://leetcode.com/problems/wildcard-matching/
 
-// Approach 1: Recursion(TLE)(Top-Down) + Memoization 
-
+// Approach 1: Recursion (Top-Down) (TLE) + Memoization 
 class Solution {
 private:
     bool isAllStars(int j, string &p){
@@ -17,6 +16,7 @@ private:
 
         if(dp[i][j]!=-1) return dp[i][j];
 
+        // Perform all operations
         if(s[i]==p[j] || p[j]=='?') return dp[i][j] = util(i-1, j-1, s, p, dp);
         else{
             if(p[j]=='*') return dp[i][j] = (util(i-1, j, s, p, dp) || util(i, j-1, s, p, dp));
@@ -37,33 +37,46 @@ Recursion:
     SC-> Recursion Stack: O(m+n)ASC
 
 With Memoization:
-    TC-> O(m*n)
-    SC-> DP Array: O(m*n) + Recursion Stack: O(m+n)ASC
+    TC-> O(m * n)
+    SC-> DP Array: O(m * n) + Recursion Stack: O(m+n)ASC
 */
 
 
-
-// Approach 2: Tabulation (Bottom Up Approach)
+// Approach 2: Tabulation (Bottom-Up)
 class Solution {
+private:
+    bool isAllStars(int j, string &p){
+        for(int ind=0; ind<=j; ind++) if(p[ind]!='*') return false;
+        return true;
+    }
 public:
     bool isMatch(string s, string p) {
+
         int m = s.size(), n = p.size();
-        vector<vector<bool>> dp(m+1, vector<bool>(n+1, false));
+        vector<vector<bool>> dp(m+2, vector<bool>(n+2, false));
 
-        // Base cases
-        dp[0][0] = true;
-        // All Stars case of recursion solution.
-        for(int j=1; j<=n; j++){
-            if(p[j-1]=='*') dp[0][j] = true;
-            else break;
-        }
+        for(int i=-1; i<=m; i++){
+            for(int j=-1; j<=n; j++){
 
-        for(int i=1; i<=m; i++){
-            for(int j=1; j<=n; j++){
-                if(s[i-1]==p[j-1] || p[j-1]=='?') dp[i][j] = dp[i-1][j-1];
+                // Base case
+                if (i < 0 && j < 0){
+                    dp[i+1][j+1] = true;
+                    continue;
+                }
+                if (i >= 0 && j < 0){
+                    dp[i+1][j+1] = false;
+                    continue;
+                }
+                if (i < 0 && j >= 0){
+                    dp[i+1][j+1] = isAllStars(j, p);
+                    continue;
+                }
+
+                // Perform all operations
+                if(s[i]==p[j] || p[j]=='?') dp[i+1][j+1] = dp[i][j];
                 else{
-                    if(p[j-1]=='*') dp[i][j] = dp[i-1][j] || dp[i][j-1];
-                    else dp[i][j] = false;
+                    if(p[j]=='*') dp[i+1][j+1] = (dp[i][j+1] || dp[i+1][j]);
+                    else dp[i+1][j+1] = false;
                 }
             }
         }
@@ -72,6 +85,6 @@ public:
 };
 /*
 If m = size(s), and n = size(p), then:
-TC-> O(m*n)
-SC-> DP Array: O(m*n)
+TC-> O(m * n)
+SC-> DP Array: O(m * n)
 */
