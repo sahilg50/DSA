@@ -1,0 +1,73 @@
+// https://www.geeksforgeeks.org/problems/longest-common-substring1452/1
+
+
+// Approach 1: Recursion (Top-Down) (TLE)
+class Solution {
+private:
+    int util(int i, int j, string &s1, string &s2, int count){
+        // Base case
+        if(i == -1 || j == -1) return count;
+        
+        // Perform all operations
+        int same = 0, notSame = 0;
+        if(s1[i] == s2[j]) same = util(i-1, j-1, s1, s2, count+1);
+        notSame = max(util(i-1, j, s1, s2, 0), util(i, j-1, s1, s2, 0));
+        
+        // Return
+        return max(same, notSame);
+    }
+public:
+    int longestCommonSubstr(string s1, string s2) {
+        
+        int m = s1.size();
+        int n = s2.size();
+        
+        return util(m-1, n-1, s1, s2, 0);
+    }
+};
+/*
+If M = size(s1), and N = size(s2), then:
+TC-> O(3^M * 3^N)
+SC-> Recursion Stack: O(M + N)ASC
+*/
+
+
+// Approach 2: Tabulation (Bottom-Up)
+class Solution {
+public:
+    int longestCommonSubstr(string s1, string s2) {
+        
+        int m = s1.size();
+        int n = s2.size();
+        
+        vector<vector<int>> dp(m+1, vector<int>(n+1, -1));
+        
+        int ans = 0;
+        
+        for(int i=-1; i<m; i++){
+            for(int j=-1; j<n; j++){
+                // Base case
+                if(i == -1 || j == -1){
+                    dp[i+1][j+1] = 0;
+                    continue;
+                }
+                
+                // Perform all operations
+                // If the characters match
+                if(s1[i] == s2[j]){
+                    dp[i+1][j+1] = dp[i][j] + 1;
+                    ans = max(ans, dp[i+1][j+1]);   
+                }
+                
+                // IF the characters don't match
+                else dp[i+1][j+1] = 0;
+            }
+        }
+        return ans;
+    }
+};
+/*
+If M = size(s1), and N = size(s2), then:
+TC-> O(M * N)
+SC-> DP Array(2d-vector): O(M * N) +  Recursion Stack: O(M + N)ASC
+*/
