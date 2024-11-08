@@ -4,7 +4,7 @@ TOPIC: Abstract Class:
 
     -> An abstract class is one in which there is a declaration but no definition for a member function.
 
-    -> This concept is implemented in C++  by declaring a  member function as virtual and assigning it to zero.
+    -> This concept is implemented in C++  by declaring a member function as virtual and assigning it to zero.
 
 TOPIC: Pure Abstract Class
     -> A pure Abstract class has only abstract member functions and no data or concrete member functions.

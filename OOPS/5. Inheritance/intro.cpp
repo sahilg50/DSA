@@ -21,6 +21,8 @@ TOPIC: Types of Inheritance
 TOPIC: NOTE
     -> Protected and Private members cannot be accessed in the driver function(main function) directly.
 
+    -> Protected members can be accessed directly under inherited class.
+
     -> Private members are never inherited.
 
     -> If publicly inherited, public members will be public and protected members will be protected.
