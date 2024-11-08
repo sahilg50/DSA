@@ -1,54 +1,74 @@
 /*
 TOPIC: Virtual Base Class
-    -> When two or more objects are derived from a common base class, you can prevent multiple copies of the base class from being present in an object derived from those objects by declaring the base class as virtual when it is inherited.
+    -> When multiple classes ('A1' and 'B1'), inherit from a common base class 'Base', and another class 'C2' derives from those multiple classes ('A1' and 'B1'), there is a risk of multiple copies of the base class 'Base' being included in the object of derived class 'C2'. This can lead to ambiguity.
 
-    -> You accomplish this by preceding the base class' name with the keyword virtual when it is inherited.
+    -> To prevent this, virtual inheritance is used. By declaring the base class 'Base' as 'virtual' during inheritance (inheriting class 'A1' and class 'B1' from class 'Base'), you ensure that object of base class 'Base' is only constructed once, and that object is shared in the inheritance hierarchy.
+    This eliminates ambiguity and avoids multiple copies of the base class 'Base'.
 
-    -> This creates a virtual base class, which means there is only one base object. The base object is shared between all objects in the inheritance tree and is only constructed once.
+    -> NOTE: The 'Base' class constructor will only be called once per object('Base' or 'A1' or 'B1' or 'C2') creation.
 
 TOPIC: In this example
-    -> Both derived1 and derived2 have inherited base as virtual, any multiple inheritance involving them will cause only one copy of base to be present.
+    1. 'A1' and 'B1' inherit from 'Base' using virtual inheritance.
 
-    -> Therefore, in derived3, there is only one copy of base and ob.i = 10 is perfectly valid and unambiguous.
+    2. 'C2' inherits from both 'A1' and 'B1' using normal inheritance.
+
+    3. Since 'Base' is inherited virtually by 'A1' and 'B1', therefore 'C2' contains only one copy of 'Base'.
 */
 
 #include <iostream>
 using namespace std;
 
-class base
+class Base
 {
 public:
+    Base()
+    {
+        cout << "\n'Base' class constructor called.";
+    }
     int i;
 };
 
-// derived1 inherits base as virtual.
-class derived1 : virtual public base
+// 'A1' inherits 'Base' as virtual.
+class A1 : virtual public Base
 {
 public:
     int j;
 };
 
-// derived2 inherits base as virtual.
-class derived2 : virtual public base
+// 'B1' inherits 'Base' as virtual.
+class B1 : virtual public Base
 {
 public:
     int k;
 };
 
-//
-class derived3 : public derived1, public derived2
+// 'C2' inherits 'A1' and 'B1' normally
+class C2 : public A1, public B1
 {
 public:
-    int sum;
+    void print()
+    {
+        cout << "\ni: " << i;
+    }
 };
+
 int main()
 {
-    derived3 ob;
-    ob.i = 10; // now unambiguous
-    ob.j = 20;
-    ob.k = 30;
+    C2 obj;
+    cout << "\n\n";
 
-    ob.sum = ob.i + ob.j + ob.k;
-    cout << ob.sum;
+    // Trying to access the data member 'i' derived from class 'A1' and 'B2' without using the scope resolution operator '::' will not throw an error because class 'A' and class 'B' virtually inherited from base class 'Base'. Therefore only one object of base class 'Base' is present in the entire inheritance tree.
+    obj.i = 10;
+    obj.print();
+    cout << "\n\n";
+
+    obj.A1::i = 20;
+    obj.print();
+    cout << "\n\n";
+
+    obj.B1::i = 30;
+    obj.print();
+    cout << "\n\n";
+
     return 0;
 }
