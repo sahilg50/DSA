@@ -4,14 +4,16 @@ TOPIC: Abstract Class:
 
     -> An abstract class is one in which there is a declaration but no definition for a member function.
 
-    -> This concept is implemented in C++  by declaring a member function as virtual and assigning it to zero.
+    -> This concept is implemented in C++ by declaring a member function as virtual and assigning it to zero.
 
 TOPIC: Pure Abstract Class
     -> A pure Abstract class has only abstract member functions and no data or concrete member functions.
 
+    -> A pure abstract class can't be used to create objects so it doesn't have a constructor.
+
     -> A pure abstract class is used to define an interface and is intended to be inherited by concrete classes. It's a way of forcing a contract between the class designer and the users of that class. The users of this class must declare a matching member function for the class to compile.
 
-TOPIC: Points TO Note
+TOPIC: Points To Note
     -> If we do not override the pure virtual function in derived class, then derived class also becomes abstract class.
 
 TOPIC: Use Case

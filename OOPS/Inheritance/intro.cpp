@@ -28,6 +28,10 @@ TOPIC: NOTE
     -> If publicly inherited, public members will be public and protected members will be protected.
 
     -> If we inherit under a protected specifier, public and protected members become protected.
+
+    -> An object in the inheritance heirarchy can access the methods of classes above in the heirarchy, but not the methods of class below in the heirarchy. Suppose the heirarchy looks like:
+        Root <- Level1 <- Level2 <- Level3
+    A Level2 object can access the methods of Level1 and Root based on certain conditions, but it can never access the methods of the Level3.
 */
 
 // Example of hybrid inheritance.
