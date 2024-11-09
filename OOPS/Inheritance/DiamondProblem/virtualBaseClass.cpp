@@ -1,5 +1,15 @@
 /*
 TOPIC: Virtual Base Class
+
+Diamond inheritance structure (problem):
+            Base
+            (i)
+        /          \
+       A1          B1
+      (j)          (k)
+        \          /
+           Hybrid
+
     -> When multiple classes ('A1' and 'B1'), inherit from a common base class 'Base', and another class 'C2' derives from those multiple classes ('A1' and 'B1'), there is a risk of multiple copies of the base class 'Base' being included in the object of derived class 'C2'. This can lead to ambiguity.
 
     -> To prevent this, virtual inheritance is used. By declaring the base class 'Base' as 'virtual' during inheritance (inheriting class 'A1' and class 'B1' from class 'Base'), you ensure that object of base class 'Base' is only constructed once, and that object is shared in the inheritance hierarchy.
@@ -8,6 +18,17 @@ TOPIC: Virtual Base Class
     -> NOTE: The 'Base' class constructor will only be called once per object('Base' or 'A1' or 'B1' or 'C2') creation.
 
 TOPIC: In this example
+
+Diamond inheritance structure (solution):
+            Base
+            (i)
+        /          \
+    virtual     virtual
+       A1          B1
+      (j)          (k)
+        \          /
+           Hybrid
+
     1. 'A1' and 'B1' inherit from 'Base' using virtual inheritance.
 
     2. 'C2' inherits from both 'A1' and 'B1' using normal inheritance.

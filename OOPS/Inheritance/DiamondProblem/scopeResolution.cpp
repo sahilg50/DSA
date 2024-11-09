@@ -1,5 +1,13 @@
 /*
 TOPIC: Using scope resolution operator '::' to access/update ambiguous data members and member functions in the derived class.
+
+Diamond inheritance structure:
+                Shape
+            (dim1, dim2)
+            /           \
+        Square      Rectangle
+            \           /
+               Hybrid
 */
 
 #include <iostream>
