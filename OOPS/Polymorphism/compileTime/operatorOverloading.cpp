@@ -10,11 +10,15 @@ private:
 public:
     ComplexNumber(int real, int imaginary)
     {
+        cout << "\nConstructor called! real: " << real << " imaginary: " << imaginary << endl;
         this->real = real;
         this->imaginary = imaginary;
     }
 
-    void print() { cout << this->real << " + i" << this->imaginary; }
+    void print()
+    {
+        cout << this->real << " + i" << this->imaginary << endl;
+    }
 
     ComplexNumber operator+(const ComplexNumber &c2)
     {
