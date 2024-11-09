@@ -20,50 +20,37 @@ We know that child classes inherit all public data and methods from the parent c
 #include <iostream>
 using namespace std;
 
-class Rectangle
+class Phone
 {
 private:
-    int length, breadth;
-
+protected:
 public:
-    Rectangle() : length(0), breadth(0){};
-    Rectangle(int l, int b) : length(l), breadth(b){};
-
-    void area()
+    int number = 10;
+    void info()
     {
-        cout << "The area of rectangle is: " << length * breadth << endl;
-    }
-
-    void sayHello()
-    {
-        cout << "Hello from Rectangle! " << endl;
+        cout << "\nModel: Phone\nNumber: " << this->number << endl;
     }
 };
 
-class Square : public Rectangle
+class Android : public Phone
 {
 private:
-    int side;
-
+protected:
 public:
-    Square() : side(0){};
-    Square(int s) : side(s){};
+    int number = 12345;
 
-    void area()
+    // Overriding the info() function.
+    void info()
     {
-        cout << "The area of sqaure is: " << side * side << endl;
+        cout << "\nModel: Android\nAndroid number: " << this->number;
+        cout << "\nBase number: " << this->Phone::number << endl;
     }
 };
 
 int main()
 {
-
-    Rectangle r(2, 4);
-    r.area();
-    r.sayHello();
-
-    Square s(3);
-    s.area();
-    s.sayHello();
+    Android device;
+    device.info();
+    cout << device.Phone::number << endl;
     return 0;
 }
