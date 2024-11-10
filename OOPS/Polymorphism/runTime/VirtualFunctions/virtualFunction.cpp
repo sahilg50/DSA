@@ -1,24 +1,32 @@
 /*
 https://www.youtube.com/watch?v=BuWehV6sD1c
 
-Both virtual functions and pure virtual functions are used in C++ to achieve runtime polymorphism, but they differ in functionality and purpose.
-
 TOPIC: Virtual Function
 
-    -> A virtual function is a member function in a base class that can be overridden in derived classes. It provides a mechanism for dynamic dispatch, meaning the function to be called is determined at runtime based on the type of the object.
+    -> A virtual function is a member function which is declared and defined within a base class and is overridden (re-defined and re-declared) by a derived class.
 
-    -> A virtual function can have a body in the base class.
+    -> It provides a mechanism for dynamic dispatch, meaning the function to be called is determined at runtime based on the type of the object. It is mainly used to achieve runtime polymorphism.
 
-    -> Derived classes may or may not override the virtual function.
+    -> Derived classes may or may not override the virtual function. If not overridden, the base class function is called.
 
-    -> If not overridden, the base class function is called.
+    -> When you refer to a derived class object using a pointer or a reference to the base class, you can call a virtual function for that object and execute the derived class’s version of the function.
 
-    -> Base class object can be created.
+    -> A virtual function can be a friend function of another class.
+
+    -> A class may have virtual destructor but it cannot have a virtual constructor.
+
+    -> Virtual functions cannot be static.
+
+NOTE: We cannot create an object of the abstract class.
+    -> An abstract class contains at least one pure virtual function(abstract method). It can include data members, non-abstract methods (virtual or non-virtual functions, but with a method body), and even a constructor.
+
+-> Q. Why do we declare functions are virtual functions while function overriding?
+    Ans: Virtual functions ensure that the correct function is called for an object, regardless of the type of reference (or pointer) used for function call.
 
 
 TOPIC: Inheritance Heirarchy
 
-                        Base
+                      Shape
                 (virtual display())
                 /       |          \
             Square    Circle    Rectangle

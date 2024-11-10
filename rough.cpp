@@ -21,6 +21,8 @@ public:
     {
         cout << "\nBase member function called!";
     }
+
+    virtual void memberFunction2() = 0;
 };
 
 class Derived : public Base
@@ -47,5 +49,7 @@ public:
 
 int main()
 {
+    Base base;
+    base.memberFunction2();
     return 0;
 }
