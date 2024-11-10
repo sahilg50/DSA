@@ -1,7 +1,7 @@
 /*
 https://www.youtube.com/watch?v=BuWehV6sD1c
 
-TOPIC: Virtual Function
+TOPIC: Virtual Function (Virtual Non-Abstract Method)
 
     -> A virtual function is a member function which is declared and defined within a base class and is overridden (re-defined and re-declared) by a derived class.
 
@@ -16,6 +16,8 @@ TOPIC: Virtual Function
     -> A class may have virtual destructor but it cannot have a virtual constructor.
 
     -> Virtual functions cannot be static.
+
+    -> In C++11, the 'override' keyword is not required in the derived class when overriding a virtual function declared and defined in the base class.
 
 NOTE: We cannot create an object of the abstract class.
     -> An abstract class contains at least one pure virtual function(abstract method). It can include data members, non-abstract methods (virtual or non-virtual functions, but with a method body), and even a constructor.

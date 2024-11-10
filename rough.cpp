@@ -4,6 +4,7 @@ using namespace std;
 class Base
 {
 public:
+    int a;
     // Constructor
     Base()
     {
@@ -22,7 +23,7 @@ public:
         cout << "\nBase member function called!";
     }
 
-    virtual void memberFunction2() = 0;
+     void memberFunction2() = 0;
 };
 
 class Derived : public Base
