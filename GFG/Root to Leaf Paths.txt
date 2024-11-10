@@ -1,0 +1,45 @@
+// https://www.geeksforgeeks.org/problems/root-to-leaf-paths/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=root-to-leaf-paths
+
+
+// Approach 1: Optimal
+class Solution {
+private:
+    void util(Node *node, vector<int> &currPath, vector<vector<int>> &allPaths){
+        
+        // Base case
+        if(!node->left && !node->right){
+            currPath.push_back(node->data);
+            allPaths.push_back(currPath);
+            return;
+        }
+        
+        // Perform all operations
+        currPath.push_back(node->data);
+        
+        if(node->left){
+            util(node->left, currPath, allPaths);
+            currPath.pop_back();
+        }
+        
+        if(node->right){
+            util(node->right, currPath, allPaths);
+            currPath.pop_back();
+        }
+    }
+    
+public:
+    vector<vector<int>> Paths(Node* root) {
+        
+        vector<int> currPath;
+        vector<vector<int>> allPaths;
+        
+        util(root, currPath, allPaths);
+        
+        return allPaths;
+    }
+};
+/*
+If N = number of nodes of the binary tree, then:
+TC-> O(N)
+SC-> currPath (1d-vector): O(N) + Recursion stack: O(N)ASC
+*/

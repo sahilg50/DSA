@@ -6,7 +6,7 @@ class Solution {
   public:
     vector<int> bottomView(Node *root) {
         
-        map<int, int> M;
+        map<int, int> M;    // <Node, vertical index>
         
         queue<pair<Node *, int>> Q;
         if(root) Q.push({root, 0});

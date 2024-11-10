@@ -7,7 +7,7 @@ class Solution {
     vector<int> leftView(Node *root) {
         
         vector<int> result;
-        map<int, int> M;
+        map<int, int> M;    // <Node, horizontal index>
         
         queue<pair<Node *, int>> Q;
         if(root) Q.push({root, 0});

@@ -8,7 +8,7 @@ class Solution
     //from left to right in Binary Tree.
     vector<int> topView(Node *root)
     {
-        map<int, int> M;
+        map<int, int> M;    // <Node, vertical index>
         
         queue<pair<Node*, int>> Q;
         if(root) Q.push({root, 0});
