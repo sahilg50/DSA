@@ -2,32 +2,33 @@
 
 
 // Approach 1: Optimal (Level Order Traversal) (Queue + Map) 
-vector<int> leftView(Node *root)
-{
-    vector<int> result;
-    map<int, int> M;
-    
-    queue<pair<Node *, int>> Q;
-    if(root) Q.push({root, 0});
-    
-    while(!Q.empty()){
-        auto temp = Q.front();
-        Q.pop();
+class Solution {
+  public:
+    vector<int> leftView(Node *root) {
         
-        Node *node = temp.first;
-        int level = temp.second;
+        vector<int> result;
+        map<int, int> M;
         
-        if(M.find(level) == M.end()) M[level] = node->data;
+        queue<pair<Node *, int>> Q;
+        if(root) Q.push({root, 0});
         
-        if(node->left) Q.push({node->left, level + 1});
-        if(node->right) Q.push({node->right, level + 1});
+        while(!Q.empty()){
+            auto temp = Q.front();
+            Q.pop();
+            
+            Node *node = temp.first;
+            int level = temp.second;
+            
+            if(M.find(level) == M.end()) M[level] = node->data;
+            
+            if(node->left) Q.push({node->left, level + 1}); 
+            if(node->right) Q.push({node->right, level + 1});
+        }
         
+        for(auto it : M) result.push_back(it.second);
+        return result;
     }
-    
-    for(auto it : M) result.push_back(it.second);
-    
-    return result;
-}
+};
 /*
 If N = number of nodes in the binary tree, then:
 TC-> Level Order Traversal: O(N) + Insert into Map: O(logN!)

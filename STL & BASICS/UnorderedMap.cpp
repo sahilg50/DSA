@@ -14,7 +14,7 @@ int main()
     TOPIC: Difference between maps and unordered_map
     In unordered_map, the elements are inserted on the basis of the hash value of the key, calculated using hash function.
     In map, the elements are inserted on the basis of the comparison of the key.
-    Therefore, key values that are not hashable, like "vector", "sets" can be a part of map but not unordered_map.
+    Therefore, key values that cannot be hashed, like "vector", "sets" can be a part of map but not unordered_map.
     */
 
     /*

@@ -21,7 +21,7 @@ public:
 /*
 If N = number of nodes, then:
 TC-> O(N)
-SC-> Recursion Stack: O(N) ASC + Ans: O(N) ASC
+SC-> Recursion Stack: O(N)ASC + Ans: O(N)ASC
 */
 
 
@@ -47,5 +47,5 @@ public:
 };
 /*
 TC-> O(N)
-SC-> Stack: O(N) + Ans: O(N) ASC
+SC-> Stack: O(N) + Ans: O(N)ASC
 */

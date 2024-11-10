@@ -7,6 +7,8 @@ TOPIC: Pure Virtual Function (Virtual Abstract Method)
     -> An object of the abstract class cannot be instantiated.
 
     -> Any derived class must provide its own implementation of the pure virtual function. If a derived class does not implement the pure virtual function, it also becomes an abstract class.
+
+    -> Pure specifier '= 0' is allowed only on virtual functions.
 */
 
 #include <iostream>
