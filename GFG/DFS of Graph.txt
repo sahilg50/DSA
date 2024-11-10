@@ -3,60 +3,64 @@
 
 // Approach 1: DFS using Recursion
 class Solution {
-private:
-    void dfs(int node, vector<int> adj[], int vis[], vector<int> &ls){
+private:    
+    void dfs(int node, int vis[], vector<vector<int>> &adj, vector<int> &ans){
         vis[node] = 1;
-        ls.push_back(node);
+        ans.push_back(node);
         
-        for(auto it: adj[node]){
+        for(it : adj[node]){
             if(!vis[it]){
-                dfs(it, adj, vis, ls);
+                dfs(it, vis, adj, ans);
             }
         }
     }
 public:
-    vector<int> dfsOfGraph(int V, vector<int> adj[]) {
-        int vis[V] = {0};
-        int start = 0;
-        vector<int> ls;
-        dfs(start, adj, vis, ls);
+    // Function to return a list containing the DFS traversal of the graph.
+    vector<int> dfsOfGraph(vector<vector<int>>& adj) {
+        
+        int n = adj.size();
+        int vis[n] = {0};
+        vector<int> ans;
+        
+        dfs(0, vis, adj, ans);
         return ls;
     }
 };
 /*
 If V = number of vertices and E = number of edges then: 
 TC-> O(V) + O(2*E)
-SC-> Vis: O(V) + Recursion Stack: O(V)ASC + ls: O(V)ASC
+SC-> Vis: O(V) + Recursion Stack: O(V)ASC + ans: O(V)ASC
 */
 
 
 // Approach 2: DFS using Stack
 class Solution {
-  public:
+public:
     // Function to return a list containing the DFS traversal of the graph.
-    vector<int> dfsOfGraph(int V, vector<int> adj[]) {
+    vector<int> dfsOfGraph(vector<vector<int>>& adj) {
         
-        vector<int> dfs, vis(V, 0);
+        int n = adj.size();
+        int vis[n] = {0};
         stack<int> S;
         
-        int src = 0;
-        S.push(src);
+        S.push(0);
+        
+        vector<int> ans;
         
         while(!S.empty()){
-            int src = S.top(); S.pop();
+            int node = S.top(); S.pop();
             
-            if(!vis[src]){
-                dfs.push_back(src);
-                vis[src] = 1;
+            if(!vis[node]){
+                vis[node] = 1;
+                ans.push_back(node);
             }
             
-            for(auto node=adj[src].rbegin(); node!=adj[src].rend(); node++){
-                if(!vis[*node]){
-                   S.push(*node);
+            for(auto it=adj[node].rbegin(); it!=adj[node].rend(); it++){
+                if(!vis[*it]){
+                    S.push(*it);
                 }
             }
         }
-        
-        return dfs;
+        return ans;
     }
 };
