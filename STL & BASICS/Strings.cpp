@@ -9,6 +9,17 @@ int main()
 {
 
     /*
+    TOPIC: Create a string
+    */
+
+    // String with all null characters
+    int n = 10;
+    string D(n, '\0');
+
+    // String with predefined character
+    string C(n, 'a');
+
+    /*
     Topic: difference between getline and cin.
     -> If we enter the string: "    Hello     World" using cin, only "hello" is stored and the remaining string is taken as input in the next input command, in case 1: getline() and in case 2: cin.
 
