@@ -1,0 +1,50 @@
+// https://leetcode.com/problems/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/?envType=daily-question&envId=2025-02-19
+
+
+// Approach 1: Backtracking
+class Solution {
+private:
+    void generateAllHappyStrings(int n, string currentString, vector<string> &happyStrings){
+
+        /*
+        Base case: If the current string has reached the desired length, then add it to the list
+        */
+        if(currentString.size() == n){
+            happyStrings.push_back(currentString);
+            return;
+        }
+
+        // Try adding each character('a', 'b', 'c') to the current string
+        for(char currentChar = 'a'; currentChar <= 'c'; currentChar++){
+            // Skip the current character if it is same as the last character
+            if(currentString.size() > 0 && currentString.back() == currentChar) continue;
+
+            // Add the next character to the string;
+            currentString.push_back(currentChar);
+            generateAllHappyStrings(n, currentString, happyStrings);
+            
+            // Backtrack
+            currentString.pop_back();
+        }
+    }
+public:
+    string getHappyString(int n, int k) {
+        string currentString = "";
+        vector<string> happyStrings;
+
+        // Generate all happy strings
+        generateAllHappyStrings(n, currentString, happyStrings);
+
+        if(happyStrings.size() < k) return "";
+        
+        return happyStrings[k-1];
+
+    }
+};
+/*
+If N = maximum size of string, then:
+TC-> O(3 * (2^(N-1)))
+In the backtracking, we explore 3 options for the first character of the string and 2 options for the next character at each of the following steps.
+
+SC-> happyStrings (vector): O(3 * (2^(N-1)) * N) + Recursion Stack: O(N)ASC
+*/
