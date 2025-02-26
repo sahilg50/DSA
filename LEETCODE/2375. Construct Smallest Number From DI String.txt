@@ -1,0 +1,32 @@
+// https://leetcode.com/problems/construct-smallest-number-from-di-string/description/?envType=daily-question&envId=2025-02-18
+
+
+// Approach 1: Stack
+class Solution {
+public:
+    string smallestNumber(string &pattern) {
+        stack<char> S;
+        string num = "";
+        
+        int n = pattern.size();
+        for(int ind=0; ind<=n; ind++){
+            // Push the next number onto the stack
+            S.push('1' + ind);
+
+            // If 'I' is encountered or we reach the end, pop all stack elements
+            if(ind == n || pattern[ind] == 'I'){
+                while(!S.empty()){
+                    num.push_back(S.top());
+                    S.pop();
+                }
+            }
+        }
+
+        return num;
+    }
+};
+/*
+If N = size of pattern, then:
+TC-> O(N)
+SC-> S (Stack): O(N) + num (String): O(N)ASC
+*/
