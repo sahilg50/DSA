@@ -167,7 +167,7 @@ int main()
     /*
     Sorts the specified range in descending format. Does not return anything.
     TC-> O(N * logN)  SC->Recursion Stack: O(logN)ASC
-    NOTE: Sort() uses Intro Sort which is a combination of Quick Sort, Heap Sort, and Insertion Sort. It ensures that the recursion depth is bounded by O(log N) by limiting the depth of Quick Sort and switching to Heap Sort when necessary.
+    NOTE: Sort() uses Intro Sort which is a combination of Quick Sort, Heap Sort, and Insertion Sort. It ensures that the recursion depth is bounded by O(log N) by limiting the depth of Quick Sort and switching to Heap Sort when necessary. The time complexity of heat sort is O(N * logN) in both the average and worst cases.
     */
 
     sort(v.begin(), v.end());
