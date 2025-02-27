@@ -1,0 +1,44 @@
+// https://leetcode.com/problems/length-of-longest-fibonacci-subsequence/description/?envType=daily-question&envId=2025-02-27
+
+
+// Approach 1: Unordered_Map + Nested Loop
+class Solution {
+private:
+    int lenLongestFib(int A, int B, unordered_map<int, bool> &Map){
+
+        int currLen = 0;
+        while(true){
+            int C = A + B;
+            if(Map.contains(C)){
+                currLen++;
+                A = B;
+                B = C;
+            }
+            else break;
+        }
+        
+        return currLen > 0 ? currLen+=2 : 0;
+    }
+public:
+    int lenLongestFibSubseq(vector<int>& arr) {
+        
+        unordered_map<int, bool> Map;
+        for(auto num : arr) Map[num] = true;
+
+        int n = arr.size();
+        int maxLen = 0;
+        for(int a=0; a<n; a++){
+            for(int b=a+1; b<n; b++){
+                int currLen = lenLongestFib(arr[a], arr[b], Map);
+                maxLen = max(maxLen, currLen);
+            }
+        }
+
+        return maxLen;
+    }
+};
+/*
+If N = size of array, then:
+TC-> Create Map(unordered_map): O(N) + Nested Loop: ~= O(N^2)
+SC-> Map(unordered_map): O(N)
+*/
