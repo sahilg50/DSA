@@ -4,9 +4,11 @@ using namespace std;
 
 int main()
 {
-    int n = 10;
-    string name(n, 'a');
-    cout << name;
+    string s = "sahil";
+    string a = s;
+    a.push_back('d');
+    cout<<s<<endl;
+    cout<<a;
 
     return 0;
 }

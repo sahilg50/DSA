@@ -1,0 +1,40 @@
+// https://leetcode.com/problems/longest-palindromic-subsequence/submissions/1561200731/
+
+
+// Approach 1: Recursion(Bottom-Up)(TLE) + Memoization
+// Note: Longest palindromic subsequence is nothing but the LCS between the given string and reversed string.
+class Solution {
+private:
+    int lcs(int i, int j, int m, const string &s, const string &t, vector<vector<int>> &dp){
+        
+        // Base case
+        if(i>=m || j>=m) return 0;
+        
+        if(dp[i][j]!=-1) return dp[i][j];
+
+        // Perform all operations
+        if(s[i]==t[j]) return dp[i][j] = 1 + lcs(i+1, j+1, m, s, t, dp);
+
+        return dp[i][j] = max(lcs(i, j+1, m, s, t, dp), lcs(i+1, j, m, s, t, dp));
+    }
+public:
+    int longestPalindromeSubseq(string &s) {
+
+        string t = s;
+        reverse(t.begin(), t.end());
+        int m = s.size();
+        
+        vector<vector<int>> dp(m+1, vector<int>(m+1, -1));
+        return lcs(0, 0, m, s, t, dp);
+    }
+};
+/*
+If M = size of s, then:
+Recursion:
+    TC-> O(2^M * 2^M), Trying out all the subsequences of both 's' and 'reverse(s)'.
+    SC-> Recursion Stack: O(M + M)ASC
+
+With Memoization:
+    TC-> O(M * M)
+    SC-> DP Array: O(N * M) + Recursion Stack: O(N + M)ASC
+*/
