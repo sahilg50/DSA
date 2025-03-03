@@ -10,7 +10,7 @@ private:
         
         if(dp[i][j]!=-1) return dp[i][j];
 
-        if(S1[i]==S2[j]) return 1 + lcs(i+1, j+1, S1, S2, dp);
+        if(S1[i]==S2[j]) return dp[i][j] = 1 + lcs(i+1, j+1, S1, S2, dp);
 
         return dp[i][j] = max(lcs(i, j+1, S1, S2, dp), lcs(i+1, j, S1, S2, dp));
     }

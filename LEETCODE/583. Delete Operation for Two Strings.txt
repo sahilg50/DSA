@@ -10,7 +10,7 @@ private:
         
         if(dp[i][j]!=-1) return dp[i][j];
 
-        if(word1[i]==word2[j]) return 1 + lcs(i+1, j+1, word1, word2, dp);
+        if(word1[i]==word2[j]) return dp[i][j] = 1 + lcs(i+1, j+1, word1, word2, dp);
 
         return dp[i][j] = max(lcs(i, j+1, word1, word2, dp), lcs(i+1, j, word1, word2, dp));
     }
