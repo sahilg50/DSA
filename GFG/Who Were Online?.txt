@@ -1,0 +1,27 @@
+// https://practice.geeksforgeeks.org/contest/gfg-weekly-196-rated-contest/problems
+
+
+// Approach 1: 2 Pointers
+// https://www.youtube.com/watch?v=2Lp0bupWTBs
+
+class Solution {
+  public:
+    int findMinMembers(vector<int> &a, vector<int> &b) {
+        
+        int n = a.size();
+        int i=n-1, j=n-1;
+        while(i>=0){
+            if(a[i] == b[j]){
+                i--, j--;
+            }
+            else i--;
+        }
+        
+        return j+1;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N)
+SC-> O(1)
+*/
