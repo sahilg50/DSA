@@ -1,0 +1,32 @@
+// https://leetcode.com/problems/check-if-number-is-a-sum-of-powers-of-three/?envType=daily-question&envId=2025-03-04
+
+
+// Approach 1: Backtracking
+// Solution: Editorial
+class Solution {
+private:
+    bool util(int power, int n){
+        // Base case
+        if(n == 0) return true;
+        if(n < pow(3, power)) return false;
+
+        // Perform all operations
+        // Option 1: Include the current power of 3 and subtract from it.
+        bool addPower = util(power + 1, n - pow(3, power));
+
+        // Option 2: Skip the current power of 3 and try with the next power.
+        bool skipPower = util(power + 1, n);
+
+        // Return 
+        return addPower || skipPower;
+    }
+public:
+    bool checkPowersOfThree(int n) {
+        return util(0, n);
+    }
+};
+/*
+TC -> O(2^(logN to base 3))
+SC-> O(logN to base 3)
+For complete explanation, refer to the editorial
+*/
