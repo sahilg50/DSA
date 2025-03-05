@@ -1,14 +1,11 @@
 #include <iostream>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 int main()
 {
-    string s = "sahil";
-    string a = s;
-    a.push_back('d');
-    cout<<s<<endl;
-    cout<<a;
-
+    cout << INT_MAX << endl;
+    cout << (5 << 1);
     return 0;
 }
