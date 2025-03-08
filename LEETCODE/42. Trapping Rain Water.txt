@@ -1,6 +1,5 @@
 // https://leetcode.com/problems/trapping-rain-water/?envType=daily-question&envId=2024-04-12
 
-
 // Approach 1: Brute Force 
 class Solution {
 private:

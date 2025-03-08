@@ -1,23 +1,35 @@
 #include <iostream>
 #include <string>
-#include <algorithm>
 using namespace std;
+
+string compressedString(string &S)
+{
+
+    int n = S.size();
+    S.push_back('.');
+
+    string compressed = "";
+
+    char ch;
+    int count = 0;
+    for (int ind = 0; ind < n; ind++)
+    {
+        ch = S[ind];
+        count++;
+        if (ch != S[ind + 1])
+        {
+            compressed.append(to_string(count));
+            compressed.push_back(ch);
+            count = 0;
+        }
+    }
+
+    return compressed;
+}
 
 int main()
 {
-    vector<int> vec = {1, 0, 0, 9, 9, 3, 0, 1, 0, 0, -1, 10, 9, 4, 5, 6, 6, 0, 0, 0, 0, -10};
-    int mask = 0;
-    for (int i = 0; i < vec.size(); i++)
-    {
-        if (vec[i] != 0)
-            mask |= (1 << i);
-    }
-
-    for (int i = 0; i < vec.size(); i++)
-    {
-        if (mask & (1 << i))
-            cout << vec[i] << " ";
-    }
-
+    string sample = "1";
+    cout << compressedString(sample);
     return 0;
 }

@@ -1,0 +1,37 @@
+// https://leetcode.com/problems/count-and-say/description/
+
+// Approach 1: Simple Iteration
+class Solution {
+private:
+    string compressedString(string &S){
+
+        int n = S.size();
+        S.push_back('.');
+
+        string compressed = "";
+
+        char ch;
+        int count=0;
+        for(int ind=0; ind<n; ind++){
+            ch = S[ind];
+            count++;
+            if(ch != S[ind+1]){
+                compressed.append(to_string(count));
+                compressed.push_back(ch);
+                count = 0;
+            }
+        }
+        return compressed;
+    }
+
+public:
+    string countAndSay(int n) {
+
+        string S = "1";
+        for(int i=2; i<=n; i++){
+            S = compressedString(S);
+        }
+
+        return S;
+    }
+};
