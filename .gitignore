@@ -2,6 +2,5 @@
 !*/
 !*.*
 *.exe
-tasks.json
 launch.json
 a.out
