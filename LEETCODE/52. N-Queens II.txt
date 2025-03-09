@@ -1,0 +1,71 @@
+// https://leetcode.com/problems/n-queens-ii/description/
+
+// Approach 1: Backtracking
+class Solution {
+private:
+    bool canPlace(int r, int c, int n, vector<vector<int>> &board){
+        // Check column
+        int R=0, C=c;
+        while(R<n){
+            if(board[R][C] == 1) return false;
+            R++;
+        }
+
+        // Check left diagonal
+        R=r, C=c;
+        while(R>=0 && C>=0){
+            if(board[R][C] == 1) return false;
+            R--, C--;
+        }
+
+        R=r, C=c;
+        while(R<n && C<n){
+            if(board[R][C] == 1) return false;
+            R++, C++;
+        }
+
+        // Check right diagonal
+        R=r, C=c;
+        while(R>=0 && C<n){
+            if(board[R][C] == 1) return false;
+            R--, C++;
+        }
+
+        R=r, C=c;
+        while(R<n && C>=0){
+            if(board[R][C] == 1) return false;
+            R++, C--;
+        }
+
+        return true;
+    }
+
+    int util(int r, int n, vector<vector<int>> &board){
+        // Base case
+        if(r >= n) return 1;
+
+        // Perform all operations + backtrack
+        int ans = 0;
+        for(int c=0; c<n; c++){
+            if(canPlace(r, c, n, board)){
+                board[r][c] = 1;
+                ans += util(r+1, n, board);
+                board[r][c] = 0;
+            }
+        }
+
+        return ans;
+    }
+public:
+    int totalNQueens(int n) {
+
+        vector<vector<int>> board(n, vector<int>(n, 0));
+
+        return util(0, n, board);
+    }
+};
+/*
+If N = number of Rows, and number of Columns of the chess board, then:
+TC-> O(2 ^ (N*N))
+SC-> board(2d vector): O(N*N) + Recursion Stack: O(N)ASC
+*/
