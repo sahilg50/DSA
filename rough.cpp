@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <unordered_map>
 using namespace std;
 
 int main()
 {
-    vector<int> vec = {1, 2, 3, 4};
-    cout << 10;
+    unordered_map<string, vector<string>> M;
     return 0;
 }

@@ -1,0 +1,26 @@
+// https://leetcode.com/problems/group-anagrams/description/
+
+// Approach 1: Sorting
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, vector<string>> M;
+        for(const string &str : strs){
+            string temp = str;
+            sort(temp.begin(), temp.end());
+            M[temp].push_back(str);
+        }
+
+        vector<vector<string>> groupedAnagrams;
+        for(auto it : M){
+            groupedAnagrams.push_back(it.second);
+        }
+
+        return groupedAnagrams;
+    }
+};
+/*
+If M = len of strs, and N = avg length of a string, then:
+TC-> O(M * NlogN)
+SC-> Recursion Stack: O(logN)ASC
+*/
