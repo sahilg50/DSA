@@ -5,8 +5,7 @@ using namespace std;
 
 int main()
 {
-    string sample = "";
-    sample.push_back('0' + 1);
-    cout << sample;
+    int x = ((1 << 31));
+    cout << x;
     return 0;
 }
