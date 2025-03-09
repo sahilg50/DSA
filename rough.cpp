@@ -1,22 +1,20 @@
 #include <iostream>
-#include <unordered_set>
-#include <vector>
+#include <map>
 using namespace std;
 
 int main()
 {
-    vector<int> vec;
-    vector<vector<int>> S;
+    vector<int> nums = {1, 2, 3, 4, 5, 5};
+    map<int, int> M;
+    for (auto num : nums)
+        M[num]++;
 
-    for (int i = 1; i < 10; i++)
+    for (auto it : M)
     {
-        vec.push_back(i);
-        S.push_back(vec);
+        cout << type_info(it);
     }
 
-    for (auto s : S)
-    {
-        copy(s.begin(), s.end(), ostream_iterator<int>(cout, " "));
-    }
+    for (auto it : M)
+        cout << it.second << " ";
     return 0;
 }

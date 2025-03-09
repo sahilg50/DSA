@@ -1,7 +1,7 @@
 // https://leetcode.com/problems/combination-sum-ii/description/
 
 
-// Approach 1: Recursion
+// Approach 1: Backtracking
 class Solution {
 private:
     void util(int ind, int target, vector<int> &currCombo, vector<vector<int>> &allCombo, vector<int> &candidates){

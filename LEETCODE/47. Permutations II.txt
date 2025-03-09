@@ -1,0 +1,48 @@
+// https://leetcode.com/problems/permutations-ii/description/
+
+// Approach 1: Map + Backtracking
+class Solution {
+private:
+    void util(map<int, int> &M, vector<int> &currPer, vector<vector<int>> &allPer, int n){
+
+        // Base case
+        if(currPer.size() == n){
+            allPer.push_back(currPer);
+            return;
+        }
+
+        // Perform all operations
+        for(auto it = M.begin(); it != M.end(); ++it){
+            if(it->second > 0){
+
+                currPer.push_back(it->first);
+                it->second -= 1;
+
+                util(M, currPer, allPer, n);
+
+                currPer.pop_back();
+                it->second += 1;
+            }
+        }
+    }
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        
+        int n = nums.size();
+
+        map<int, int> M;
+        for(auto num : nums) M[num] ++;
+
+        vector<int> currPer;
+        vector<vector<int>> allPer;
+
+        util(M, currPer, allPer, n);
+
+        return allPer;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N)
+SC-> Recursion Stack: O(N)ASC
+*/
