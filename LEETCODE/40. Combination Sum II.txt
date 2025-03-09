@@ -1,0 +1,41 @@
+// https://leetcode.com/problems/combination-sum-ii/description/
+
+
+// Approach 1: Recursion
+class Solution {
+private:
+    void util(int ind, int target, vector<int> &currCombo, vector<vector<int>> &allCombo, vector<int> &candidates){
+        // Base case
+        if(target == 0) allCombo.push_back(currCombo);
+        if(target <= 0) return;
+
+        // Perform all operations
+        int prevElement = -1;
+        for( ; ind<candidates.size(); ind++){
+
+            if(candidates[ind] == prevElement) continue;
+
+            currCombo.push_back(candidates[ind]);
+            util(ind+1, target-candidates[ind], currCombo, allCombo, candidates);
+            currCombo.pop_back();
+
+            prevElement = candidates[ind];
+        }
+    }
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+
+        sort(candidates.begin(), candidates.end());
+
+        vector<int> currCombo;
+        vector<vector<int>> allCombo;
+
+        util(0, target, currCombo, allCombo, candidates);
+        return allCombo;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(2^N)
+SC-> Recursion Stack: O(N)ASC
+*/

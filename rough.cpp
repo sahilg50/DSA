@@ -1,35 +1,22 @@
 #include <iostream>
-#include <string>
+#include <unordered_set>
+#include <vector>
 using namespace std;
-
-string compressedString(string &S)
-{
-
-    int n = S.size();
-    S.push_back('.');
-
-    string compressed = "";
-
-    char ch;
-    int count = 0;
-    for (int ind = 0; ind < n; ind++)
-    {
-        ch = S[ind];
-        count++;
-        if (ch != S[ind + 1])
-        {
-            compressed.append(to_string(count));
-            compressed.push_back(ch);
-            count = 0;
-        }
-    }
-
-    return compressed;
-}
 
 int main()
 {
-    string sample = "1";
-    cout << compressedString(sample);
+    vector<int> vec;
+    vector<vector<int>> S;
+
+    for (int i = 1; i < 10; i++)
+    {
+        vec.push_back(i);
+        S.push_back(vec);
+    }
+
+    for (auto s : S)
+    {
+        copy(s.begin(), s.end(), ostream_iterator<int>(cout, " "));
+    }
     return 0;
 }
