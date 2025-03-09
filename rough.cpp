@@ -5,6 +5,8 @@ using namespace std;
 
 int main()
 {
-    unordered_map<string, vector<string>> M;
+    string sample = "";
+    sample.push_back('0' + 1);
+    cout << sample;
     return 0;
 }

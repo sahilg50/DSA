@@ -1,26 +1,59 @@
 // https://leetcode.com/problems/group-anagrams/description/
 
-// Approach 1: Sorting
+// Approach 1: Sorting + Unordered_map
 class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        
         unordered_map<string, vector<string>> M;
-        for(const string &str : strs){
-            string temp = str;
-            sort(temp.begin(), temp.end());
-            M[temp].push_back(str);
+        for(auto s : strs){
+            string originalString = s;
+            sort(s.begin(), s.end());
+            M[s].push_back(originalString);
         }
 
-        vector<vector<string>> groupedAnagrams;
-        for(auto it : M){
-            groupedAnagrams.push_back(it.second);
+        vector<vector<string>> anagrams;
+        for(auto [key, vecOfStrings] : M){
+            anagrams.push_back(vecOfStrings);
         }
 
-        return groupedAnagrams;
+        return anagrams;
     }
 };
 /*
 If M = len of strs, and N = avg length of a string, then:
 TC-> O(M * NlogN)
-SC-> Recursion Stack: O(logN)ASC
+SC-> M(unordered_map): O(M * N)
+*/
+
+
+// Approach 2: Unordered_map
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+
+        unordered_map<string, vector<string>> M;
+        for(auto s : strs){
+
+            string hashString = "";
+
+            vector<int> freq(26, 0);
+            for(auto ch : s) freq[ch - 'a']++;
+
+            for(int i=0; i<26; i++) hashString.push_back('0' + freq[i]);
+            M[hashString].push_back(s);
+        }
+
+        vector<vector<string>> anagrams;
+        for(auto [key, vecOfStrings] : M){
+            anagrams.push_back(vecOfStrings);
+        }
+
+        return anagrams;
+    }
+};
+/*
+If M = len of strs, and N = avg length of a string, then:
+TC-> O(M * N)
+SC-> M(unordered_map): O(M * N)
 */
