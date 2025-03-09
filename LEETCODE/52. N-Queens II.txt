@@ -3,7 +3,8 @@
 // Approach 1: Backtracking
 class Solution {
 private:
-    bool canPlace(int r, int c, int n, vector<vector<int>> &board){
+    // method to check if we can place a queen at (r, c)
+    bool isValid(int r, int c, int n, vector<vector<int>> &board){
         // Check column
         int R=0, C=c;
         while(R<n){
@@ -47,7 +48,7 @@ private:
         // Perform all operations + backtrack
         int ans = 0;
         for(int c=0; c<n; c++){
-            if(canPlace(r, c, n, board)){
+            if(isValid(r, c, n, board)){
                 board[r][c] = 1;
                 ans += util(r+1, n, board);
                 board[r][c] = 0;
@@ -66,6 +67,59 @@ public:
 };
 /*
 If N = number of Rows, and number of Columns of the chess board, then:
-TC-> O(2 ^ (N*N))
+TC-> Recursion: O(N!) * isValid(method): O(N)
 SC-> board(2d vector): O(N*N) + Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: Optimal (Backtracking + Bit-masking)
+class Solution {
+private:
+    // Method to check is we can place the queen at (r, c) using bit-masking
+    bool isValid(int r, int c, int n, int columns, int leftDiagonal, int rightDiagonal){
+
+        if((columns & (1 << c))) return false;
+
+        if((leftDiagonal & (1 << (r+c)))) return false;
+
+        if((rightDiagonal & (1 << (r-c+n)))) return false;
+
+        return true;
+    }
+
+    int util(int r, int n, int columns, int leftDiagonal, int rightDiagonal){
+
+        // Base case
+        if(r >= n) return 1;
+
+        // Perform all operations
+        int ans = 0;
+        for(int c=0; c<n; c++){
+            if(isValid(r, c, n, columns, leftDiagonal, rightDiagonal)){
+                
+                // Place the queen using bit-masking
+                columns |= (1 << c);
+                leftDiagonal |= (1 << (r+c));
+                rightDiagonal |= (1 << (r-c+n));
+                
+                ans += util(r+1, n, columns, leftDiagonal, rightDiagonal);
+
+                // Backtrack (remove the queen using bit-masking)
+                columns &= ~(1 << c);
+                leftDiagonal &= ~(1 << (r+c));
+                rightDiagonal &= ~(1 << (r-c+n));
+            }
+        }
+
+        return ans;
+    }
+public:
+    int totalNQueens(int n) {
+        return util(0, n, 0, 0, 0);
+    }
+};
+/*
+If N = number of Rows, and number of Columns of the chess board, then:
+TC-> OO(N!)
+SC-> Recursion Stack: O(N)ASC
 */
