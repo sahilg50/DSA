@@ -1,0 +1,53 @@
+// https://leetcode.com/problems/spiral-matrix-ii/
+
+// Approach 1: Iterative approach
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+
+        int left = 0, right = n - 1;
+        int top = 0, bottom = n - 1;
+        int num = 1;
+        vector<vector<int>> matrix(n, vector<int>(n, -1));
+
+        while (left <= right && top <= bottom) {
+            // Move Right
+            for (int i = left; i <= right; i++){
+                matrix[top][i] = num;
+                num++;
+            }
+            top++;  // Move top boundary down
+
+            // Move Down
+            for (int i = top; i <= bottom; i++){
+                matrix[i][right] = num;
+                num++;
+            }
+            right--; // Move right boundary left
+
+            // Move Left (Check boundary to avoid duplicate rows)
+            if (top <= bottom) {
+                for (int i = right; i >= left; i--){
+                    matrix[bottom][i] = num;
+                    num++;
+                }
+                bottom--; // Move bottom boundary up
+            }
+
+            // Move Up (Check boundary to avoid duplicate columns)
+            if (left <= right) {
+                for (int i = bottom; i >= top; i--){
+                    matrix[i][left] = num;
+                    num++;
+                }
+                left++; // Move left boundary right
+            }
+        }
+        return matrix;
+    }
+};
+/*
+If N, N are the dimension of the matrix, then:
+TC-> O(N * N)
+SC-> O(1)
+*/

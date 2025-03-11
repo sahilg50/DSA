@@ -1,0 +1,45 @@
+// https://leetcode.com/problems/spiral-matrix/description/
+
+// Approach 1: Iterative approach
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        if (matrix.empty()) return {}; // Handle empty matrix case
+
+        int left = 0, right = matrix[0].size() - 1;
+        int top = 0, bottom = matrix.size() - 1;
+        vector<int> result;
+
+        while (left <= right && top <= bottom) {
+            // Move Right
+            for (int i = left; i <= right; i++)
+                result.push_back(matrix[top][i]);
+            top++;  // Move top boundary down
+
+            // Move Down
+            for (int i = top; i <= bottom; i++)
+                result.push_back(matrix[i][right]);
+            right--; // Move right boundary left
+
+            // Move Left (Check boundary to avoid duplicate rows)
+            if (top <= bottom) {
+                for (int i = right; i >= left; i--)
+                    result.push_back(matrix[bottom][i]);
+                bottom--; // Move bottom boundary up
+            }
+
+            // Move Up (Check boundary to avoid duplicate columns)
+            if (left <= right) {
+                for (int i = bottom; i >= top; i--)
+                    result.push_back(matrix[i][left]);
+                left++; // Move left boundary right
+            }
+        }
+        return result;
+    }
+};
+/*
+If M, N are the dimension of the matrix, then:
+TC-> O(M * N)
+SC-> O(1)
+*/
