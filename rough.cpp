@@ -8,6 +8,6 @@ int main()
     cout << "Hello to feature 3.0";
     cout << "Sample";
     cout << "Hello World";
-    cout << "sample1";
+    cout << "Sample 10";
     return 0;
 }
