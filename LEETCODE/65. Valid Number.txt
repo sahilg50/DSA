@@ -1,0 +1,60 @@
+// https://leetcode.com/problems/valid-number/description/
+
+// Approach 1: Iterative
+class Solution {
+private:
+    bool isValidDecimalOrInteger(string s, bool allowDecimal) {
+        int n = s.size();
+        bool hasDigit = false, hasDot = false;
+
+        for (int i = 0; i < n; i++) {
+            char ch = s[i];
+
+            if (ch == '+' || ch == '-') {
+                if (i != 0) return false; // Sign must be at the start
+            } 
+            else if (ch == '.') {
+                if (!allowDecimal || hasDot) return false; // No multiple dots allowed
+                hasDot = true;
+            } 
+            else if (isdigit(ch)) {
+                hasDigit = true;
+            } 
+            else {
+                return false; // Invalid character
+            }
+        }
+        return hasDigit; // At least one digit is required
+    }
+
+public:
+    bool isNumber(string s) {
+        int n = s.size();
+        int expIndex = -1;
+        string basePart = "", exponentPart = "";
+
+        // Identify exponent ('e' or 'E') and split string
+        for (int i = 0; i < n; i++) {
+            if (s[i] == 'e' || s[i] == 'E') {
+                if (i == 0 || i == n - 1) return false; // 'e' or 'E' cannot be first or last
+                expIndex = i;
+                basePart = s.substr(0, i);
+                exponentPart = s.substr(i + 1);
+                break;
+            }
+        }
+        if (expIndex == -1) basePart = s; // No exponent, entire string is basePart
+
+        // Validate base part (before 'e' or 'E')
+        if (!isValidDecimalOrInteger(basePart, true)) return false;
+
+        // Validate exponent part (if present)
+        if (!exponentPart.empty() && !isValidDecimalOrInteger(exponentPart, false)) return false;
+
+        return true;
+    }
+};
+/*
+TC-> O(N)
+SC-> O(1)ASC
+*/
