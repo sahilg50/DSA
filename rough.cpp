@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
+    cout << "Hello to feature 3.0";
     cout << "Hello World";
-    cout << "Testing the git pull request";
     return 0;
 }
