@@ -5,9 +5,6 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello to feature 3.0";
-    cout << "Sample";
-    cout << "Hello World";
-    cout << "Sample 10";
+    cout << "Hello";
     return 0;
 }
