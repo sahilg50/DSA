@@ -1,0 +1,27 @@
+// https://leetcode.com/problems/plus-one/
+
+// // Approach 1: Reverse Iteration
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        
+        for(auto digit=digits.rbegin(); digit!=digits.rend(); digit++){
+            if(*digit < 9){
+                (*digit)++;   // simply increment and return
+                return digits;
+            }
+            
+            *digit = 0; // Set to 0 and continue (carry over)
+        }
+
+        // If all the digits are 9, then add a new digit '1' at the beginning
+        digits.insert(digits.begin(), 1);
+
+        return digits;
+    }
+};
+/*
+If N =  size of array, then:
+TC-> O(N)
+SC-> O(1)
+*/
