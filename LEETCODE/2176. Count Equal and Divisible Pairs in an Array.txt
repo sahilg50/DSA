@@ -1,0 +1,23 @@
+// https://leetcode.com/problems/count-equal-and-divisible-pairs-in-an-array/description/?envType=daily-question&envId=2025-04-17
+
+
+// Approach 1: Nested Loop
+class Solution {
+public:
+    int countPairs(vector<int>& nums, int k) {
+        int n = nums.size();
+        int res = 0;  // number of pairs meeting the requirements
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                if ((i * j) % k == 0 && nums[i] == nums[j]) {
+                    ++res;
+                }
+            }
+        }
+        return res;
+    }
+};
+/*
+TC-> O(N)
+SC-> O(1)
+*/
