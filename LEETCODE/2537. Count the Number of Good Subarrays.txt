@@ -6,7 +6,7 @@ class Solution {
 public:
     long long countGood(vector<int>& nums, int k) {
         
-        unordered_map<int, int> M;
+        unordered_map<int, int> freq;
 
         long long count = 0;
 
@@ -15,13 +15,13 @@ public:
         int i = 0;
         int j = 0;
         while(j < n){
-            pairs += M[nums[j]];
-            M[nums[j]]++;
+            pairs += freq[nums[j]];
+            freq[nums[j]]++;
 
             while(pairs >= k){
                 count += (n - j);
-                M[nums[i]]--;
-                pairs -= M[nums[i]];
+                freq[nums[i]]--;
+                pairs -= freq[nums[i]];
                 i++;
             }
 
@@ -34,5 +34,5 @@ public:
 /*
 If N = size of array, then:
 TC-> O(N)
-SC-> O(1)
+SC-> unordered_map (freq): O(N)
 */
