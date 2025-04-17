@@ -1,0 +1,35 @@
+// https://leetcode.com/problems/count-good-triplets-in-an-array/description/?envType=daily-question&envId=2025-04-15
+
+
+// Approach 1: Finding the common elements on each side of the element in both arrays.
+class Solution {
+public:
+    long long goodTriplets(vector<int>& nums1, vector<int>& nums2) {
+
+        int n = nums1.size();
+        unordered_map<int, pair<int, int>> M;
+
+        for(int ind = 0; ind < n; ++ind){
+            M[nums1[ind]].first = ind;
+            M[nums2[ind]].second = ind;
+        }
+
+        long long result = 0;
+        for(auto it : M){
+            int num = it.first;
+            int ind1 = it.second.first;
+            int ind2 = it.second.second;
+
+            int leftCommon = 0;
+            int rightCommon = 0;
+            for(int ind = 0; ind < n; ind++){
+                if(M[nums1[ind]].first < ind1 && M[nums1[ind]].second < ind2) leftCommon++;
+                else if(M[nums1[ind]].first > ind1 && M[nums1[ind]].second > ind2) rightCommon++;
+            }
+
+            result += leftCommon * rightCommon;
+        }
+
+        return result;
+    }
+};
