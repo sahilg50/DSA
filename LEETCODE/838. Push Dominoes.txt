@@ -1,0 +1,43 @@
+// https://leetcode.com/problems/push-dominoes/description/?envType=daily-question&envId=2025-05-02
+
+
+// Approach 1: Queue
+class Solution {
+public:
+    string pushDominoes(string dominoes) {
+
+        queue<pair<char, int>> Q;
+        int n = dominoes.size();
+        for(int ind=0; ind<n; ind++){
+            if(dominoes[ind] != '.') Q.push({dominoes[ind], ind});
+        }
+
+        while(!Q.empty()){
+            char fall = Q.front().first;
+            int ind = Q.front().second;
+            Q.pop();
+
+            if(fall == 'L'){
+                if(ind > 0 && dominoes[ind-1] == '.'){
+                    dominoes[ind-1] = 'L';
+                    Q.push({'L', ind-1});
+                }
+            }
+            else if(fall == 'R'){
+                if(ind+1 < n && dominoes[ind+1] == '.'){
+                    if(ind+2 < n && dominoes[ind+2] == 'L') Q.pop();
+                    else{
+                        dominoes[ind+1] = 'R';
+                        Q.push({'R', ind+1});
+                    }
+                }
+            }
+        }
+
+        return dominoes;
+    }
+};
+/*
+TC-> O(2*N)
+SC-> Queue: O(N)
+*/ 
