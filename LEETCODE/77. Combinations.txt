@@ -1,0 +1,32 @@
+// https://leetcode.com/problems/combinations/description/
+
+// Approach 1: Recursion
+class Solution {
+private:
+    void util(int start, int end, int k, vector<int> &combination, vector<vector<int>> &combinations){
+        // Base case
+        if(combination.size() == k){
+            combinations.push_back(combination);
+            return;
+        }
+
+        // Perform all operations
+        for(int i=start; i<=end; i++){
+            combination.push_back(i);
+            util(i+1, end, k, combination, combinations);
+            combination.pop_back();
+        }
+    }
+public:
+    vector<vector<int>> combine(int n, int k) {
+        vector<int> combination;
+        vector<vector<int>> combinations;
+
+        util(1, n, k, combination, combinations);
+        return combinations;
+    }
+};
+/*
+TC-> O(N^2)
+SC-> Recursion Stack: O(N)ASC
+*/
