@@ -1,0 +1,44 @@
+// https://leetcode.com/problems/word-search/description/
+
+// Approach 1: Recursion (DFS) + Memoization
+class Solution {
+private:
+    bool dfs(int r, int c, int ind, vector<vector<char>> &board, string &word, vector<vector<bool>> &visited) {
+        if (ind == word.size()) return true;
+
+        int R = board.size(), C = board[0].size();
+        if (r < 0 || r >= R || c < 0 || c >= C || visited[r][c] || board[r][c] != word[ind])
+            return false;
+
+        visited[r][c] = true;
+
+        // Explore all 4 directions
+        bool found = dfs(r + 1, c, ind + 1, board, word, visited) ||
+                     dfs(r - 1, c, ind + 1, board, word, visited) ||
+                     dfs(r, c + 1, ind + 1, board, word, visited) ||
+                     dfs(r, c - 1, ind + 1, board, word, visited);
+
+        visited[r][c] = false; // backtrack
+        return found;
+    }
+
+public:
+    bool exist(vector<vector<char>>& board, string word) {
+        int R = board.size(), C = board[0].size();
+        vector<vector<bool>> visited(R, vector<bool>(C, false));
+
+        for (int r = 0; r < R; ++r) {
+            for (int c = 0; c < C; ++c) {
+                if (board[r][c] == word[0]) {
+                    if (dfs(r, c, 0, board, word, visited)) return true;
+                }
+            }
+        }
+        return false;
+    }
+};
+/*
+If M = number of rows, and N = number of columns, then:
+TC-> O(M*N)
+SC-> 2d-Vector(visited): O(M*N) + Recursion Stack: O(M+N)ASC
+*/
