@@ -1,0 +1,72 @@
+// https://leetcode.com/problems/text-justification/description/
+
+// Solution: https://www.youtube.com/watch?v=jpU2LVaDa4g
+
+// Approach 1
+class Solution {
+private:
+    string textLine(int i, int j, vector<string> &words, int spaces, int spaceSize, int extraSpaceSize, int maxWidth){
+        string line = "";
+        
+        for(int k=i; k<j; k++){
+
+            line.append(words[k]);
+
+            if(k != j-1){
+                string space(spaceSize, ' ');
+                line.append(space);
+            }
+
+            if(extraSpaceSize){
+                line.push_back(' ');
+                extraSpaceSize--;
+            }
+
+        }
+
+        while(line.size() < maxWidth) line.push_back(' ');
+
+        return line;
+    }
+
+public:
+    vector<string> fullJustify(vector<string>& words, int maxWidth) {
+        vector<string> result;
+        int n = words.size();
+        int i = 0;
+        while(i < n){
+            int letterCount = words[i].size();
+            int j = i + 1;
+            int spaces = 0;
+
+            // Try to fit as many words as possible in the current line
+            while(j < n && words[j].size() + 1 + spaces + letterCount <= maxWidth){
+                letterCount += words[j].size();
+                spaces++;
+                j++;
+            }
+
+            int remainingSpace = maxWidth - letterCount;
+
+            int spaceSize = spaces == 0 ? 0 : remainingSpace / spaces;
+            int extraSpaceSize = spaces == 0 ? 0 : remainingSpace % spaces;
+
+            // Last line or line with a single word: left-justified
+            if(j == n){
+                spaceSize = 1;
+                extraSpaceSize = 0;
+            }
+
+            result.push_back(textLine(i, j, words, spaces, spaceSize, extraSpaceSize, maxWidth));
+
+            i = j;
+        }
+
+        return result;
+    }
+};
+/*
+If N = size of string vector, then:
+TC-> O(2 * N)
+SC-> O(1)
+*/
