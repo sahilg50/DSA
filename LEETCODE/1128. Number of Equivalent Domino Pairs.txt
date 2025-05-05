@@ -1,0 +1,49 @@
+// https://leetcode.com/problems/number-of-equivalent-domino-pairs/description/?envType=daily-question&envId=2025-05-04
+
+
+// Approach 1: Nested Loop (TLE)
+class Solution {
+public:
+    int numEquivDominoPairs(vector<vector<int>>& dominoes) {
+        int n = dominoes.size();
+        int count = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = i + 1; j < n; j++){
+                if(dominoes[i][0] == dominoes[j][0] && dominoes[i][1] == dominoes[j][1]) count++;
+                else if(dominoes[i][1] == dominoes[j][0] && dominoes[i][0] == dominoes[j][1]) count++;
+            }
+        }
+        return count;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N^2)
+SC-> O(1)
+*/
+
+
+// Approach 2: unordered_map
+class Solution {
+public:
+    int numEquivDominoPairs(vector<vector<int>>& dominoes) {
+        unordered_map<int, int> freq;
+        int count = 0;
+
+        for (const auto& d : dominoes) {
+            int a = min(d[0], d[1]);
+            int b = max(d[0], d[1]);
+            int key = a * 10 + b;  // unique key for normalized domino
+
+            count += freq[key];   // if key already exists, add its count to total
+            freq[key]++;          // then increment the frequency
+        }
+
+        return count;
+    }
+};
+/*
+If N = number of dominoes, then:
+TC-> O(N)
+SC-> unordered_map(freq): O(N)
+*/
