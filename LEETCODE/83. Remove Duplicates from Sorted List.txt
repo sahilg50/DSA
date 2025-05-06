@@ -1,0 +1,20 @@
+// https://leetcode.com/problems/remove-duplicates-from-sorted-list/description/
+
+
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        ListNode *curr = head;
+
+        while(curr != nullptr && curr->next != nullptr){
+            if(curr->val == curr->next->val) curr->next = curr->next->next;
+            else curr = curr->next;
+        }
+        return head;
+    }
+};
+/*
+If N = number of nodes in the linked list
+TC-> O(N)
+SC-> O(1)
+*/
