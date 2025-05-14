@@ -39,5 +39,7 @@ public:
     }
 };
 /*
-TC-> O()
+If N = size of string, then:
+TC-> O(N^4)
+SC-> Recursion Stack: O(N)ASC
 */
