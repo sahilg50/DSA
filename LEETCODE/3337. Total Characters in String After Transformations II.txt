@@ -57,3 +57,75 @@ public:
         return size;
     }
 };
+
+
+// Approach 3: Matrix Multiplication (Optimal)
+class Solution {
+private:
+    const int MOD = 1e9 + 7;
+    const int ALPHABET_SIZE = 26;
+
+    vector<vector<long long>> multiply(vector<vector<long long>> &a, vector<vector<long long>> &b){
+        vector<vector<long long>> c(ALPHABET_SIZE, vector<long long>(ALPHABET_SIZE, 0));
+
+        for(int i = 0; i < ALPHABET_SIZE; i++){
+            for(int j = 0; j < ALPHABET_SIZE; j++){
+                for(int k = 0; k < ALPHABET_SIZE; k++){
+                    c[i][j] = (c[i][j] + a[i][k] * b[k][j]) % MOD;
+                }
+            }
+        }
+        return c;
+    }
+
+    vector<vector<long long>> exp(vector<vector<long long>> base, int power){
+
+        // Make Identity matrix
+        vector<vector<long long>> matrix(ALPHABET_SIZE, vector<long long>(ALPHABET_SIZE, 0));
+        for(int i = 0; i < ALPHABET_SIZE; i++) matrix[i][i] = 1;
+
+        while(power){
+            if(power % 2) matrix = multiply(matrix, base);
+            base = multiply(base, base);
+            power /= 2; 
+        }
+
+        return matrix;
+    }
+
+public:
+    int lengthAfterTransformations(string s, int t, vector<int>& nums) {
+        
+        // Step 1: Build the transformation matrix
+        vector<vector<long long>> matrix(26, vector<long long>(26, 0));
+        for (int i = 0; i < ALPHABET_SIZE; ++i) {
+            for (int j = 1; j <= nums[i]; ++j) {
+                matrix[i][(i + j) % ALPHABET_SIZE] += 1;
+            }
+        }
+
+        // Step 2: Compute matrix^t
+        vector<vector<long long>> matrix_T;
+        matrix_T = exp(matrix, t);
+
+        // Step 3: Build the initial frequency vector
+        vector<long long> freq(ALPHABET_SIZE, 0);
+        for (char ch : s) freq[ch - 'a'] += 1;
+
+        // Step 4: Multiply frequency vector (freq) with matrix^t (matrix_T)
+        vector<long long> final_freq(ALPHABET_SIZE, 0);
+        for (int i = 0; i < ALPHABET_SIZE; ++i) {
+            for (int j = 0; j < ALPHABET_SIZE; ++j) {
+                final_freq[j] = (final_freq[j] + freq[i] * matrix_T[i][j]) % MOD;
+            }
+        }
+
+        // Step 5: Sum the final frequencies to get the total length
+        int total_length = 0;
+        for (int i = 0; i < ALPHABET_SIZE; ++i) {
+            total_length = (total_length + final_freq[i]) % MOD;
+        }
+
+        return total_length;
+    }
+};
