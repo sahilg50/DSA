@@ -1,0 +1,59 @@
+// https://leetcode.com/problems/total-characters-in-string-after-transformations-ii/description/?envType=daily-question&envId=2025-05-14
+
+
+// Approach 1: String Iteration + Nested Loop (Brute Force) (TLE)
+class Solution {
+public:
+    int lengthAfterTransformations(string s, int t, vector<int>& nums) {
+
+        int mod = 1e9 + 7;
+
+        string temp = "";
+        while(t--){
+            for(auto ch : s){
+                for(int shift = 1; shift <= nums[ch - 'a']; shift++){
+                    temp.push_back('a' + ((ch - 'a' + shift) % 26));
+                }
+            }
+            s = temp;
+            temp = "";
+        }
+
+        return s.size() % mod;
+    }
+};
+/*
+If T = number of transformations, s = max size of string, and 1 <= nums[i] <= 25, then:
+TC-> O(s * (25^t))
+SC-> 1d-vector(temp): O(s * (25^t))
+*/
+
+
+// Approach 2: unordered_map + Nested Loop (Better) (TLE)
+class Solution {
+public:
+    int lengthAfterTransformations(string s, int t, vector<int>& nums) {
+        
+        int mod = 1e9 + 7;
+        unordered_map<char, int> freq1, freq2;
+        for(auto ch : s) freq1[ch]++;
+
+        while(t--){
+            for(auto it : freq1){
+                char ch = it.first;
+                int count = it.second;
+                for(int shift = 1; shift <= nums[ch - 'a']; shift++){
+                    char new_ch = 'a' + ((ch - 'a' + shift) % 26);
+                    freq2[new_ch] = (freq2[new_ch] + count) % mod;
+                }
+            }
+            freq1 = freq2;
+            freq2.clear();
+        }
+
+        int size = 0;
+        for(auto it : freq1) size = (size + it.second) % mod;
+
+        return size;
+    }
+};

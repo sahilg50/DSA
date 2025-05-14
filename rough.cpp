@@ -5,6 +5,10 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello World";
+    char ch = 'z';
+    ch = char((int('z') + 1) % int('z'));
+    cout << "Hello";
+    cout << ch;
+    cout << "Hello";
     return 0;
 }

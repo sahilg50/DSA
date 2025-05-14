@@ -1,0 +1,43 @@
+// https://leetcode.com/problems/scramble-string/
+
+// Approach 1: Recursion + Memoization
+// Solution: https://www.youtube.com/watch?v=Fx96uB9EIDQ
+class Solution {
+private:
+    bool solve(string s1, string s2, unordered_map<string, bool> &dp){
+        // Base case
+        if(s1.size() != s2.size()) return false;
+        if(s1 == s2) return true;
+
+        string key = s1 + " " + s2;
+        if(dp.find(key) != dp.end()) return dp[key];
+
+        bool result = false;
+
+        int n = s1.size();
+        for(int i = 1; i < n; i++){
+            bool notSwapped = solve(s1.substr(0, i), s2.substr(0, i), dp) && solve(s1.substr(i, n-i), s2.substr(i, n-i), dp);
+            if(notSwapped){
+                result = true;
+                break;
+            }
+
+            bool swapped = solve(s1.substr(0, i), s2.substr(n-i, i), dp) && solve(s1.substr(i, n-i), s2.substr(0, n-i), dp);
+            if(swapped){
+                result = true;
+                break;
+            }
+        }
+
+        return dp[key] = result;
+    }
+
+public:
+    bool isScramble(string s1, string s2) {
+        unordered_map<string, bool> dp;
+        return solve(s1, s2, dp);
+    }
+};
+/*
+TC-> O()
+*/
