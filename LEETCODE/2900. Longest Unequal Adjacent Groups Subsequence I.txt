@@ -1,0 +1,24 @@
+// https://leetcode.com/problems/longest-unequal-adjacent-groups-subsequence-i/description/?envType=daily-question&envId=2025-05-15
+
+// Approach 1: Greedy
+class Solution {
+public:
+    vector<string> getLongestSubsequence(vector<string>& words, vector<int>& groups) {
+        
+        vector<string> result;
+        int lastGroup = -1;
+        for(int ind=0; ind<groups.size(); ind++){
+            if(lastGroup != groups[ind]){
+                result.push_back(words[ind]);
+                lastGroup = groups[ind];
+            }
+        }
+
+        return result;
+    }
+};
+/*
+If N = size of groups and words array, then:
+TC-> O(N)
+SC-> 1d-vector (result): O(N)ASC
+*/
