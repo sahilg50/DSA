@@ -1,0 +1,28 @@
+// https://leetcode.com/problems/unique-binary-search-trees/description/
+
+// Approach 1: Dynamic programming
+// Solution: https://www.youtube.com/watch?v=Ox0TenN3Zpg
+class Solution {
+public:
+    int numTrees(int n) {
+        vector<int> dp(n+1, 1);
+
+        for(int nodes = 2; nodes <= n; nodes++){
+
+            int totalTrees = 0;
+            for(int root = 1; root <= nodes; root++){
+                int left = root - 1;
+                int right = nodes - root;
+                totalTrees += dp[left] * dp[right];
+            }
+
+            dp[nodes] = totalTrees;
+        }  
+        return dp[n];
+    }
+};
+/*
+If N = total number of nodes, then:
+TC-> O(N^2)
+SC-> 1d-vector (dp): O(N)
+*/
