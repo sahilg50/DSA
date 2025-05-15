@@ -1,0 +1,36 @@
+// https://leetcode.com/problems/restore-ip-addresses/description/
+
+// Solution: https://www.youtube.com/watch?v=61tN4YEdiTM
+// Approach 1: Recursion
+class Solution {
+private:
+    void util(int ind, int dots, string currIP, vector<string> &allIP, string &s){
+        // Base case
+        if(dots == 4 && ind == s.size()){
+            currIP.pop_back();
+            allIP.push_back(currIP);
+            return;
+        }
+        if(dots > 4) return;
+
+        // Perform all operations
+        for(int i = 1; i <= 3; i++){
+            if((ind + i <= s.size()) && (stoi(s.substr(ind, i)) <= 255) && (i == 1 || s[ind] != '0')){
+                util(ind + i, dots + 1, currIP + s.substr(ind, i) + ".", allIP, s);
+            }
+        }
+    }
+public:
+    vector<string> restoreIpAddresses(string s) {
+        if(s.size() > 12) return {};
+
+        vector<string> allIP;
+        util(0, 0, "", allIP, s);
+        
+        return allIP;
+    }
+};
+/*
+TC-> O(3^N)
+SC-> currIP: 3 * O(4)ASC + Recursion Stack: O(4)ASC
+*/
