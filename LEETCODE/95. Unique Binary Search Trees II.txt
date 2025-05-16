@@ -1,0 +1,51 @@
+// https://leetcode.com/problems/unique-binary-search-trees-ii/
+
+// Approach 1: Recursion
+// Solution: https://www.youtube.com/watch?v=SXU--MPoUe8
+class Solution {
+private:
+    vector<TreeNode *> generate(int left, int right){
+        // Base case
+        if(left > right) return {nullptr};
+        if(left == right){
+            TreeNode *Root = new TreeNode(left);
+            return {Root};
+        }
+
+        // Perform all operations
+        vector<TreeNode *> BSTs;
+        for(int root = left; root <= right; root++){
+            vector<TreeNode *> left_BSTs = generate(left, root-1);
+            vector<TreeNode *> right_BSTs = generate(root+1, right);
+
+            for(TreeNode  *left_BST : left_BSTs){
+                for(TreeNode *right_BST : right_BSTs){
+                    TreeNode *Root = new TreeNode(root);
+                    Root->left = left_BST;
+                    Root->right = right_BST;
+                    
+                    BSTs.push_back(Root);
+                }
+            }
+        }
+        return BSTs;
+    }
+public:
+    vector<TreeNode*> generateTrees(int n) {
+        return generate(1, n);
+    }
+};
+/*
+n = 0  → 1
+n = 1  → 1
+n = 2  → 2
+n = 3  → 5
+n = 4  → 14
+n = 5  → 42
+n = 6  → 132
+...
+This is catalan series: C = (2n!)/((n+1)! * n!)
+
+TC-> O(C)
+SC-> 1d-vector (BSTs): O(C) + Recurion Stack: O(N)ASC
+*/
