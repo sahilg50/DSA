@@ -1,0 +1,67 @@
+// https://leetcode.com/problems/binary-tree-level-order-traversal-ii/description/
+
+
+// Approach 1: Recursion + Map
+class Solution {
+private:
+    void inOrder(TreeNode *root, int level, map<int, vector<int>> &levelNodes){
+        if(root == nullptr) return;
+
+        inOrder(root->left, level + 1, levelNodes);
+        levelNodes[level].push_back(root->val);
+        inOrder(root->right, level + 1, levelNodes);
+    }
+public:
+    vector<vector<int>> levelOrderBottom(TreeNode* root) {
+        map<int, vector<int>> levelNodes;
+        inOrder(root, 0, levelNodes);
+
+        vector<vector<int>> levelOrderedNodes;
+        for(auto it = levelNodes.rbegin(); it != levelNodes.rend(); it++){
+            levelOrderedNodes.push_back(it->second);
+        }
+
+        return levelOrderedNodes;
+    }
+};
+/*
+If N = total number of nodes in binary tree, then:
+TC-> Inorder: O(N) + Insertion in map (levelNodes): O(logN) + iterating levelNodes: O(N) 
+SC-> map (levelNodes): O(N) + levelOrderedNodes: O(N)ASC + Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: Queue
+class Solution {
+public:
+    vector<vector<int>> levelOrderBottom(TreeNode* root) {
+
+        vector<vector<int>> levelOrderedNodes;
+
+        queue<TreeNode *> Q;
+        if(root) Q.push(root);
+
+        while(!Q.empty()){
+            int n = Q.size();
+            vector<int> nodes;
+            for(int i = 0; i < n; i++){
+                TreeNode *root = Q.front();
+                Q.pop();
+
+                nodes.push_back(root->val);
+
+                if(root->left) Q.push(root->left);
+                if(root->right) Q.push(root->right);
+            }
+            levelOrderedNodes.push_back(nodes);
+        }
+
+        reverse(levelOrderedNodes.begin(), levelOrderedNodes.end());
+        return levelOrderedNodes;
+    }
+};
+/*
+If N = total number of nodes in binary tree, and H = height of the tree, then:
+TC-> Inorder: O(N) 
+SC-> queue (Q): O(2^H) + nodes: O(2^H) + levelOrderedNodes: O(N)
+*/
