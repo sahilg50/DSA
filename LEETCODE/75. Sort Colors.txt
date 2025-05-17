@@ -14,6 +14,7 @@ TC-> O(N * LogN)
 SC-> O(1)
 */
 
+
 // Approach 2: Better (Find the count of 0, 1, and 2)
 class Solution {
 public:
@@ -40,7 +41,43 @@ SC-> O(1)
 */
 
 
-// Approach 3: Optimal
+// Approach 3: 2 iterative loops
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+
+        int L = 0;
+        int R = nums.size() - 1;
+        while(L <= R){
+            if(nums[L] == 0) L++;
+            else if(nums[R] == 0){
+                swap(nums[R], nums[L]);
+                L++;
+                R--;
+            }
+            else R--;
+        }
+
+        R = nums.size() - 1;
+        while(L <= R){
+            if(nums[L] == 1) L++;
+            else if(nums[R] == 1){
+                swap(nums[R], nums[L]);
+                L++;
+                R--;
+            }
+            else R--;
+        }
+    }
+};
+/*
+If N = size of the array, then:
+TC-> O(2 * N)
+SC-> O(1)
+*/
+
+
+// Approach 4: Optimal
 class Solution {
 public:
     void sortColors(vector<int>& nums) {
