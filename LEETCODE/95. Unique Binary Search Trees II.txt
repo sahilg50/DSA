@@ -47,5 +47,5 @@ n = 6  → 132
 This is catalan series: C = (2n!)/((n+1)! * n!)
 
 TC-> O(C)
-SC-> 1d-vector (BSTs): O(C) + Recurion Stack: O(N)ASC
+SC-> 1d-vector (BSTs): O(C) + Recursion Stack: O(N)ASC
 */

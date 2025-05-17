@@ -1,0 +1,97 @@
+// https://leetcode.com/problems/longest-unequal-adjacent-groups-subsequence-ii/?envType=daily-question&envId=2025-05-16
+
+
+// Approach 1: Recursion (TLE)
+class Solution {
+private:
+    bool isHamming(string &a, string &b){
+        if(a.size() != b.size()) return false;
+
+        int diff = 0;
+        for(int ind = 0; ind < a.size(); ind++){
+            if(a[ind] != b[ind]) diff++;
+        }
+
+        return diff == 1;
+    }
+
+    void util(int ind, int prevInd, vector<string> currSubseq, vector<string> &longestSubseq, vector<string> &words, vector<int> &groups){
+        // Base case
+        if(ind == words.size()){
+            if(currSubseq.size() > longestSubseq.size()) longestSubseq = currSubseq;
+            return;
+        }
+
+        // Perform all operations
+        // Pick 
+        if(prevInd == -1 || (groups[ind] != groups[prevInd] && isHamming(words[ind], words[prevInd]))){
+            currSubseq.push_back(words[ind]);
+            util(ind + 1, ind, currSubseq, longestSubseq, words, groups);
+            currSubseq.pop_back();
+        }
+
+        // NotPick
+        util(ind + 1, prevInd, currSubseq, longestSubseq, words, groups);
+
+    }
+public:
+    vector<string> getWordsInLongestSubsequence(vector<string>& words, vector<int>& groups) {
+        vector<string> currSubseq, longestSubseq;
+        util(0, -1, currSubseq, longestSubseq, words, groups);
+        return longestSubseq;
+    }
+};
+/*
+If N = size of groups and words array, then:
+TC-> O(2^N)
+SC-> 1d-vector (currSubseq): O(N^2) + Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: Dynamic Programming
+class Solution {
+private:
+    bool isHamming(string& s1, string& s2) {
+        if (s1.size() != s2.size()) return false;
+    
+        int diff = 0;
+        for (int i = 0; i < s1.size(); i++) {
+            if(s1[i] != s2[i]) diff++;
+        }
+        
+        return diff == 1;
+    }
+
+public:
+    vector<string> getWordsInLongestSubsequence(vector<string>& words, vector<int>& groups){
+
+        int n = groups.size();
+
+        vector<int> dp(n, 1);
+        vector<int> prev(n, -1);
+
+        int maxIndex = 0;
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (isHamming(words[i], words[j]) && dp[j] + 1 > dp[i] && groups[i] != groups[j]){
+                    dp[i] = dp[j] + 1;
+                    prev[i] = j;
+                }
+            }
+            if (dp[i] > dp[maxIndex]) maxIndex = i;
+        }
+
+        vector<string> ans;
+        for (int i = maxIndex; i >= 0; i = prev[i]) {
+            ans.emplace_back(words[i]);
+        }
+
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
+/*
+If N = size of array, then:
+TC-> O(N^2)
+SC-> 1d-vector (dp): O(N) + 1d-vector (prev): O(N)
+*/
