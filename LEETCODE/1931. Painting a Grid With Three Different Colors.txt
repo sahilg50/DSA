@@ -1,0 +1,75 @@
+// https://leetcode.com/problems/painting-a-grid-with-three-different-colors/description/?envType=daily-question&envId=2025-05-18
+
+// Approach 1: Recursion + Memoization
+// Solution: https://www.youtube.com/watch?v=Qz8F-nC8oxQ
+class Solution {
+private:
+    const int MOD = 1e9 + 7;
+
+    void generateAllColumnStates(char prevChar, int currLen, string &currColumnState, const int &maxLen, vector<string> &allColumnStates){
+        // Base case
+        if(currLen == maxLen){
+            allColumnStates.push_back(currColumnState);
+            return;
+        }
+
+        // Perform all operations
+        for(char ch : {'R', 'G', 'B'}){
+            if(ch == prevChar) continue;
+            
+            currColumnState.push_back(ch);
+            generateAllColumnStates(ch, currLen + 1, currColumnState, maxLen, allColumnStates);
+            currColumnState.pop_back();
+        }
+    }
+
+    bool isValid(int currStateIndex, int prevStateIndex, const int &Rows, const vector<string> &allColumnStates){
+        
+        if(prevStateIndex == -1) return true;
+        if(currStateIndex == prevStateIndex) return false;
+
+        string currColumnState = allColumnStates[currStateIndex];
+        string prevColumnState = allColumnStates[prevStateIndex];
+
+        for(int r = 0; r < Rows; r++){
+            if(currColumnState[r] == prevColumnState[r]) return false;
+        }
+
+        return true;
+    }
+
+    int solve(int columnsRemaining, int prevStateIndex, const int &Rows, const int &Columns, const vector<string> &allColumnStates, vector<vector<int>> &dp){
+
+        // Base case
+        if(columnsRemaining == 0) return 1;
+        if(dp[columnsRemaining][prevStateIndex+1] != -1) return dp[columnsRemaining][prevStateIndex+1];
+
+        // if(dp[columnsRemaining][prevStateIndex] != -1) return dp[columnsRemaining][prevStateIndex]; 
+
+
+        // Perform all operations
+        int totalWays = 0;
+        int totalStates = allColumnStates.size();
+
+        for(int currStateIndex = 0; currStateIndex < totalStates; currStateIndex++){
+            if(isValid(currStateIndex, prevStateIndex, Rows, allColumnStates)){
+                totalWays = (totalWays + solve(columnsRemaining - 1, currStateIndex, Rows, Columns, allColumnStates, dp)) % MOD;
+            }
+        }
+
+        return dp[columnsRemaining][prevStateIndex+1] = totalWays;
+    }
+
+public:
+    int colorTheGrid(int m, int n) {
+
+        vector<string> allColumnStates;
+        string currColumnState = "";
+        generateAllColumnStates('#', 0, currColumnState, m, allColumnStates);
+        
+        int totalStates = allColumnStates.size();
+        vector<vector<int>> dp(n + 1, vector<int>(totalStates + 2, -1));
+
+        return solve(n, -1, m, n, allColumnStates, dp);
+    }
+};
