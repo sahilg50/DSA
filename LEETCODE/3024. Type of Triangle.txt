@@ -1,0 +1,25 @@
+// https://leetcode.com/problems/type-of-triangle/description/?envType=daily-question&envId=2025-05-19
+
+
+class Solution {
+public:
+    string triangleType(vector<int>& nums) {
+        // Sort the side lengths to simplify checks
+        sort(nums.begin(), nums.end());
+
+        // Triangle inequality: sum of two smaller sides must be > third side
+        if (nums[0] + nums[1] <= nums[2])
+            return "none";
+
+        // Check for equilateral
+        if (nums[0] == nums[1] && nums[1] == nums[2])
+            return "equilateral";
+
+        // Check for isosceles
+        if (nums[0] == nums[1] || nums[1] == nums[2] || nums[0] == nums[2])
+            return "isosceles";
+
+        // Otherwise, it's scalene
+        return "scalene";
+    }
+};
