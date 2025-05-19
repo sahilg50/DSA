@@ -1,0 +1,37 @@
+// https://leetcode.com/problems/populating-next-right-pointers-in-each-node/description/
+
+// Approach 1: BFS (Queue)
+class Solution {
+public:
+    Node* connect(Node* root) {
+        
+        queue<Node *> Q;
+        if(root) Q.push(root);
+
+        while(!Q.empty()){
+
+            int n = Q.size();
+            Node *prev = nullptr;
+
+            for(int i = 0; i < n; i++){
+
+                Node *node = Q.front();
+                Q.pop();
+
+                if(prev) prev->next = node;
+                node->next = NULL;
+                prev = node;
+
+                if(node->left) Q.push(node->left);
+                if(node->right) Q.push(node->right);
+            }
+        }
+
+        return root;
+    }
+};
+/*
+If N = total number of nodes in the binary tree, then:
+TC-> O(N)
+SC-> Queue: O(N)
+*/
