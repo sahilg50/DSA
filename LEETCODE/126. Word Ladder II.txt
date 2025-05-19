@@ -1,0 +1,56 @@
+// https://leetcode.com/problems/word-ladder-ii/description/
+
+// Approach 1: BFS (MLE 33/38)
+// Solution: https://www.youtube.com/watch?v=DREutrv2XD0&t=516s
+class Solution {
+public:
+    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+
+        unordered_set<string> S(wordList.begin(), wordList.end());
+
+        queue<vector<string>> Q;
+        Q.push({beginWord});
+
+        vector<string> wordsInLadder;
+        wordsInLadder.push_back(beginWord);
+
+        vector<vector<string>> ans;
+    
+        while(!Q.empty()){
+
+            for(auto word : wordsInLadder) S.erase(word);
+            wordsInLadder.clear();
+
+            int size = Q.size();
+            for(int i = 0; i < size; i++){
+
+                vector<string> vec = Q.front();
+                Q.pop();
+
+                // Last word in the current ladder
+                string word = vec.back(); 
+
+                if(word == endWord){
+                    if(ans.size() == 0) ans.push_back(vec);
+                    else if(vec.size() == ans[0].size()) ans.push_back(vec);
+                } 
+
+                for(int ind = 0; ind < word.size(); ind++){
+                    char original = word[ind];
+                    for(char ch = 'a'; ch <= 'z'; ch++){
+                        word[ind] = ch;
+                        if(S.count(word) > 0){
+                            vec.push_back(word);
+                            Q.push(vec);
+                            wordsInLadder.push_back(word);
+                            vec.pop_back();
+                        }
+                    }
+                    word[ind] = original;
+                }
+            }
+        }
+        return ans;
+    }
+};
+ 
