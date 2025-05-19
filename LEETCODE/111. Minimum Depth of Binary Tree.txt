@@ -1,0 +1,62 @@
+// https://leetcode.com/problems/minimum-depth-of-binary-tree/description/
+
+// Approach 1: DFS (Using Queue)
+class Solution {
+private:
+    void dfs(TreeNode *root, int currDepth, int &minDepth){
+        if(root->left == nullptr && root->right == nullptr){
+            minDepth = min(minDepth, currDepth);
+            return;
+        }
+
+        if(root->left) dfs(root->left, currDepth + 1, minDepth);
+        if(root->right) dfs(root->right, currDepth + 1, minDepth);
+    }
+public:
+    int minDepth(TreeNode* root) {
+        if (root == nullptr) return 0;
+
+        int minDepth = INT_MAX;
+        dfs(root, 1, minDepth);
+
+        return minDepth;
+    }
+};
+/*
+If N = number of nodes, then:
+TC-> O(N)
+SC-> Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 2: BFS (Using Queue)
+class Solution {
+public:
+    int minDepth(TreeNode* root) {
+        if (!root) return 0;
+
+        queue<pair<TreeNode*, int>> q;
+        q.push({root, 1});  // pair of (node, current depth)
+
+        while (!q.empty()) {
+            auto [node, depth] = q.front();
+            q.pop();
+
+            // If it's a leaf node, return current depth
+            if (!node->left && !node->right)
+                return depth;
+
+            if (node->left)
+                q.push({node->left, depth + 1});
+            if (node->right)
+                q.push({node->right, depth + 1});
+        }
+
+        return 0;  // should never reach here
+    }
+};
+/*
+If N = number of nodes, then:
+TC-> O(N)
+SC-> Queue: O(N)
+*/
