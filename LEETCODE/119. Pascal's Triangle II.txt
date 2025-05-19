@@ -1,0 +1,29 @@
+// https://leetcode.com/problems/pascals-triangle-ii/
+
+// Approach 1: Nested Loop
+class Solution {
+public:
+    vector<int> getRow(int rowIndex) {
+
+        vector<int> prev = {1};
+        vector<int> curr;
+
+        for(int row = 1; row <= rowIndex; row++){
+
+            curr.push_back(1);
+            for(int i = 1; i < row; i++){
+                curr.push_back(prev[i-1] + prev[i]);
+            }
+            curr.push_back(1);
+
+            prev = curr;
+            curr.clear();
+        }
+
+        return prev;
+    }
+};
+/*
+TC-> O(N^2)
+SC-> 1d-vector (prev): O(N) + 1d-vector (curr): O(N)
+*/
