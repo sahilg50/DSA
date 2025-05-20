@@ -1,0 +1,51 @@
+// https://leetcode.com/problems/zero-array-transformation-i/description/?envType=daily-question&envId=2025-05-20
+
+// Approach 1: Brute Force (Iterating all the number in the ranges 1 by 1)
+class Solution {
+public:
+    bool isZeroArray(vector<int>& nums, vector<vector<int>>& queries) {
+        for(const vector<int> &query : queries){
+            for(int index = query.front(); index <= query.back(); index++){
+                if(nums[index]) nums[index]--;
+            }
+        }
+
+        for(const int &num : nums) if(num) return false;
+        return true;
+    }
+};
+/*
+If N = total number of queries, and Q = avg range in each query, then:
+TC-> O(N * Q)
+SC-> O(1)
+*/
+
+
+// Approach 2: Difference array
+class Solution {
+public:
+    bool isZeroArray(vector<int>& nums, vector<vector<int>>& queries) {
+
+        int n = nums.size();
+        vector<int> diff(n, 0);
+
+        for(const vector<int> &query : queries){
+            diff[query[0]] += 1;
+            if(query[1] + 1 < n) diff[query[1] + 1] -= 1;
+        }
+
+        for(int index = 0; index < n; index++){
+
+            if (index - 1 >= 0) diff[index] += diff[index - 1];
+
+            if(nums[index] > diff[index]) return false;
+        }
+
+        return true;
+    }
+};
+/*
+If N = size of array, and Q = number of queries, then:
+TC-> O(Q) + O(N)
+SC-> 1d-vector (diff): O(N)
+*/
