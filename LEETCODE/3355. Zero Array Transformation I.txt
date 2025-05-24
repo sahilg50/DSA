@@ -1,5 +1,6 @@
 // https://leetcode.com/problems/zero-array-transformation-i/description/?envType=daily-question&envId=2025-05-20
 
+
 // Approach 1: Brute Force (Iterating all the number in the ranges 1 by 1)
 // Solution: https://www.youtube.com/watch?v=JbF-Bsm4yak
 class Solution {
