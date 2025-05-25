@@ -1,0 +1,62 @@
+// https://leetcode.com/problems/zero-array-transformation-iii/description/?envType=daily-question&envId=2025-05-22
+
+// Approach 1: MaxHeap and MinHeap
+// Solution: https://www.youtube.com/watch?v=nJZ_Ob3VIQs&t=201s
+class Solution {
+public:
+    int maxRemoval(vector<int>& nums, vector<vector<int>>& queries) {
+
+        int Q = queries.size();
+        int N = nums.size();
+
+        priority_queue<int> maxHeap; // To store the farthest endings
+        priority_queue<int, vector<int>, greater<int>> past; // Past ending of queries
+        
+        sort(queries.begin(), queries.end());
+        int q = 0; // Pointing to the queries
+        int usedQueries = 0; // Queries used so far
+
+        for(int n = 0; n < N; n++) {
+
+            while(q < Q && queries[q][0] == n) {
+                maxHeap.push(queries[q][1]);
+                q++;
+            }
+
+            nums[n] -= past.size();
+
+            while(nums[n] > 0 && !maxHeap.empty() && maxHeap.top() >= n){
+
+                int ending = maxHeap.top();
+                maxHeap.pop();
+
+                past.push(ending);
+
+                usedQueries++;
+                nums[n]--;
+            }
+            
+            if(nums[n] > 0) return -1;
+
+            while(!past.empty() && past.top() <= n) past.pop();
+        }
+
+        return Q - usedQueries;
+    }
+};
+/*
+Let N = size of the array, Q = number of queries, then:
+
+Time Complexity:
+    - Sort queries: O(Q * LogQ)
+    - Iterating nums: O(N)
+    - Iterating queries: O(Q)
+    - Push into maxHeap: O(Q * LogQ)
+    - Pop from maxHeap: O(Q * LogQ)
+    - Push into minHeap: O(Q * LogQ)
+    - Pop from minHeap: O(Q * LogQ)
+
+Space Complexity:
+    - maxHeap: O(Q)
+    - minHeap: O(Q)
+*/

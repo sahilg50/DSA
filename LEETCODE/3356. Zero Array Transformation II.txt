@@ -106,7 +106,7 @@ Space Complexity:
 */
 
 
-// Approach 3: Difference Array (Form all subarray of queries starting from 0th index using binary search)
+// Approach 3: Difference Array (Form all subArray of queries starting from 0th index using binary search)
 class Solution {
 private:
     // Check if the first (q + 1) queries can reduce all nums[i] to zero or below
