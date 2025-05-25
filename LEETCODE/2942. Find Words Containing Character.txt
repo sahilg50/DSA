@@ -1,0 +1,30 @@
+// https://leetcode.com/problems/find-words-containing-character/description/?envType=daily-question&envId=2025-05-24
+
+// Approach 1: Iteration 
+class Solution {
+public:
+    vector<int> findWordsContaining(vector<string>& words, char x) {
+
+        vector<int> result;
+
+        for(int ind = 0; ind < words.size(); ind++) {
+            for(auto ch : words[ind]) {
+                if(ch == x) {
+                    result.push_back(ind);
+                    break;
+                ¯}
+            }
+        }
+
+        return result;
+    }
+};
+/*
+Let N = number of words, and M = max word length, then:
+
+Time Complexity:
+    - O(N * 50)
+
+Space Complexity: 
+    - result (1d-vector): O(N)ASC
+*/

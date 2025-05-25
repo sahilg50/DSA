@@ -121,3 +121,15 @@ public:
         return result;
     }
 };
+/*
+Let N = size of nums, then:
+
+Time Complexity: 
+    - Create 'delta' vector: O(N)
+    - Sorting 'delta' vector: O(N * LogN)
+
+Space Complexity:
+    - O(1)
+
+Note: This code will give integer overflow but the same code will pass in python!
+*/
