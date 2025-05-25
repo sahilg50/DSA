@@ -12,7 +12,7 @@ public:
                 if(ch == x) {
                     result.push_back(ind);
                     break;
-                ¯}
+                }
             }
         }
 

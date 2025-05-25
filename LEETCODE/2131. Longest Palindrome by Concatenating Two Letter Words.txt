@@ -1,0 +1,45 @@
+// https://leetcode.com/problems/longest-palindrome-by-concatenating-two-letter-words/description/?envType=daily-question&envId=2025-05-25
+
+
+// Approach 1: unordered_map
+// Solution: https://www.youtube.com/watch?v=rRbpECaMY9s
+class Solution {
+public:
+    int longestPalindrome(vector<string>& words) {
+        unordered_map<string, int> freq;
+        int totalLength = 0;
+
+        for (const string& word : words) {
+            string reversed = {word[1], word[0]};
+            
+            if (freq[reversed] > 0) {
+                // Match found, forms a palindrome part: "ab" + "ba"
+                totalLength += 4;
+                freq[reversed]--;
+            } else {
+                freq[word]++;
+            }
+        }
+
+        // Check for any remaining "aa", "bb", etc. that can be placed in the center
+        for (const auto& [word, count] : freq) {
+            if (word[0] == word[1] && count > 0) {
+                totalLength += 2;
+                break;
+            }
+        }
+
+        return totalLength;
+    }
+};
+/*
+Let N = number of words
+
+Time Complexity:
+    - First loop over words: O(N)
+    - Second loop over map entries: O(N)
+    => Total: O(N)
+
+Space Complexity:
+    - Hash map storing up to N words: O(N)
+*/
