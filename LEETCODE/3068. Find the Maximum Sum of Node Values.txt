@@ -1,0 +1,123 @@
+// https://leetcode.com/problems/find-the-maximum-sum-of-node-values/description/?envType=daily-question&envId=2025-05-23
+
+
+// Approach 1: Backtracking (TLE 353/718)
+class Solution {
+private:    
+    void util(int ind, int currSum, int &maxSum, int k, vector<int> &nums, vector<vector<int>> &edges){
+        // Base
+        if(ind == edges.size()){
+            maxSum = max(maxSum, currSum);
+            return;
+        }
+
+        // Perform all operations
+        // No Change
+        util(ind + 1, currSum, maxSum, k, nums, edges);
+
+        // Change 
+        int u = edges[ind][0];
+        int v = edges[ind][1];
+
+        currSum -= (nums[u] + nums[v]);
+        nums[u] ^= k;
+        nums[v] ^= k;
+        currSum += (nums[u] + nums[v]);
+
+        util(ind + 1,  currSum, maxSum, k, nums, edges);
+
+        // Backtrack
+        nums[u] ^= k;
+        nums[v] ^= k;
+    }
+public:
+    long long maximumValueSum(vector<int>& nums, int k, vector<vector<int>>& edges) {
+        int currSum = accumulate(nums.begin(), nums.end(), 0);
+        int maxSum = INT_MIN;
+
+        util(0, currSum, maxSum, k, nums, edges);
+
+        return maxSum;
+    }
+};
+/*
+Let N = size of nums, E = total number of edges, then:
+
+Time Complexity:
+    - Accumulate: O(N)
+    - Recursion (Trying all combination by changing and not changing each edge): O(2 ^ E)
+
+Space Complexity:  
+    - Recursion Stack: O(E)ASC
+*/
+
+
+// Approach 2: Backtracking (Same algo but a different approach)
+class Solution {
+private:    
+    void util(int ind, bool flag, int currSum, int &maxSum, int k, vector<int> &nums){
+        // Base
+        if(ind == nums.size()){
+            if(flag) maxSum = max(maxSum, currSum);
+            return;
+        }
+
+        // Perform all operations
+        // No Change    
+        util(ind + 1, flag, currSum, maxSum, k, nums);
+
+        // Change
+        currSum -= nums[ind];
+        nums[ind] ^= k;
+        currSum += nums[ind];
+
+        util(ind + 1, !flag, currSum, maxSum, k, nums);
+
+        // Backtrack
+        nums[ind] ^= k;
+    }
+
+public:
+    long long maximumValueSum(vector<int>& nums, int k, vector<vector<int>>& edges) {
+        int currSum = accumulate(nums.begin(), nums.end(), 0);
+        int maxSum = INT_MIN;
+
+        util(0, true, currSum, maxSum, k, nums);
+
+        return maxSum;
+    }
+};
+/*
+Let N = size of nums, E = total number of edges, then:
+
+Time Complexity:
+    - Accumulate: O(N)
+    - Recursion (Trying all combination by changing and not changing each node): O(2 ^ N)
+
+Space Complexity:  
+    - Recursion Stack: O(N)ASC
+*/
+
+
+// Approach 3: Finding Delta + Sorting
+// Solution: https://www.youtube.com/watch?v=bnBp6_b4GCw
+class Solution {
+public:
+    long long maximumValueSum(vector<int>& nums, int k, vector<vector<int>>& edges) {
+        
+        vector<int> delta;
+        for(auto num : nums) delta.push_back((num ^ k) - num);
+        sort(delta.begin(), delta.end(), greater<>());
+
+        long long result = accumulate(nums.begin(), nums.end(), 0);
+
+        for(int ind = 0; ind < delta.size() - 1; ind += 2) {
+            int path_delta = delta[ind] + delta[ind + 1];
+            
+            if(path_delta > 0) result += path_delta;
+            else break;
+        }
+
+        return result;
+    }
+};
