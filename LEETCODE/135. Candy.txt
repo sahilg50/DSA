@@ -1,7 +1,7 @@
 // https://leetcode.com/problems/candy/description/?envType=daily-question&envId=2025-06-02
 
 
-// Approach 1: Slope Approach
+// Approach 1: Comparing 1 neighbor at a time
 // Solution: https://www.youtube.com/watch?v=IIqVFvKE6RY
 class Solution {
 public:
@@ -38,4 +38,53 @@ Time Complexity:
 Space Complexity:
     - left (1d-vector): O(N)
     - right (1d-vector): O(N)
+*/
+
+
+// Approach 2: Slope concept
+// Solution: https://www.youtube.com/watch?v=IIqVFvKE6RY
+class Solution {
+public:
+    int candy(vector<int>& ratings) {
+
+        int n = ratings.size();
+        int totalCandies = 1;
+
+        int i = 1;
+        while(i < n){
+            
+            // Flat slope
+            if(ratings[i] == ratings[i - 1]){
+                totalCandies++;
+                i++;
+                continue;
+            }
+
+            int peak = 1;
+            while(i < n && ratings[i] > ratings[i - 1]){
+                peak++;
+                totalCandies += peak;
+                i++;
+            }
+
+            int down = 1;
+            while(i < n && ratings[i] < ratings[i - 1]){
+                totalCandies += down;
+                down++;
+                i++;
+            }
+
+            if(down > peak){
+                totalCandies += down - peak;
+            }
+        }
+        return totalCandies;
+    }
+};
+/*
+Let N = size of ratings
+
+Time Complexity: O(N)
+
+Space Complexity: O(1)
 */
