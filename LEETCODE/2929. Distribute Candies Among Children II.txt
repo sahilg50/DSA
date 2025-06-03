@@ -1,18 +1,19 @@
 // https://leetcode.com/problems/distribute-candies-among-children-ii/description/?envType=daily-question&envId=2025-06-01
 
-
-// Approach 1: Recursion
 // Solution: https://www.youtube.com/watch?v=eL_3cDp0zjE&t=265s
+
+
+// Approach 1: Recursion (TLE)
 class Solution {
 private:
-    int util(int child, int n, int limit){
+    long long util(int child, int n, int limit){
         // Base case
         if(child == 4){
             return n == 0;
         }
 
         // Perform all operations
-        int totalWays = 0;
+        long long totalWays = 0;
         for(int candies = 0; candies <= min(n, limit); candies++){
             totalWays += util(child + 1, n - candies, limit);
         }
@@ -31,4 +32,84 @@ Let N = number of candies, and Limit = maximum number of candies that can be giv
 Time Complexity: O(min(Limit, N) ^ 3)
 
 Space Complexity: O(3)
+*/
+
+
+// Approach 2: Nested Loop (TLE)
+class Solution {
+public:
+    long long distributeCandies(int n, int limit) {
+        
+        long long totalWays = 0;
+        for(int c1 = 0; c1 <= min(n, limit); c1++){
+            for(int c2 = 0; c2 <= min(n - c1, limit); c2++){
+                for(int c3 = 0; c3 <= min(n - c1 - c2, limit); c3++){
+                    if(c1 + c2 + c3 == n) totalWays++;
+                }
+            }
+        }
+
+        return totalWays;
+    }
+};
+/*
+Let N = number of candies, and Limit = maximum number of candies that can be given to a child, then:
+
+Time Complexity: O(min(Limit, N) ^ 3)
+
+Space Complexity: O(1)
+*/
+
+
+// Approach 3: Better Nested Loop (TLE)
+class Solution {
+public:
+    long long distributeCandies(int n, int limit) {
+        
+        long long totalWays = 0;
+        for(int c1 = 0; c1 <= min(n, limit); c1++){
+            for(int c2 = 0; c2 <= min(n - c1, limit); c2++){
+                int c3 = n - c1 - c2;
+                totalWays += (c3 <= limit);
+            }
+        }
+
+        return totalWays;
+    }
+};
+/*
+Let N = number of candies, and Limit = maximum number of candies that can be given to a child, then:
+
+Time Complexity: O(min(Limit, N) ^ 2)
+
+Space Complexity: O(1)
+*/
+
+
+// Approach 4: Optimal
+class Solution {
+public:
+    long long distributeCandies(int n, int limit) {
+        int c1_max = min(n, limit);
+        int c1_min = max(0, n - (limit * 2));
+
+        long long totalWays = 0;
+        for(int c1 = c1_min; c1 <= c1_max; c1++){
+            int N = n - c1; // Total candies left after child1 took c1 candies
+
+            int c2_min = max(0, N - limit);
+            int c2_max = min(N, limit);
+
+            totalWays += c2_max - c2_min + 1;
+        }
+
+        return totalWays; 
+    }
+};
+/*
+Let N = number of candies, and Limit = maximum number of candies that can be given to a child, then:
+
+Time Complexity: O(min(Limit, N))
+
+Space Complexity: O(1)
 */
