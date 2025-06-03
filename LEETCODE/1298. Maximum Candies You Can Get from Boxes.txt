@@ -1,0 +1,62 @@
+// https://leetcode.com/problems/maximum-candies-you-can-get-from-boxes/description/?envType=daily-question&envId=2025-06-03
+
+
+// Approach 1: Optimal
+class Solution {
+public:
+    int maxCandies(vector<int>& status, vector<int>& candies, vector<vector<int>>& keys, vector<vector<int>>& containedBoxes, vector<int>& initialBoxes) {
+
+        int n = status.size();
+        vector<bool> box_found(n, false);
+        vector<bool> key_found(n, false);
+        vector<bool> box_can_be_opened(n, false);
+
+        queue<int> Q;   // Contains boxes that can be opened but not opened yet
+
+        for(auto box : initialBoxes){
+            box_found[box] = true;
+
+            if(status[box]){
+                Q.push(box);
+                box_can_be_opened[box] = true;
+            }
+        }
+
+        int totalCandies = 0;
+        while(!Q.empty()){
+
+            int box = Q.front();
+            Q.pop();
+
+            totalCandies += candies[box];
+
+            for(auto containedBox : containedBoxes[box]){
+                box_found[containedBox] = true;
+                if(!box_can_be_opened[containedBox] && (status[containedBox] || key_found[containedBox])){
+                    box_can_be_opened[containedBox] = true;
+                    Q.push(containedBox);
+                }
+            }
+
+            for(auto key : keys[box]){
+                key_found[key] = true;
+                if(!box_can_be_opened[key] && box_found[key]){
+                    box_can_be_opened[key] = true;
+                    Q.push(key);
+                }
+            }
+        }
+
+        return totalCandies;
+    }
+};
+/*
+Let N = number of boxes, then:
+
+Time Complexity: O(N)
+
+Space Complexity:
+    - box_found (1d-vector): O(N)
+    - key_found (1d-vector): O(N)
+    - box_can_be_opened (1d-vector): O(N)
+*/
