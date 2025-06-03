@@ -1,0 +1,34 @@
+// https://leetcode.com/problems/distribute-candies-among-children-ii/description/?envType=daily-question&envId=2025-06-01
+
+
+// Approach 1: Recursion
+// Solution: https://www.youtube.com/watch?v=eL_3cDp0zjE&t=265s
+class Solution {
+private:
+    int util(int child, int n, int limit){
+        // Base case
+        if(child == 4){
+            return n == 0;
+        }
+
+        // Perform all operations
+        int totalWays = 0;
+        for(int candies = 0; candies <= min(n, limit); candies++){
+            totalWays += util(child + 1, n - candies, limit);
+        }
+
+        // Return
+        return totalWays;
+    }
+public:
+    long long distributeCandies(int n, int limit) {
+        return util(1, n, limit);
+    }
+};
+/*
+Let N = number of candies, and Limit = maximum number of candies that can be given to a child, then:
+
+Time Complexity: O(min(Limit, N) ^ 3)
+
+Space Complexity: O(3)
+*/
