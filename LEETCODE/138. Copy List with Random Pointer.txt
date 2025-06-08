@@ -1,0 +1,38 @@
+// https://leetcode.com/problems/copy-list-with-random-pointer/description/
+
+// Solution: https://www.youtube.com/watch?v=5Y2EiZST97Y
+
+// Approach 1: unordered_map
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
+        unordered_map<Node*, Node*> oldToNew;
+
+        Node *curr = head;
+        while(curr){
+            Node *copy = new Node(curr->val);
+            oldToNew[curr] = copy; 
+            curr = curr->next;
+        }
+
+        curr = head;
+        while(curr){
+            Node *copy = oldToNew[curr];
+            copy->next = oldToNew[curr->next];
+            copy->random = oldToNew[curr->random];
+            curr = curr->next;
+        }
+
+        return oldToNew[head];
+    }
+};
+/*
+Let N = number of nodes in linked list, then:
+
+Time Complexity:
+    - Create oldToNew: O(N)
+    - populate next, random branches of the nodes: O(N)
+
+Space Complexity:
+    - oldToNew (unordered_map): O(N)
+*/

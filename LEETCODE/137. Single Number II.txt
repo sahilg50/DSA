@@ -1,5 +1,6 @@
 // https://leetcode.com/problems/single-number-ii/description/
 
+// Solution: https://www.youtube.com/watch?v=5Bb2nqA40JY
 
 // Approach 1: unordered_map
 class Solution {
@@ -88,8 +89,8 @@ public:
         
         int ones = 0, twos = 0;
         for(const int &num : nums){
-            ones = (num ^ ones) & !twos;
-            twos = (num ^ twos) & !ones;
+            ones = (num ^ ones) & ~twos;
+            twos = (num ^ twos) & ~ones;
         }
 
         return ones;
