@@ -1,0 +1,104 @@
+// https://leetcode.com/problems/single-number-ii/description/
+
+
+// Approach 1: unordered_map
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+
+        unordered_map<int, int> numFreq;
+        for(const int &num : nums) numFreq[num]++;
+
+        for(auto [num, freq] : numFreq) if(freq == 1) return num;
+
+        return -1;
+    }
+};
+/*
+Let N = size of nums array, then:
+
+Time Complexity:
+    - Create frequency map: O(N)
+    - Iterate frequency map: O(N)
+    => Total: O(2 * N)
+
+Space Complexity:
+    - numFreq (unordered_map): O(N)
+*/
+
+
+// Approach 2: Bit Manipulation
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+
+        int result = 0;
+        for(int bitIndex = 0; bitIndex <= 31; bitIndex++){
+
+            int count = 0;
+            for(const int &num : nums){
+                if(num & (1 << bitIndex)) count++;
+            }
+
+            if(count % 3 == 1) result |= (1 << bitIndex);
+        }
+
+        return result;
+    }
+};
+/*
+Let N = size of nums array, then:
+
+Time Complexity: O(32 * N)
+
+Space Complexity: O(1)
+*/
+
+
+// Approach 3: Sorting
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+
+        sort(nums.begin(), nums.end());
+
+        for(int i = 1; i < nums.size(); i += 3){
+            if(nums[i] != nums[i-1]) return nums[i-1];
+        }
+
+        return nums.back();
+    }
+};
+/*
+Let N = size of nums array, then:
+
+Time Complexity:
+    - Sort the nums: O( N * logN)
+    - Iterate the sorted array: O(N/3)
+
+Space Complexity:
+    - Sorting: O(logN)
+*/
+
+
+// Approach 4: Bit Manipulation (optimal)
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        
+        int ones = 0, twos = 0;
+        for(const int &num : nums){
+            ones = (num ^ ones) & !twos;
+            twos = (num ^ twos) & !ones;
+        }
+
+        return ones;
+    }
+};
+/*
+Let N = size of nums array, then:
+
+Time Complexity: O(N)
+
+Space Complexity: O(1)
+*/
