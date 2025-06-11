@@ -1,0 +1,37 @@
+// https://leetcode.com/problems/word-break/
+
+// Approach 1: Recursion + Memoization
+class Solution {
+int util(int ind, string &S, vector<string> &wordDict, vector<int> &dp){
+    // Base case
+    if(ind == S.size()) return 1;
+    if(dp[ind] != -1) return dp[ind];
+
+    // Perform all operations
+    for(const string &word : wordDict){
+        string subString = S.substr(ind, word.size());
+        if(subString == word){
+            if(util(ind + word.size(), S, wordDict, dp)){
+                return dp[ind] = 1;
+            }
+        }
+    }
+
+    // Return
+    return dp[ind] = 0;
+}
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        
+        vector<int> dp(s.size(), -1);
+        return util(0, s, wordDict, dp);
+    }
+};
+/*
+If N = size of string, and M = size of wordDict, then:
+Time Complexity: 
+    - util: O(N * M)
+    
+Space Complexity: 
+    - Recursion Stack: O(N)ASC
+*/

@@ -1,0 +1,30 @@
+// https://leetcode.com/problems/maximum-difference-between-even-and-odd-frequency-i/description/?envType=daily-question&envId=2025-06-10
+
+
+// Approach 1
+class Solution {
+public:
+    int maxDifference(string s) {
+        unordered_map<int, int> charFreq;
+
+        for(const char &ch : s) charFreq[ch]++;
+
+        int maxOddFreq = INT_MIN;
+        int minEvenFreq = INT_MAX;
+        for(auto [ch, freq] : charFreq){
+            if(freq % 2) maxOddFreq = max(maxOddFreq, freq);
+            else minEvenFreq = min(minEvenFreq, freq);
+        }
+
+        return maxOdd - minEven;
+    }
+};
+/*
+If N = size of array, then:
+Time Complexity: 
+    - Create charFreq: O(N)
+    - Find maxOddFreq and minEvenFreq: O(N)
+
+Space Complexity: 
+    - charFreq (unordered_map): O(N)
+*/
