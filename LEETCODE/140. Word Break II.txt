@@ -1,0 +1,48 @@
+// https://leetcode.com/problems/word-break-ii/description/
+
+// Approach 1: Backtracking
+class Solution {
+private:
+    void util(int ind, vector<string> &currWords, vector<string> &wordStrings, string s, vector<string> &wordDict){
+        // Base case
+        if(ind == s.size()){
+            string str = "";
+            for(auto word : currWords) str.append(word + " ");
+            str.pop_back();
+            wordStrings.push_back(str);
+            return;
+        }
+
+        // Perform all operations
+        for(auto word : wordDict){
+            int length = word.size();
+
+            string subString = "-1";
+            if(ind + length <= s.size()) subString = s.substr(ind, length);
+
+            if(word == subString){
+                currWords.push_back(word);
+                util(ind + length, currWords, wordStrings, s, wordDict);
+                currWords.pop_back();
+            }            
+        }
+    }
+public:
+    vector<string> wordBreak(string s, vector<string>& wordDict) {
+        vector<string> wordStrings;
+        vector<string> currWords;
+        util(0, currWords, wordStrings, s, wordDict);
+
+        return wordStrings;
+    }
+};
+/*
+If N = size of the string s, then:
+
+Time Complexity: O(2 ^ N)
+
+Space Complexity: 
+    - currWords: O(N)
+    - Recursion Stack: O(N)ASC
+    - wordStrings: O(N * 2^N)
+*/
