@@ -1,0 +1,38 @@
+// https://leetcode.com/problems/maximum-manhattan-distance-after-k-changes/description/?envType=daily-question&envId=2025-06-20
+
+// Approach 1: Iteration
+// Solution: https://www.youtube.com/watch?v=LjgDv-WeXfM
+class Solution {
+public:
+    int maxDistance(string s, int k) {
+        int north = 0, south = 0;
+        int east = 0, west = 0;
+        
+        int currMD = 0, maxMD = 0;
+        for(int i = 0; i < s.size(); i++){
+            if(s[i] == 'N') north++;
+            else if(s[i] == 'S') south++;
+            else if(s[i] == 'E') east++;
+            else west++;
+        
+            currMD = abs(north - south) + abs(east - west);
+            int steps = i + 1;
+            int wasted = steps - currMD;
+
+            int extra = 0;
+            if(wasted != 0){
+                extra = min(2 * k, wasted);
+            }
+
+            int finalCurrMD = currMD + extra;
+            maxMD = max(maxMD, finalCurrMD);
+        }
+        
+        return maxMD;
+    }
+};
+/*
+If N = size of array, then:
+Time Complexity: O(N)
+Space Complexity: O(1)
+*/
