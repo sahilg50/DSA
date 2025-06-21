@@ -1,0 +1,80 @@
+// https://leetcode.com/problems/lru-cache/description/
+
+class LRUCache {
+private:
+    int capacity;
+    int size = 0;
+
+    struct Node{
+        int key;
+        int value;
+        Node *next;
+        Node *prev;
+
+        Node(int key, int value){
+            this->key = key;
+            this->value = value;
+            this->next = nullptr;
+            this->prev = nullptr;
+        }
+    };
+
+    Node *head = new Node(-1, -1);
+    Node *tail = new Node(-1, -1);
+
+    unordered_map<int, Node*> M;
+
+    void removeNode(Node* node) {
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+    }
+
+    void insertToFront(Node* node) {
+        Node* MRU = head->next;
+        head->next = node;
+        node->prev = head;
+        node->next = MRU;
+        MRU->prev = node;
+    }
+
+public:
+    LRUCache(int capacity) {
+        this->capacity = capacity;
+
+        this->head->next = tail;
+        this->tail->prev = head;
+    }
+    
+    int get(int key) {
+        if (M.find(key) != M.end()) {
+            Node* node = M[key];
+            removeNode(node);
+            insertToFront(node);
+            return node->value;
+        }
+        return -1;
+    }
+
+    void put(int key, int value) {
+        if (M.find(key) != M.end()) {
+            Node* node = M[key];
+            removeNode(node);
+            delete node;
+            M.erase(key);
+            size--;
+        }
+
+        if (size == capacity) {
+            Node* LRU = tail->prev;
+            removeNode(LRU);
+            M.erase(LRU->key);
+            delete LRU;
+            size--;
+        }
+
+        Node* newNode = new Node(key, value);
+        insertToFront(newNode);
+        M[key] = newNode;
+        size++;
+    }
+};

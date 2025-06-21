@@ -5,10 +5,12 @@ using namespace std;
 
 int main()
 {
-    char ch = 'z';
-    ch = char((int('z') + 1) % int('z'));
-    cout << "Hello";
-    cout << ch;
-    cout << "Hello";
+    unordered_map<int, int> M;
+    M[1] = 1;
+    M[0] = 0;
+    M[2] = 2;
+    M[6] = 6;
+    for (auto [key, value] : M)
+        cout << key << " " << value << endl;
     return 0;
 }
