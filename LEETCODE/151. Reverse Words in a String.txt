@@ -1,0 +1,81 @@
+// https://leetcode.com/problems/reverse-words-in-a-string/
+
+
+// Approach 1: Using extra space
+class Solution {
+public:
+    string reverseWords(string &s) {
+
+        vector<string> words;
+        string currWord = "";
+
+        for(auto ch : s){
+            if(ch != ' ') currWord.push_back(ch);
+            else if(ch == ' ' && currWord != ""){
+                words.push_back(currWord);
+                currWord = "";
+            }
+        }
+        if(currWord != "") words.push_back(currWord);
+
+        string result = "";
+        for(auto it = words.rbegin(); it != words.rend(); it++){
+            result.append(*it + " ");
+        }
+        result.pop_back();
+
+        return result;
+    }
+};
+/*
+If N = size of string, then:
+
+Time Complexity:
+    - Iterate s: O(N)
+    - Iterate words: O(N)
+
+Space Complexity:
+    - currWord: O(N)
+    - words: O(N)
+*/
+
+
+// Approach 2: Optimal
+class Solution {
+public:
+    string reverseWords(string s) {
+        int n = s.length();
+        string result;
+        int i = n - 1;
+
+        while (i >= 0) {
+            // Skip trailing spaces
+            while (i >= 0 && s[i] == ' ') i--;
+
+            if (i < 0) break;
+
+            int j = i;
+
+            // Find the start of the word
+            while (i >= 0 && s[i] != ' ') i--;
+
+            // Append word to result
+            result.append(s.substr(i + 1, j - i));
+            result.push_back(' ');
+        }
+
+        // Remove trailing space if any
+        if (!result.empty()) result.pop_back();
+
+        return result;
+    }
+};
+/*
+If N = size of string, then:
+
+Time Complexity:
+    - Iterate s: O(N)
+    - Iterate words: O(N)
+
+Space Complexity: O(1)
+*/
