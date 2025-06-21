@@ -1,0 +1,92 @@
+// https://leetcode.com/problems/maximum-product-subarray/description/
+
+// Approach 1: Brute Force (TLE)
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int n = nums.size();
+
+        int maxProduct = INT_MIN;
+        for(int i = 0; i < n; i++){
+            int currProduct = 1;
+            for(int j = i; j < n; j++){
+                currProduct *= nums[j];
+                maxProduct = max(maxProduct, currProduct);
+                if(currProduct == 0) currProduct = 1;
+            }
+        }
+        return maxProduct;
+    }
+};
+/*
+If N = size of array, then:
+
+Time Complexity: O(N ^ 2)
+
+Space Complexity: O(1)
+*/
+
+
+// Approach 2: Suffix & Prefix
+// Solution: https://www.youtube.com/watch?v=hnswaLJvr6g
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int n = nums.size();
+
+        int maxProduct = INT_MIN;
+        int prefix = 1;
+        int suffix = 1; 
+        for(int i = 0; i < n; i++){
+            prefix *= nums[i];
+            suffix *= nums[n-i-1];
+            maxProduct = max(maxProduct, max(prefix, suffix));
+
+            if(prefix == 0) prefix = 1;
+            if(suffix == 0) suffix = 1;
+        }
+        return maxProduct;
+    }
+};
+/*
+If N = size of array, then:
+
+Time Complexity: O(N)
+
+Space Complexity: O(1)
+*/
+
+
+// Approach 3: CurrMin & CurrMax
+// Solution: https://www.youtube.com/watch?v=lXVy6YWFcRM
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int n = nums.size();
+
+        int maxProduct = INT_MIN;
+        int currMin = 1;
+        int currMax = 1; 
+
+        for(auto num : nums){
+            int temp = currMax * num;
+            currMax = max(currMax * num, max(currMin * num, num));
+            currMin = min(temp, min(currMin * num, num));
+            maxProduct = max(maxProduct, currMax);
+
+            if(num == 0) {
+                currMax = 1; 
+                currMin = 1;
+            }
+        }
+        
+        return maxProduct;
+    }
+};
+/*
+If N = size of array, then:
+
+Time Complexity: O(N)
+
+Space Complexity: O(1)
+*/
