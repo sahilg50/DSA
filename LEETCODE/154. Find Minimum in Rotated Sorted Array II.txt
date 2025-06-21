@@ -1,0 +1,35 @@
+// https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/
+
+// Approach 1: Binary Search
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        int L = 0, H = nums.size() - 1;
+
+        while (L < H) {
+            int M = L + (H - L) / 2;
+
+            if (nums[M] > nums[H]) {
+                // Minimum must be to the right of M
+                L = M + 1;
+            }
+            else if (nums[M] < nums[H]) {
+                // Minimum could be M or to the left
+                H = M;
+            }
+            else {
+                // nums[M] == nums[H], we can't decide, safely reduce search space
+                H--;
+            }
+        }
+
+        return nums[L]; // or nums[H], since L == H
+    }
+};
+/*
+If N = size of nums array, then:
+
+Time Complexity: O(N)
+
+Space Complexity: O(1)
+*/
