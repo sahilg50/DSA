@@ -4,27 +4,22 @@
 class Solution {
 public:
     int findMin(vector<int>& nums) {
+        int L = 0, H = nums.size() - 1;
 
-        int n = nums.size();
-        int L = 0;
-        int H = n - 1;
-        int ans = INT_MAX;
+        while (L < H) {
+            int M = L + (H - L) / 2;
 
-        while(L <= H){
-
-            int M = L + (H - L)/2;
-            
-            if(nums[L] <= nums[M]){
-                ans = min(ans, nums[L]);
+            if (nums[M] > nums[H]) {
+                // Minimum must be to the right of M
                 L = M + 1;
             }
-            else{
-                ans = min(ans, nums[M]);
-                H = M - 1;
+            else {
+                // Minimum could be M or to the left
+                H = M;
             }
         }
 
-        return ans;
+        return nums[L]; // or nums[H], since L == H
     }
 };
 /*
