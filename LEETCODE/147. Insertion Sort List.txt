@@ -1,0 +1,35 @@
+// https://leetcode.com/problems/insertion-sort-list/description/
+
+// Approach 1: Creating a new LinkedList
+class Solution {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        
+        ListNode *dummy = new ListNode(0);
+
+        ListNode *curr = head;
+        while(curr){
+            ListNode *next = curr->next;
+
+            ListNode *itr = dummy;
+            while(itr->next && itr->next->val < curr->val){
+                itr = itr->next;
+            }
+
+            curr->next = itr->next;
+            itr->next = curr;
+
+            curr = next;
+        }
+
+        return dummy->next;
+    }
+};
+/*
+If N = number of nodes in the linked list, then:
+
+Time Complexity: O(N ^ 2)
+
+Space Complexity: 
+    - New LinkedList: O(N)
+*/
