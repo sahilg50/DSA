@@ -32,3 +32,12 @@ public:
         return minStack.back();
     }
 };
+/*
+If N = number of elements inserted in the stack, then:
+
+Time Complexity: O(1) for all methods
+
+Space Complexity:
+    - stack: O(N)
+    - minStack: O(N)
+*/
