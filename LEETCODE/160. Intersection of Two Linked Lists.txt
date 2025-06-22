@@ -1,0 +1,77 @@
+// https://leetcode.com/problems/intersection-of-two-linked-lists/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+// Approach 1: Using unordered_set
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        
+        
+        unordered_set<ListNode *> S;
+
+        ListNode *node = headA;
+        while(node != nullptr){
+            S.insert(node);
+            node = node->next;
+        }
+
+        node = headB;
+        while(node != nullptr){
+            if(S.find(node) != S.end()) return node;
+            node = node->next;
+        }
+
+        return nullptr;
+    }
+};
+/*
+If A = number of nodes in LinkedListA, and B = number of nodes in LinkedListB, and C = number of common nodes, then:
+
+Time Complexity: 
+    - Iterate LinkedListA: O(A + C)
+    - Iterate LinkedListB: O(B + C)
+
+Space Complexity:
+    - unordered_set: O(A + C)
+*/
+
+
+// Approach 2: 2-Pointers
+/*
+🧠 Why this works:
+	•	Let’s say:
+	•	Length of list A = a + c (a = before intersection, c = after intersection)
+	•	Length of list B = b + c
+	•	After switching, both pointers traverse a + c + b steps.
+	•	They either meet at the intersection or both reach nullptr.
+*/
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if (!headA || !headB) return nullptr;
+
+        ListNode* a = headA;
+        ListNode* b = headB;
+
+        while (a != b) {
+            a = a ? a->next : headB;
+            b = b ? b->next : headA;
+        }
+
+        return a;  // Could be nullptr or the intersection node
+    }
+};
+/*
+If A = number of nodes in LinkedListA, and B = number of nodes in LinkedListB, and C = number of common nodes, then:
+
+Time Complexity: O(A + B + C)
+
+Space Complexity: O(1)
+*/
