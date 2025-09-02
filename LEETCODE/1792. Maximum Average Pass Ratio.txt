@@ -1,0 +1,111 @@
+// https://leetcode.com/problems/maximum-average-pass-ratio/description/?envType=daily-question&envId=2025-09-01
+
+
+// Approach 1: Brute Force (Nested For-Loop) (TLE)
+class Solution {
+public:
+    double maxAverageRatio(vector<vector<int>>& classes, int extraStudents) {
+        int n = classes.size();
+
+        vector<double> currRatio(n);
+        for (int i = 0; i < n; i++) {
+            currRatio[i] = static_cast<double>(classes[i][0]) / classes[i][1];
+        }
+
+        while (extraStudents--) {
+            int bestClassIdx = -1;
+            double bestDelta = -1.0;
+
+            for (int i = 0; i < n; i++) {
+                double newRatio = static_cast<double>(classes[i][0] + 1) / (classes[i][1] + 1);
+                double delta = newRatio - currRatio[i];
+
+                if (delta > bestDelta) {
+                    bestDelta = delta;
+                    bestClassIdx = i;
+                }
+            }
+
+            // update the chosen class
+            classes[bestClassIdx][0]++;
+            classes[bestClassIdx][1]++;
+            currRatio[bestClassIdx] = static_cast<double>(classes[bestClassIdx][0]) / classes[bestClassIdx][1];
+        }
+
+        double sum = accumulate(currRatio.begin(), currRatio.end(), 0.0);
+        return sum / n;
+    }
+};
+/*
+If C = number of classes, and N = number of extra students, then:
+
+Time Complexity: O(C * N)
+
+Space Complexity: 
+    currRatio (vector): O(C)
+*/
+
+
+// Approach 2: Optimal (Max Heap)
+class Solution {
+public:
+    struct ClassData {
+        int pass, total;
+        double delta;
+
+        // compute delta (improvement if one student is added)
+        static double computeDelta(int pass, int total) {
+            return (double)(pass + 1) / (total + 1) - (double)pass / total;
+        }
+    };
+
+    struct Compare {
+        bool operator()(const ClassData& a, const ClassData& b) {
+            return a.delta < b.delta; // max heap (largest delta on top)
+        }
+    };
+
+    double maxAverageRatio(vector<vector<int>>& classes, int extraStudents) {
+        priority_queue<ClassData, vector<ClassData>, Compare> pq;
+
+        // Initialize heap with all classes
+        for (auto &c : classes) {
+            ClassData d{c[0], c[1], ClassData::computeDelta(c[0], c[1])};
+            pq.push(d);
+        }
+
+        // Distribute extra students
+        while (extraStudents--) {
+            auto top = pq.top();
+            pq.pop();
+
+            // add one student
+            top.pass++;
+            top.total++;
+            top.delta = ClassData::computeDelta(top.pass, top.total);
+
+            pq.push(top);
+        }
+
+        // Compute final average ratio
+        double result = 0.0;
+        while (!pq.empty()) {
+            auto top = pq.top();
+            pq.pop();
+            result += (double)top.pass / top.total;
+        }
+
+        return result / classes.size();
+    }
+};
+/*
+If C = number of classes, and N = number of extra students, then:
+
+Time Complexity:
+    - Building heap: O(C * logC)
+    - Each Extra Student: O(logC) (heap pop + push) = O(N * logC)
+    - Total: O(C + N) * logC
+
+Space Complexity: 
+    - pq (priority_queue): O(C)
+*/
