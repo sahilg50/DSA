@@ -1,0 +1,96 @@
+// https://leetcode.com/problems/minimum-operations-to-make-array-elements-zero/description/?envType=daily-question&envId=2025-09-06
+
+//Solution: https://www.youtube.com/watch?v=VYDl3p9bkkw
+
+// Approach 1: Max-Heap
+class Solution {
+public:
+    long long minOperations(vector<vector<int>>& queries) {
+        priority_queue<int, vector<int>, greater<int>> pq;
+        int total_operations = 0;
+        for(auto query: queries){
+            for(int num = query[0]; num <= query[1]; num++){
+                pq.push(num);
+            }
+
+            int operations = 0;
+            while(!pq.empty()){
+                int num = pq.top(); pq.pop();
+                num = floor(num / 4);
+                if(num) pq.push(num);
+                operations++;
+            }
+            
+            total_operations += ceil(operations / 2);
+        }
+
+        return total_operations;
+    }
+};
+/*
+Let Q = number of queries.
+For each query, assume:
+- K = number of elements inserted into the priority queue
+- num = largest number in the range
+
+Time Complexity:
+    1.  Building the initial pq (priority_queue): O(K)
+    2.  Reducing each number to 0:
+        - Each number becomes 0 after O(log₄(num)) steps
+        - Each push/pop operation costs O(log K)
+        - So, cost per number = O(log₄(num) * log K)
+
+    3.  Total cost for one query (all K numbers):
+        O(K * log₄(num) * log K)
+
+    4.  Across all Q queries:
+        O(Q * K * log₄(num) * log K)
+
+Space Complexity: 
+    - pq (priority_queue): O(K)
+*/
+
+
+// Approach 2: Optimal
+class Solution {
+public:
+    long long minOperations(vector<vector<int>>& queries) {
+        long long total_steps = 0;
+
+        for (auto& query : queries) {
+            long long curr_steps = 0;
+            int steps = 1;
+
+            while (true) {
+                // Compute range boundaries: [4^(steps-1), 4^steps - 1]
+                long long L = 1LL << (2 * (steps - 1)); // 4^(steps-1)
+                long long R = (1LL << (2 * steps)) - 1; // 4^steps - 1
+
+                if (L > query[1]) break; // No overlap with query
+
+                long long left = max<long long>(L, query[0]);
+                long long right = min<long long>(R, query[1]);
+
+                if (left <= right) {
+                    long long count = right - left + 1;
+                    curr_steps += count * steps;
+                }
+
+                steps++;
+            }
+
+            // Divide by 2, rounding up
+            total_steps += (curr_steps + 1) / 2;
+        }
+
+        return total_steps;
+    }
+};
+/*
+Let:
+- Q = number of queries
+- M = maximum value across all queries
+
+Time Complexity: O(Q * log₄(M))   // logarithmic in the max value per query
+Space Complexity: O(1)            // only constant extra space used
+*/
