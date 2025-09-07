@@ -1,0 +1,31 @@
+// https://leetcode.com/problems/find-n-unique-integers-sum-up-to-zero/description/?envType=daily-question&envId=2025-09-07
+
+
+// Approach 1: For Loop
+class Solution {
+public:
+    vector<int> sumZero(int n) {
+        vector<int> result;
+        result.reserve(n); // pre-allocate memory to avoid multiple reallocations
+
+        for (int i = 1; i <= n / 2; i++) {
+            result.push_back(i);
+            result.push_back(-i);
+        }
+
+        if (n % 2 == 1) {
+            result.push_back(0); // add 0 if n is odd
+        }
+
+        return result;
+    }
+};
+
+/*
+If N = number of elements:
+
+Time Complexity: O(N)        // must generate N elements
+Space Complexity:
+    - Extra (excluding result): O(1)
+    - Result vector: O(N)
+*/
