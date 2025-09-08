@@ -1,0 +1,39 @@
+// https://leetcode.com/problems/convert-integer-to-the-sum-of-two-no-zero-integers/description/?envType=daily-question&envId=2025-09-08
+
+
+// Approach 1: For Loop (Check all pairs)
+class Solution {
+private:
+    bool isNoZero(int num) {
+        while (num > 0) {
+            if (num % 10 == 0) return false;
+            num /= 10;
+        }
+        return true;
+    }
+public:
+    vector<int> getNoZeroIntegers(int n) {
+        for (int i = 1; i < n; i++) {
+            if (isNoZero(i) && isNoZero(n - i)) {
+                return {i, n - i};
+            }
+        }
+        // Guaranteed by problem constraints that a solution exists
+        return {};
+    }
+};
+/*
+Let:
+    N = given number
+    D = number of digits in N
+
+Time Complexity:
+    - Iterating through possible pairs: O(N)
+    - Checking if a number has no zero: O(D)
+    - For both numbers in a pair: O(2D) = O(D)
+
+    => Total: O(N * D)
+
+Space Complexity:
+    - Constant extra space: O(1)
+*/
