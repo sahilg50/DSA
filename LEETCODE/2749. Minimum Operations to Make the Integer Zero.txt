@@ -1,0 +1,27 @@
+// https://leetcode.com/problems/minimum-operations-to-make-the-integer-zero/description/?envType=daily-question&envId=2025-09-05
+
+// Solution: https://www.youtube.com/watch?v=YLKbecs9LIU
+
+// Approach 1: Optimal
+class Solution {
+public:
+    int makeTheIntegerZero(int num1, int num2) {
+        for (int t = 1; t <= 60; t++) { // 60 is safe bound (since num1 ≤ 1e9)
+            long long val = static_cast<long long>(num1) - (1LL * t * num2);
+
+            if (val < 0) return -1;
+
+            if (__builtin_popcountll(val) <= t && t <= val) {
+                return t;
+            }
+        }
+        return -1;
+    }
+};
+/*
+If T = max transaction, then:
+
+Time Complexit: O(T)
+
+Space Complexit: O(1)
+*/
